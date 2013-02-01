@@ -83,9 +83,8 @@ void stk_run()
             node = list;
             while(node)
             {
-                printf("%p\n", node->this);
-                wnode = (stk_widget*)node;
-                //if (XCheckWindowEvent(wnode->dsp, wnode->win, wnode->mask, &event))
+                wnode = (stk_widget*)node->this;
+                if (XCheckWindowEvent(wnode->dsp, wnode->win, wnode->mask, &event))
                   printf("Event happened to %p\n", wnode);
                 node = node->next;
             }

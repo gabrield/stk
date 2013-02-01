@@ -1,4 +1,4 @@
-#include <stk_window.h>
+#include <stk_widget.h>
 
 int main()
 {
@@ -10,7 +10,6 @@ int main()
 
 
   stk_run();
-  sleep(4);
   
   return 0;
 }
