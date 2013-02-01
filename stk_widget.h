@@ -16,7 +16,5 @@ typedef struct
     int mask;
 } stk_widget;
 
-stk_widget *stk_window_new(int, int, uint, uint, void *, void *);
-void stk_window_show(stk_widget *);
 
 #endif /* STK_WIDGET_H */

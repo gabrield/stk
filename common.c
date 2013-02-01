@@ -3,7 +3,7 @@
 widget_list *list;
 
 
-int stk_init()
+void stk_init()
 {
     list = NULL;
 }
@@ -20,12 +20,14 @@ int stk_widget_insert(void *widget)
         list->prev = new_widget;
 
     list = new_widget;
+
+    return 0;
 }
 
 
 int stk_widget_delete(void *widget)
 {
-
+    return 0;
 }
 
 

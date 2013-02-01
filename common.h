@@ -18,7 +18,7 @@ typedef struct widget_ptr
 	struct widget_ptr *prev, *next;
 } widget_list;
 
-int stk_init();
+void stk_init();
 int stk_widget_insert(void *);
 int stk_widget_delete(void *);
 int stk_widget_search(void *);

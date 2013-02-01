@@ -27,6 +27,8 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, void (*func), void *arg
 
       return new_win;
     }
+    else
+      return NULL;
 }
 
 void stk_window_add(stk_widget *win, stk_widget *widget)
