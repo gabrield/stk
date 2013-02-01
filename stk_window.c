@@ -25,7 +25,7 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, void *func, void *args)
 
 
 
-void stk_window_handle(XEvent *event)
+void stk_window_handle(STKEvent *event, void *arg)
 {
   switch(event->type)
   {

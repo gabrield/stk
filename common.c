@@ -53,7 +53,7 @@ int stk_widget_search(void *widget)
 
 void stk_run()
 {
-    XEvent  event;
+    STKEvent  event;
     widget_list *node = list;
     stk_widget *wnode = NULL;
 
@@ -69,7 +69,7 @@ void stk_run()
                 if(XCheckWindowEvent(wnode->dsp, wnode->win, wnode->mask, &event))
                 {
                     printf("Event %d happened to %p\n", event.type, wnode);
-                    wnode->handler(&event);
+                    wnode->handler(&event, NULL);
                 }
                 node = node->next;
             }

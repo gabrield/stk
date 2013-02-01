@@ -10,6 +10,8 @@
 #define FOUND 42
 #define NOT_FOUND 404
 
+typedef XEvent STKEvent;
+
 typedef struct widget_ptr
 {
 	void *this;
