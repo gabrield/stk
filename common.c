@@ -68,8 +68,8 @@ void stk_run()
                 wnode = (stk_widget*)node->this;
                 if(XCheckWindowEvent(wnode->dsp, wnode->win, wnode->mask, &event))
                 {
-                    printf("Event %d happened to %p\n", event.type, wnode);
-                    wnode->handler(&event, NULL);
+                    /*printf("Event %d happened to %p\n", event.type, wnode);*/
+                    wnode->handler(&event, wnode);
                 }
                 node = node->next;
             }

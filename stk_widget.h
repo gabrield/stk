@@ -11,8 +11,8 @@ typedef struct
     int x, y;
     Window win;
     Display *dsp;
-    void *func, *args;
-    void (*handler)(STKEvent *, void *);
+    void (*func)(void *), *args;
+    void (*handler)(XEvent *, void *);
     int mask;
 } stk_widget;
 

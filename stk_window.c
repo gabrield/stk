@@ -1,6 +1,6 @@
 #include <stk_window.h>
 
-stk_widget *stk_window_new(int x, int y, uint w, uint h, void *func, void *args)
+stk_widget *stk_window_new(int x, int y, uint w, uint h, void (*func), void *args)
 {
     stk_widget *new_win  = (stk_widget*) malloc(sizeof(stk_widget));
     new_win->dsp = XOpenDisplay(0);
@@ -17,23 +17,34 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, void *func, void *args)
       new_win->args = args;
       new_win->handler = &stk_window_handle;
 
+      if(func)
+        new_win->func = func;
+
+      if(args)
+        new_win->args = args;
+
       stk_widget_insert((void*)new_win); 
 
       return new_win;
     }
 }
 
-
-
-void stk_window_handle(STKEvent *event, void *arg)
+void stk_window_add(stk_widget *win, stk_widget *widget)
 {
+  widget->dsp = win->dsp;
+}
+
+void stk_window_handle(STKEvent *event, void *warg)
+{
+  stk_widget *wg = (stk_widget*)warg;
+
   switch(event->type)
   {
     case ButtonPress:
-      printf("ButtonPress\n");
       break;
     case ButtonRelease:
-       printf("ButtonRelease\n");
+       if(wg->func)
+           wg->func(wg->args);
       break;
   }
 }
