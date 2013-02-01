@@ -11,7 +11,7 @@ int init()
 
 int insert(void *widget)
 {
-	widget_list *new_widget = (widget_list *)malloc(sizeof(widget_list));
+    widget_list *new_widget = (widget_list *)malloc(sizeof(widget_list));
     new_widget->this = widget;
     new_widget->prev = NULL;
     new_widget->next = list;

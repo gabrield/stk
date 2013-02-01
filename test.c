@@ -17,11 +17,11 @@ int main()
   insert(&b);
   insert(w);
 
-   print();
-   search(&a);
-   search(&c);
-   search(&b);
-   search(w);
+  print();
+  search(&a);
+  search(&c);
+  search(&b);
+  search(w);
 
   sleep(10);
 
