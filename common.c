@@ -37,14 +37,15 @@ int search(void *widget)
     else
         while(node)
         {
-                if (node->this == widget)
-                {
-                    printf("Widget %p found!\n", widget);
-                    return FOUND;
-                }
-                else
-                    node = node->next;
+            if (node->this == widget)
+            {
+                printf("Widget %p found!\n", widget);
+                return FOUND;
+            }
+            else
+                node = node->next;
         }
+        
         printf("Widget %p not found :(\n", widget);
         return NOT_FOUND;
 }
