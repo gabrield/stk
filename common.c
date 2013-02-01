@@ -51,27 +51,9 @@ int stk_widget_search(void *widget)
 }
 
 
-void stk_widget_print()
-{
-    // widget_list *node = list;
-    // if(node ==  NULL)
-    //     printf("Empty list\n");
-    // else
-    //     while(1)
-    //     {
-    //         node = list;
-    //         while(node)
-    //         {
-    //             printf("%p\n", node->this);
-    //             node = node->next;
-    //         }
-    //     }
-}
-
-
 void stk_run()
 {
-    STKEvent  event;
+    XEvent  event;
     widget_list *node = list;
     stk_widget *wnode = NULL;
 
@@ -84,10 +66,12 @@ void stk_run()
             while(node)
             {
                 wnode = (stk_widget*)node->this;
-                if (XCheckWindowEvent(wnode->dsp, wnode->win, wnode->mask, &event))
-                  printf("Event happened to %p\n", wnode);
+                if(XCheckWindowEvent(wnode->dsp, wnode->win, wnode->mask, &event))
+                {
+                    printf("Event %d happened to %p\n", event.type, wnode);
+                    wnode->handler(&event);
+                }
                 node = node->next;
             }
         }
 }
-

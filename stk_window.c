@@ -14,7 +14,8 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, void *func, void *args)
       new_win->mask = ExposureMask | ButtonPressMask | ButtonReleaseMask | PointerMotionMask | KeyPressMask | StructureNotifyMask;
       XSelectInput( new_win->dsp, new_win->win, new_win->mask);
       new_win->func = func;
-      new_win->args = args; 
+      new_win->args = args;
+      new_win->handler = &stk_window_handle;
 
       stk_widget_insert((void*)new_win); 
 
@@ -24,20 +25,16 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, void *func, void *args)
 
 
 
-void stk_window_handle(STKEvent *event)
+void stk_window_handle(XEvent *event)
 {
   switch(event->type)
   {
-  case Expose:
-  case LeaveNotify:
-    break;
-  case EnterNotify:
-  case ButtonPress:
-    break;
-  case ButtonRelease:
-    break;
-  default:
-    break;
+    case ButtonPress:
+      printf("ButtonPress\n");
+      break;
+    case ButtonRelease:
+       printf("ButtonRelease\n");
+      break;
   }
 }
 

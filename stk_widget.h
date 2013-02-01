@@ -12,7 +12,7 @@ typedef struct
     Window win;
     Display *dsp;
     void *func, *args;
-    void (*handler)();
+    void (*handler)(XEvent *);
     int mask;
 } stk_widget;
 
