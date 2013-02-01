@@ -1,0 +1,9 @@
+#ifndef STK_WINDOW_H
+#define STK_WINDOW_H
+
+#include <common.h>
+
+stk_widget *stk_window_new(int, int, uint, uint, void *, void *);
+void stk_window_show(stk_widget *);
+
+#endif /* STK_WINDOW_H */

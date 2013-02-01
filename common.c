@@ -71,7 +71,7 @@ void stk_widget_print()
 
 void stk_run()
 {
-    XEvent    event;
+    STKEvent  event;
     widget_list *node = list;
     stk_widget *wnode = NULL;
 

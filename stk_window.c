@@ -1,5 +1,4 @@
-#include <common.h>
-
+#include <stk_window.h>
 
 stk_widget *stk_window_new(int x, int y, uint w, uint h, void *func, void *args)
 {
@@ -23,6 +22,24 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, void *func, void *args)
     }
 }
 
+
+
+void stk_window_handle(STKEvent *event)
+{
+  switch(event->type)
+  {
+  case Expose:
+  case LeaveNotify:
+    break;
+  case EnterNotify:
+  case ButtonPress:
+    break;
+  case ButtonRelease:
+    break;
+  default:
+    break;
+  }
+}
 
 void stk_window_show(stk_widget *win)
 {
