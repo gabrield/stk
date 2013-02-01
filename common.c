@@ -52,20 +52,21 @@ int search(void *widget)
 
 void print()
 {
-    widget_list *node = list;
-    if(node ==  NULL)
-        printf("Empty list\n");
-    else
-        //while(1)
-        //{
-        //    node = list;
-            while(node)
-            {
-                printf("%p\n", node->this);
-                node = node->next;
-            }
-        //}
+    // widget_list *node = list;
+    // if(node ==  NULL)
+    //     printf("Empty list\n");
+    // else
+    //     while(1)
+    //     {
+    //         node = list;
+    //         while(node)
+    //         {
+    //             printf("%p\n", node->this);
+    //             node = node->next;
+    //         }
+    //     }
 }
+
 
 void handle()
 {}
