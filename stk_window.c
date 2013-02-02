@@ -1,6 +1,6 @@
 #include <stk_window.h>
 
-stk_widget *stk_window_new(int x, int y, uint w, uint h, void (*func), void *args)
+stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title, void (*func), void *args)
 {
     stk_widget *new_win  = (stk_widget*) malloc(sizeof(stk_widget));
     new_win->dsp = display;
@@ -16,6 +16,9 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, void (*func), void *arg
       new_win->func = func;
       new_win->args = args;
       new_win->handler = &stk_window_handle;
+
+      if(title)
+        stk_window_set_title(new_win, title);
 
       if(func)
         new_win->func = func;
@@ -51,4 +54,20 @@ void stk_window_show(stk_widget *win)
 {
     XMapWindow(win->dsp, win->win);
     XFlush(win->dsp);
+}
+
+
+void stk_window_set_title(stk_widget *win, const char *title)
+{
+    int rc = 0;
+    /* This variable will store the newly created property. */
+    XTextProperty window_title_property;
+
+    /* translate the given string into an X property. */
+    rc = XStringListToTextProperty((char**)&title,
+                                       1,
+                                       &window_title_property);
+    XSetWMName(win->dsp, win->win, &window_title_property);
+
+
 }

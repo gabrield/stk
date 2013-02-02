@@ -14,7 +14,7 @@ int main()
 
   stk_init();
   
-  win = stk_window_new(500, 500, 640, 480, &hello, "to STK");
+  win = stk_window_new(500, 500, 640, 480, "STK Demo", &hello, "to STK");
   bt  = stk_button_new(win, 100, 100, 60, 20, "Button", &hello, "to STKButton");
 
   stk_window_show(win);
