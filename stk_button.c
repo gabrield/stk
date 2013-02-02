@@ -41,8 +41,7 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     {
         new_bt->win = XCreateSimpleWindow(new_bt->dsp, parent_win->win, x, y, w,
                                                                   h, 2, fg, bg);
-        new_bt->mask = ExposureMask | ButtonPressMask | ButtonReleaseMask |
-                    PointerMotionMask | KeyPressMask | StructureNotifyMask;
+        new_bt->mask =  ExposureMask | EnterWindowMask | LeaveWindowMask | ButtonPressMask | ButtonReleaseMask;
 
         XChangeWindowAttributes(new_bt->dsp, new_bt->win, CWBackingStore,
                                                             &setwinattr);
@@ -74,30 +73,38 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
 }
 
 
+void stk_button_expose(stk_widget *bt)
+{
+    int   width, center;
+    XClearWindow(bt->dsp, bt->win);
+
+    width = XTextWidth(bt->font_info, bt->label, strlen(bt->label));
+    center = (bt->w - width) / 2;
+
+    XDrawString(bt->dsp, bt->win, bt->gc2, center, bt->font_info->ascent,
+                                           bt->label, strlen(bt->label));
+    XFlush(bt->dsp);
+}
+
+
 void stk_button_redraw(int dtype, stk_widget *bt)
-{ int   width, center;
+{ 
 
     switch(dtype)
     {
         case STK_BUTTON_EXPOSE:
-           
-    
-            XClearWindow(bt->dsp, bt->win);
-
-            width = XTextWidth(bt->font_info, bt->label, strlen(bt->label));
-            printf("%d\n", width);
-
-            center = (bt->w - width) / 2;
-            printf("%d\n", center);
-
-            XDrawString(bt->dsp, bt->win, bt->gc2, center, bt->font_info->ascent,
-                                                   bt->label, strlen(bt->label));
-            XFlush(bt->dsp);
-
+            stk_button_expose(bt);
             break;
 
         case STK_BUTTON_PRESS:
+            XDrawRectangle(bt->dsp, bt->win, bt->gc2, 0, 0, bt->w - 1,
+                                                            bt->h - 1);
+             break;
+
         case STK_BUTTON_RELEASE:
+             stk_button_expose(bt);
+             break;
+
         case STK_BUTTON_ENTER:
         case STK_BUTTON_LEAVE:
         default:
@@ -114,12 +121,20 @@ void stk_button_handle(STKEvent *event, void *warg)
   switch(event->type)
   {
     case Expose:
+        printf("Expose\n");
         stk_button_redraw(STK_BUTTON_EXPOSE, wg);
+        break;
+    case LeaveNotify:
+        printf("LeaveNotify\n");
+        break;
     case ButtonPress:
+        printf("ButtonPress\n");
+        stk_button_redraw(STK_BUTTON_PRESS, wg);
         break;
     case ButtonRelease:
         if(wg->func)
             wg->func(wg->args);
+         stk_button_redraw(STK_BUTTON_RELEASE, wg);
         break;
   }
 }
