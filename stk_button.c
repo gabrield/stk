@@ -121,14 +121,11 @@ void stk_button_handle(STKEvent *event, void *warg)
   switch(event->type)
   {
     case Expose:
-        printf("Expose\n");
         stk_button_redraw(STK_BUTTON_EXPOSE, wg);
         break;
     case LeaveNotify:
-        printf("LeaveNotify\n");
         break;
     case ButtonPress:
-        printf("ButtonPress\n");
         stk_button_redraw(STK_BUTTON_PRESS, wg);
         break;
     case ButtonRelease:
