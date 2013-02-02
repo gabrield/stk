@@ -14,6 +14,10 @@ typedef struct
     void    (*func)(void *), *args;
     void    (*handler)(XEvent *, void *);
     int     mask;
+    GC gc, gc2;
+    XFontStruct *font_info;
+    char* fontname;
+    const char *label;
 } stk_widget;
 
 

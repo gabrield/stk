@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <X11/Xlib.h>
 #include <stk_widget.h>
@@ -12,7 +13,7 @@
 
 typedef XEvent STKEvent;
 
- Display *display;
+Display *display;
 
 typedef struct widget_ptr
 {
