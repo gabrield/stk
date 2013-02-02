@@ -1,8 +1,6 @@
 LIBS  = -lX11
-CFLAGS = -I. -L/usr/X11R6/lib 
+CFLAGS = -I. -L/usr/X11R6/lib -Wall
 
-
-# Should be equivalent to your list of C files, if you don't build selectively
 SRC=$(wildcard *.c)
 
 all: $(SRC)
