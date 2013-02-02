@@ -1,10 +1,8 @@
 #include <stk_button.h>
 
-stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h, void (*func), void *args)
+stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h, void *func, void *args)
 {
     stk_widget *new_bt  = (stk_widget*) malloc(sizeof(stk_widget));
-    new_bt->dsp = display;
-
     int                   screen;
     GC                    gc, gc2;
     XGCValues             gcval;
@@ -12,6 +10,9 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     XFontStruct*          font_info;
     char* fontname =      "9x15";
     XSetWindowAttributes  setwinattr;
+    new_bt->dsp = display;
+
+
 
 
     screen = DefaultScreen(new_bt->dsp );
@@ -27,6 +28,12 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     gc = XCreateGC(new_bt->dsp, parent_win->win, GCForeground | GCBackground, &gcval);
 
     setwinattr.backing_store = Always;
+
+
+    if( (font_info = XLoadQueryFont(display, fontname)) != NULL)
+        XSetFont(display, gc, font_info->fid);
+    else
+      perror("XLoadQueryFont");
 
     if(new_bt->dsp)
     {
@@ -70,9 +77,3 @@ void stk_button_handle(STKEvent *event, void *warg)
       break;
   }
 }
-
-// void stk_button_show(stk_widget *win)
-// {
-//     XMapWindow(win->dsp, win->win);
-//     XFlush(win->dsp);
-// }

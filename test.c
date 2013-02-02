@@ -18,10 +18,10 @@ void hello_bt(void *string)
 
 int main()
 {
-  stk_init();
-  
   stk_widget *win = NULL;
   stk_widget *bt = NULL;
+
+  stk_init();
   
   win = stk_window_new(500, 500, 640, 480, &hello, "to STK");
   bt  = stk_button_new(win, 100, 100, 40, 20, &hello_bt, "to STKButton");

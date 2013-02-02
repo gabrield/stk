@@ -31,11 +31,6 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, void (*func), void *arg
       return NULL;
 }
 
-void stk_window_add(stk_widget *win, stk_widget *widget)
-{
-    XMapWindow(win->dsp, widget->win);
-    XFlush(win->dsp);
-}
 
 void stk_window_handle(STKEvent *event, void *warg)
 {
