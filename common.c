@@ -6,6 +6,7 @@ widget_list *list;
 void stk_init()
 {
     list = NULL;
+    display =  XOpenDisplay(0);
 }
 
 

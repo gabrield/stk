@@ -8,12 +8,12 @@ typedef unsigned int uint;
 typedef struct
 {
     unsigned int w, h;
-    int x, y;
-    Window win;
+    int     x, y;
+    Window  win;
     Display *dsp;
-    void (*func)(void *), *args;
-    void (*handler)(XEvent *, void *);
-    int mask;
+    void    (*func)(void *), *args;
+    void    (*handler)(XEvent *, void *);
+    int     mask;
 } stk_widget;
 
 

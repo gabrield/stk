@@ -7,10 +7,12 @@
 #include <X11/Xlib.h>
 #include <stk_widget.h>
 
-#define FOUND 42
+#define FOUND     42
 #define NOT_FOUND 404
 
 typedef XEvent STKEvent;
+
+ Display *display;
 
 typedef struct widget_ptr
 {
@@ -18,10 +20,11 @@ typedef struct widget_ptr
 	struct widget_ptr *prev, *next;
 } widget_list;
 
+
+int  stk_widget_insert(void *);
+int  stk_widget_delete(void *);
+int  stk_widget_search(void *);
 void stk_init();
-int stk_widget_insert(void *);
-int stk_widget_delete(void *);
-int stk_widget_search(void *);
 void stk_run();
 
 #endif /* COMMON_H */

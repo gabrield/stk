@@ -3,7 +3,7 @@
 stk_widget *stk_window_new(int x, int y, uint w, uint h, void (*func), void *args)
 {
     stk_widget *new_win  = (stk_widget*) malloc(sizeof(stk_widget));
-    new_win->dsp = XOpenDisplay(0);
+    new_win->dsp = display;
 
     if(new_win->dsp)
     {
@@ -33,7 +33,8 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, void (*func), void *arg
 
 void stk_window_add(stk_widget *win, stk_widget *widget)
 {
-  widget->dsp = win->dsp;
+    XMapWindow(win->dsp, widget->win);
+    XFlush(win->dsp);
 }
 
 void stk_window_handle(STKEvent *event, void *warg)
