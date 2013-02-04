@@ -1,3 +1,5 @@
+#include <stk_widget.h>
+
 #include <common.h>
 
 widget_list *list;
@@ -107,4 +109,22 @@ void stk_run()
             }
         }
     }
+}
+
+
+
+void stk_widget_set_size(stk_widget *);
+
+
+void stk_widget_set_pos(stk_widget *win, uint x, uint y)
+{
+    XMoveWindow(win->dsp, win->win, x, y);   
+}
+
+
+void stk_widget_set_color(stk_widget *win, int color)
+{
+    XSetWindowBackground(win->dsp, win->win, color);
+    XClearWindow(win->dsp, win->win);
+    XFlush(win->dsp);
 }

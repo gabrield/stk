@@ -1,7 +1,7 @@
 #ifndef STK_BUTTON_H
 #define STK_BUTTON_H
 
-#include <common.h>
+#include <stk_widget.h>
 
 /* STKButton Events */
 #define STK_BUTTON_EXPOSE   10

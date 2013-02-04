@@ -36,6 +36,16 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title, void
 }
 
 
+void stk_window_set_pos(stk_widget *win, uint x, uint y)
+{
+  stk_widget_set_pos(win, x, y);
+}    
+
+void stk_window_set_color(stk_widget *win, int color)
+{
+    stk_widget_set_color(win, color);
+}
+
 void stk_window_handle(STKEvent *event, void *warg)
 {
   stk_widget *wg = (stk_widget*)warg;

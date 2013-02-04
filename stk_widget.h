@@ -1,9 +1,29 @@
 #ifndef STK_WIDGET_H
 #define STK_WIDGET_H
 
-#include <common.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xos.h>
+#include <X11/Xatom.h>
+#include <X11/keysym.h>
+#include <stk_widget.h>
+
+typedef XEvent STKEvent;
 
 typedef unsigned int uint;
+
+Display *display;
+
+typedef struct widget_ptr
+{
+    void *this;
+    struct widget_ptr *prev, *next;
+} widget_list;
+
 
 typedef struct
 {
@@ -19,6 +39,16 @@ typedef struct
     char *fontname;
     const char *label;
 } stk_widget;
+
+
+stk_widget *stk_widget_search(void *);
+int         stk_widget_insert(void *);
+int         stk_widget_delete(void *);
+void        stk_init();
+void        stk_run();
+void        stk_widget_set_size(stk_widget *);
+void        stk_widget_set_pos(stk_widget *, uint, uint);
+void        stk_widget_set_color(stk_widget *, int color);
 
 
 #endif /* STK_WIDGET_H */
