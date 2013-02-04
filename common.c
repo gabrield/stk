@@ -2,7 +2,11 @@
 
 widget_list *list;
 
-
+/* stk_init()
+Initialize the Display connection to X and the widget list
+@return: void
+@comments: Must be called before any STK functions
+*/
 void stk_init()
 {
     list = NULL;
@@ -10,19 +14,30 @@ void stk_init()
 }
 
 
+/* stk_widget_insert():
+Alloc and insert a widget in the widget list.
+@return: 0 if success or -1 if unsuccessful.
+@comments: Every widget must call it to be
+           registered and have its events
+           handled
+*/
 int stk_widget_insert(void *widget)
 {
     widget_list *new_widget = (widget_list *)malloc(sizeof(widget_list));
-    new_widget->this = widget;
-    new_widget->prev = NULL;
-    new_widget->next = list;
+    if(new_widget)
+    {
+        new_widget->this = widget;
+        new_widget->prev = NULL;
+        new_widget->next = list;
 
-    if(list != NULL)
-        list->prev = new_widget;
+        if(list != NULL)
+            list->prev = new_widget;
 
-    list = new_widget;
+        list = new_widget;
 
-    return 0;
+        return 0;
+    }
+    return -1;
 }
 
 
@@ -32,6 +47,11 @@ int stk_widget_delete(void *widget)
 }
 
 
+/* stk_widget_search():
+Search for a widget in the widget list.
+@return:and return a pointer to stk_widget or NULL
+@comments: return a pointer to stk_widget if the widget exists.
+*/
 stk_widget *stk_widget_search(void *widget)
 {
     widget_list *node = list;
@@ -59,6 +79,13 @@ stk_widget *stk_widget_search(void *widget)
 }
 
 
+/* stk_run():
+Search for a widget in the widget list.
+@return: void
+@comments: Must be called after all STK functions.
+           It's the event loop that handles the all
+           the event callings of the widgets.
+*/
 void stk_run()
 {
     STKEvent  event;
