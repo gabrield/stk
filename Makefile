@@ -1,7 +1,17 @@
-LIBS  = -lX11
-CFLAGS = -g -I. -L/usr/X11R6/lib -Wall 
+CC=gcc
+CFLAGS=-c -g -I. -Wall 
+LDFLAGS=-L/usr/X11R6/lib -lX11
+SOURCES=$(wildcard *.c)
+OBJECTS=$(SOURCES:.c=.o)
+EXECUTABLE=test
 
-SRC=$(wildcard *.c)
+all: $(SOURCES) $(EXECUTABLE)
+	
+$(EXECUTABLE): $(OBJECTS) 
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
 
-all: $(SRC)
-	gcc -o test $^ $(CFLAGS) $(LIBS)
+.c.o:
+	$(CC) $(CFLAGS) $< -o $@
+
+clean:
+	rm -rf $(OBJECTS)
