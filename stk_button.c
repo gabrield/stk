@@ -11,7 +11,7 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     long fg, bg;
     XSetWindowAttributes setwinattr;
     new_bt->dsp = display;
-    new_bt->fontname = "9x15bold";
+    new_bt->fontname = "7x13";
     new_bt->label = label;
 
     screen = DefaultScreen(new_bt->dsp);
@@ -33,7 +33,7 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     new_bt->font_info = XLoadQueryFont(new_bt->dsp, new_bt->fontname);
 
     if(new_bt->fontname != NULL)
-        XSetFont(display, new_bt->gc, new_bt->font_info->fid);
+        XSetFont(display, new_bt->gc2, new_bt->font_info->fid);
     else
       perror("XLoadQueryFont");
 
@@ -80,7 +80,6 @@ void stk_button_expose(stk_widget *bt)
 
     width = XTextWidth(bt->font_info, bt->label, strlen(bt->label));
     center = (bt->w - width) / 2;
-
     XDrawString(bt->dsp, bt->win, bt->gc2, center, bt->font_info->ascent,
                                            bt->label, strlen(bt->label));
     XFlush(bt->dsp);

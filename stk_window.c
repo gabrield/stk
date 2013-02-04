@@ -68,6 +68,4 @@ void stk_window_set_title(stk_widget *win, const char *title)
                                        1,
                                        &window_title_property);
     XSetWMName(win->dsp, win->win, &window_title_property);
-
-
 }

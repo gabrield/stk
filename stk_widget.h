@@ -16,7 +16,7 @@ typedef struct
     int     mask;
     GC gc, gc2;
     XFontStruct *font_info;
-    char* fontname;
+    char *fontname;
     const char *label;
 } stk_widget;
 
