@@ -32,25 +32,30 @@ int stk_widget_delete(void *widget)
 }
 
 
-int stk_widget_search(void *widget)
+stk_widget *stk_widget_search(void *widget)
 {
     widget_list *node = list;
+    stk_widget *wnode = NULL;
+
+
     if(node ==  NULL)
-        printf("Empty list\n");
+        printf("Empty widget list\n");
     else
+    {
         while(node)
         {
-            if (node->this == widget)
+            wnode = (stk_widget*)node->this;
+            if(wnode->win == (Window)widget)
             {
-                printf("Widget %p found!\n", widget);
-                return FOUND;
+                /*printf("Widget %p found!\n", widget);*/
+                return wnode;
             }
             else
                 node = node->next;
         }
-        
-        printf("Widget %p not found :(\n", widget);
-        return NOT_FOUND;
+    }   
+    printf("Widget %p not found :(\n", widget);
+    return NULL;
 }
 
 
@@ -63,18 +68,16 @@ void stk_run()
     if(node ==  NULL)
         printf("Empty list\n");
     else
+    {       
         while(1)
         {
-            node = list;
-            while(node)
+            XNextEvent(display, &event);
+            wnode = stk_widget_search((void*)event.xany.window);
+            if(wnode)
             {
-                wnode = (stk_widget*)node->this;
-                if(XCheckWindowEvent(wnode->dsp, wnode->win, wnode->mask, &event))
-                {
-                    /*printf("Event %d happened to %p\n", event.type, wnode);*/
-                    wnode->handler(&event, wnode);
-                }
-                node = node->next;
+                /*printf("Event %d happened to %p == %p\n", event.type, wnode->win, event.xany.window);*/
+                wnode->handler(&event, wnode);
             }
         }
+    }
 }

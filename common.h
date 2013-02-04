@@ -7,10 +7,10 @@
 #include <unistd.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <X11/Xos.h>
+#include <X11/Xatom.h>
+#include <X11/keysym.h>
 #include <stk_widget.h>
-
-#define FOUND     42
-#define NOT_FOUND 404
 
 typedef XEvent STKEvent;
 
@@ -23,10 +23,11 @@ typedef struct widget_ptr
 } widget_list;
 
 
-int  stk_widget_insert(void *);
-int  stk_widget_delete(void *);
-int  stk_widget_search(void *);
-void stk_init();
-void stk_run();
+stk_widget *stk_widget_search(void *);
+int         stk_widget_insert(void *);
+int         stk_widget_delete(void *);
+void        stk_init();
+void        stk_run();
+
 
 #endif /* COMMON_H */
