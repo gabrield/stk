@@ -1,7 +1,5 @@
 #include <stk_widget.h>
 
-#include <common.h>
-
 widget_list *list;
 
 /* stk_init()
