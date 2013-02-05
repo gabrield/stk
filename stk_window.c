@@ -52,11 +52,13 @@ void stk_window_handle(STKEvent *event, void *warg)
 
   switch(event->type)
   {
+    case Expose:
+        break;
     case ButtonPress:
       break;
     case ButtonRelease:
-       if(wg->func)
-           wg->func(wg->args);
+       /*if(wg->func)
+           wg->func(wg->args);*/
       break;
   }
 }
