@@ -61,7 +61,7 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
             new_bt->label = label;
 
         stk_widget_insert((void*)new_bt); 
-        printf("new_bt = %p\n", new_bt);
+        
         return new_bt;
     }
     else
@@ -116,7 +116,7 @@ void stk_button_redraw(int dtype, stk_widget *bt)
 
 
 
-void stk_button_handle(STKEvent *event, void *warg)
+void stk_button_handle(STKEvent *event, void *warg, void *args)
 {
   stk_widget *wg = (stk_widget*)warg;
 
@@ -128,12 +128,16 @@ void stk_button_handle(STKEvent *event, void *warg)
     case LeaveNotify:
         break;
     case ButtonPress:
-        stk_button_redraw(STK_BUTTON_PRESS, wg);
+        if(event->xbutton.button == Button1)
+            stk_button_redraw(STK_BUTTON_PRESS, wg);
         break;
     case ButtonRelease:
-        if(wg->func)
-            wg->func(wg->args);
-         stk_button_redraw(STK_BUTTON_RELEASE, wg);
+        if(event->xbutton.button == Button1)
+        {
+            if(wg->func)
+                wg->func(wg->args);
+        }
+        stk_button_redraw(STK_BUTTON_RELEASE, wg);
         break;
   }
 }

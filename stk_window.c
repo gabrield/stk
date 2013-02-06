@@ -46,7 +46,7 @@ void stk_window_set_color(stk_widget *win, int color)
     stk_widget_set_color(win, color);
 }
 
-void stk_window_handle(STKEvent *event, void *warg)
+void stk_window_handle(STKEvent *event, void *warg, void *args)
 {
   stk_widget *wg = (stk_widget*)warg;
 

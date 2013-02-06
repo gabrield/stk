@@ -60,7 +60,7 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
 
 
         stk_widget_insert((void*)new_txt); 
-        printf("new_txt = %p\n", new_txt);
+
         return new_txt;
     }
     else
@@ -86,8 +86,13 @@ void stk_text_expose(stk_widget *txt)
 }
 
 
-void stk_text_redraw(int dtype, stk_widget *txt)
+void stk_text_redraw(int dtype, stk_widget *txt, void *args)
 { 
+    
+    STKEvent *ev;
+
+    if(args)
+         ev = (STKEvent*)args;
 
     switch(dtype)
     {
@@ -105,11 +110,21 @@ void stk_text_redraw(int dtype, stk_widget *txt)
             break;
 
         case STK_TEXT_KEYPRESS:
-            printf("STK_TEXT_KEYPRESS\n");
+            {
+                char c;
+                int len;
+                KeySym keysym;
+                len = XLookupString(&ev->xkey, &c, sizeof(char), &keysym, NULL);
+                if (len > 0){
+                    if (c == '\r')
+                        c = '\n';
+
+                    printf("STK_TEXT_KEYPRESS / key = %c\n", c);
+                }
+            }
             break;
 
         case STK_TEXT_KEYRELEASE:
-            printf("STK_TEXT_KEYRELEASE\n");
             stk_text_expose(txt);
             break;
 
@@ -123,32 +138,32 @@ void stk_text_redraw(int dtype, stk_widget *txt)
 
 
 
-void stk_text_handle(STKEvent *event, void *warg)
+void stk_text_handle(STKEvent *event, void *warg, void *args)
 {
   stk_widget *wg = (stk_widget*)warg;
 
     switch(event->type)
     {
         case Expose:
-            stk_text_redraw(STK_TEXT_EXPOSE, wg);
+            stk_text_redraw(STK_TEXT_EXPOSE, wg, NULL);
             break;
         case LeaveNotify:
             break;
 
         case ButtonPress:
-            stk_text_redraw(STK_TEXT_PRESS, wg);
+            stk_text_redraw(STK_TEXT_PRESS, wg, NULL);
             break;
 
         case ButtonRelease:
-            stk_text_redraw(STK_TEXT_RELEASE, wg);
+            stk_text_redraw(STK_TEXT_RELEASE, wg, NULL);
             break;
 
         case KeyPress:
-            stk_text_redraw(STK_TEXT_KEYPRESS, wg);
+            stk_text_redraw(STK_TEXT_KEYPRESS, wg, event);
             break;
 
         case KeyRelease:
-            stk_text_redraw(STK_TEXT_KEYRELEASE, wg);
+            stk_text_redraw(STK_TEXT_KEYRELEASE, wg, NULL);
             break;
     }
 }

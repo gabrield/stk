@@ -12,6 +12,6 @@
 
 stk_widget *stk_button_new(stk_widget *, int, int, uint, uint, const char *,
                                                             void *, void *);
-void        stk_button_handle(STKEvent *, void *);
+void        stk_button_handle(STKEvent *, void *, void *);
 
 #endif /* STK_BUTTON_H */
