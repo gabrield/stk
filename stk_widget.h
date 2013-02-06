@@ -32,7 +32,7 @@ typedef struct
     Window  win;
     Display *dsp;
     void    (*func)(void *), *args;
-    void    (*handler)(XEvent *, void *, void*);
+    void    (*handler)(XEvent *, void *);
     int     mask;
     GC gc, gc2;
     XFontStruct *font_info;

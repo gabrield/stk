@@ -41,7 +41,7 @@ int main()
     
     win = stk_window_new(500, 500, 640, 480, "STK Demo", &hello, "to STK");
     bt  = stk_button_new(win, 100, 100, 60, 20, "Hello", &hello, "to STKButton");
-    bt1 = stk_button_new(win, 200, 100, 60, 20, "Move", &move,  (void*)&wc2);
+    bt1 = stk_button_new(win, 200, 100, 60, 20, "MoveWin", &move,  (void*)&wc2);
     bt2 = stk_button_new(win, 300, 100, 60, 20, "Color1", &color, (void*)&wc1);
     bt3 = stk_button_new(win, 400, 100, 60, 20, "Color2", &color, (void*)&wc);
     bt4 = stk_button_new(win, 400, 300, 60, 20, "MoveBt1", &move, (void*)&wc3);

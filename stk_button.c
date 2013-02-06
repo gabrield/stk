@@ -61,7 +61,7 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
             new_bt->label = label;
 
         stk_widget_insert((void*)new_bt); 
-        
+
         return new_bt;
     }
     else
@@ -116,7 +116,7 @@ void stk_button_redraw(int dtype, stk_widget *bt)
 
 
 
-void stk_button_handle(STKEvent *event, void *warg, void *args)
+void stk_button_handle(STKEvent *event, void *warg)
 {
   stk_widget *wg = (stk_widget*)warg;
 
