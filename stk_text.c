@@ -115,12 +115,26 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
                 int len;
                 KeySym keysym;
                 len = XLookupString(&ev->xkey, &c, sizeof(char), &keysym, NULL);
-                if (len > 0){
-                    if (c == '\r')
-                        c = '\n';
+                if (len > 0)
+                {
+                    switch(c)
+                    {
+                        case '\r':
+                            c = '\n';
+                            printf("ENTER\n");
+                            break;
 
+                        case '\b':
+                            printf("BACKSPACE\n");
+                            break;
+
+                        case '\t':
+                            printf("TAB\n");
+                            break;
+                    }
                     printf("STK_TEXT_KEYPRESS / key = %c\n", c);
                 }
+
             }
             break;
 
