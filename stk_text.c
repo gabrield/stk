@@ -138,7 +138,7 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
 
 
 
-void stk_text_handle(STKEvent *event, void *warg, void *args)
+void stk_text_handle(STKEvent *event, void *warg)
 {
   stk_widget *wg = (stk_widget*)warg;
 
