@@ -35,12 +35,15 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     {
         new_txt->win = XCreateSimpleWindow(new_txt->dsp, parent_win->win, x, y, w,
                                                                   h, 2, fg, bg);
-        new_txt->mask =  ExposureMask | EnterWindowMask | LeaveWindowMask | ButtonPressMask | ButtonReleaseMask;
+
+        new_txt->mask =  ExposureMask | KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask |
+                         ButtonMotionMask | EnterWindowMask | LeaveWindowMask | PointerMotionMask | 
+                         FocusChangeMask | ColormapChangeMask | StructureNotifyMask | PropertyChangeMask | VisibilityChangeMask;
 
         XChangeWindowAttributes(new_txt->dsp, new_txt->win, CWBackingStore,
-                                                            &setwinattr);
+                                                              &setwinattr);
         
-        XSelectInput( new_txt->dsp, new_txt->win, new_txt->mask);
+        XSelectInput(new_txt->dsp, new_txt->win, new_txt->mask);
         XMapWindow(new_txt->dsp, new_txt->win);
 
 
@@ -54,11 +57,10 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
 
         if(label)
             new_txt->label = label;
-        else
-            new_txt->label = NULL;
+
 
         stk_widget_insert((void*)new_txt); 
-
+        printf("new_txt = %p\n", new_txt);
         return new_txt;
     }
     else
@@ -94,6 +96,8 @@ void stk_text_redraw(int dtype, stk_widget *txt)
             break;
 
         case STK_TEXT_PRESS:
+            XSetInputFocus(txt->dsp, txt->win, RevertToNone, CurrentTime);
+            printf("PRESS\n");
             break;
 
         case STK_TEXT_RELEASE:

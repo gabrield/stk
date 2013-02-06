@@ -61,7 +61,7 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
             new_bt->label = label;
 
         stk_widget_insert((void*)new_bt); 
-
+        printf("new_bt = %p\n", new_bt);
         return new_bt;
     }
     else
@@ -98,6 +98,7 @@ void stk_button_redraw(int dtype, stk_widget *bt)
             break;
 
         case STK_BUTTON_PRESS:
+            XSetInputFocus(bt->dsp, bt->win, RevertToNone, CurrentTime);
             XDrawRectangle(bt->dsp, bt->win, bt->gc2, 0, 0, bt->w - 1,
                                                             bt->h - 1);
              break;

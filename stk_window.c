@@ -55,7 +55,8 @@ void stk_window_handle(STKEvent *event, void *warg)
     case Expose:
         break;
     case ButtonPress:
-      break;
+        XSetInputFocus(wg->dsp, wg->win, RevertToNone, CurrentTime);
+        break;
     case ButtonRelease:
        /*if(wg->func)
            wg->func(wg->args);*/
