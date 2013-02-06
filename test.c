@@ -1,5 +1,6 @@
 #include <stk_window.h>
 #include <stk_button.h>
+#include <stk_text.h>
 
 typedef struct 
 {
@@ -33,7 +34,7 @@ void move(void *c)
 int main()
 {
     stk_widget *win = NULL;
-    stk_widget *bt, *bt1, *bt2, *bt3, *bt4;
+    stk_widget *bt, *bt1, *bt2, *bt3, *bt4, *txt;
     ptr wc, wc1, wc2, wc3;
 
     stk_init();
@@ -44,6 +45,7 @@ int main()
     bt2 = stk_button_new(win, 300, 100, 60, 20, "Color1", &color, (void*)&wc1);
     bt3 = stk_button_new(win, 400, 100, 60, 20, "Color2", &color, (void*)&wc);
     bt4 = stk_button_new(win, 100, 200, 60, 20, "MoveBt", &move, (void*)&wc3);
+    txt = stk_text_new(win, 100, 300, 60, 20, "TxtArea", 1);
 
     wc.d1  = win;
     wc.c   = 0xd3d3d3;

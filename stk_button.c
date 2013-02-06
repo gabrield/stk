@@ -12,7 +12,6 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     XSetWindowAttributes setwinattr;
     new_bt->dsp = display;
     new_bt->fontname = "7x13";
-    new_bt->label = label;
 
     screen = DefaultScreen(new_bt->dsp);
     fg = BlackPixel(new_bt->dsp, screen);
@@ -22,11 +21,6 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     gcval.background = bg;
     new_bt->gc2 = XCreateGC(new_bt->dsp, parent_win->win, GCForeground |
                                                   GCBackground, &gcval);
-
-    gcval.foreground = bg;
-    gcval.background = fg;  
-    new_bt->gc = XCreateGC(new_bt->dsp, parent_win->win, GCForeground |
-                                                 GCBackground, &gcval);
 
     setwinattr.backing_store = Always;
 
@@ -55,15 +49,16 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
         new_bt->w = w;
         new_bt->h = h;
 
-        new_bt->func = func;
-        new_bt->args = args;
         new_bt->handler = &stk_button_handle;
 
         if(func)
             new_bt->func = func;
 
         if(args)
-           new_bt->args = args;
+            new_bt->args = args;
+
+        if(label)
+            new_bt->label = label;
 
         stk_widget_insert((void*)new_bt); 
 
@@ -79,13 +74,16 @@ void stk_button_expose(stk_widget *bt)
     int   width, wcenter, hcenter;
     XClearWindow(bt->dsp, bt->win);
 
-    width = XTextWidth(bt->font_info, bt->label, strlen(bt->label));
-    wcenter = (bt->w - width) / 2;
-    hcenter = (bt->font_info->descent) + (bt->h / 2);
+    if(bt->label)
+    {
 
-    XDrawString(bt->dsp, bt->win, bt->gc2, wcenter, hcenter,
-                              bt->label, strlen(bt->label));
+        width = XTextWidth(bt->font_info, bt->label, strlen(bt->label));
+        wcenter = (bt->w - width) / 2;
+        hcenter = (bt->font_info->descent) + (bt->h / 2);
 
+        XDrawString(bt->dsp, bt->win, bt->gc2, wcenter, hcenter,
+                                  bt->label, strlen(bt->label));
+    }
     XFlush(bt->dsp);
 }
 
