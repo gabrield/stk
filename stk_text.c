@@ -68,7 +68,7 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
 }
 
 
-void stk_text_expose(stk_widget *txt)
+void stk_text_expose(stk_widget *txt, void *arg)
 {
     int   width, begin, hcenter;
     XClearWindow(txt->dsp, txt->win);
