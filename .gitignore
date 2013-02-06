@@ -16,3 +16,7 @@
 *.out
 *.app
 test
+
+#folders
+
+test.dSYM

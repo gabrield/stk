@@ -70,16 +70,16 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
 
 void stk_text_expose(stk_widget *txt)
 {
-    int   width, wcenter, hcenter;
+    int   width, begin, hcenter;
     XClearWindow(txt->dsp, txt->win);
 
     if(txt->label)
     {
         width = XTextWidth(txt->font_info, txt->label, strlen(txt->label));
-        wcenter = (txt->w - width) / 2;
+        begin = 0;
         hcenter = (txt->font_info->descent) + (txt->h / 2);
 
-        XDrawString(txt->dsp, txt->win, txt->gc2, wcenter, hcenter,
+        XDrawString(txt->dsp, txt->win, txt->gc2, begin, hcenter,
                                   txt->label, strlen(txt->label));
     }
     XFlush(txt->dsp);
