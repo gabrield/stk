@@ -68,6 +68,75 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
 }
 
 
+void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
+{
+    KeySym keysym = (KeySym)&key;
+    char c;
+
+    XLookupString(event, &c, sizeof(char), &keysym, NULL);
+
+    if((keysym >= XK_space) && (keysym <= XK_asciitilde))
+    {
+        printf ("Ascii key:- ");
+        if (event->state & ShiftMask)
+               printf("(Shift) %c\n", c);
+        else
+            if(event->state & LockMask)
+                printf("(Caps Lock) %c\n", c);
+        else
+            if(event->state & ControlMask)
+                printf("(Control) %c\n", 'a'+ c-1);
+
+        else
+            printf("%c\n", c) ;
+    }
+    else 
+        if((keysym >= XK_Shift_L) && (keysym <= XK_Hyper_R))
+        {
+            printf ("modifier key: - ");
+                switch (keysym){
+                    case XK_Shift_L: printf("Left Shift\n"); break;
+                    case XK_Shift_R: printf("Right Shift\n") ;break;
+                    case XK_Control_L: printf("Left Control\n") ;break;
+                    case XK_Control_R: printf("Right Control\n"); break;
+                    case XK_Caps_Lock: printf("Caps Lock\n"); break;
+                    case XK_Shift_Lock: printf("Shift Lock\n") ;break;
+                    case XK_Meta_L: printf("Left Meta\n");    break;
+                    case XK_Meta_R: printf("Right Meta\n");   break;
+        }
+    }
+    else
+        if((keysym >= XK_Left) && (keysym <= XK_Down))
+        {
+             printf("Arrow Key:-");
+             switch(keysym){
+             case XK_Left: printf("Left\n"); break;
+             case XK_Up: printf("Up\n"); break;
+             case XK_Right: printf("Right\n"); break;
+             case XK_Down: printf("Down\n"); break; 
+        }
+    }
+    else
+        if((keysym == XK_BackSpace) || (keysym == XK_Delete))
+            printf("Delete\n");
+        else
+            if ((keysym >= XK_KP_0) && (keysym <= XK_KP_9)){
+                printf("Number pad key %d\n", (int)(keysym -  XK_KP_0));
+   }
+    else
+        if(keysym == XK_Break)
+        {
+            printf("closing display\n"); 
+            XCloseDisplay(display); 
+            exit (0);
+        } 
+        else
+        {
+            printf("Not handled\n");
+        }
+}
+
+
 void stk_text_expose(stk_widget *txt, void *arg)
 {
     int   width, begin, hcenter;
@@ -97,7 +166,7 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
     switch(dtype)
     {
         case STK_TEXT_EXPOSE:
-            stk_text_expose(txt);
+            stk_text_expose(txt, NULL);
             break;
 
         case STK_TEXT_PRESS:
@@ -106,40 +175,18 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
             break;
 
         case STK_TEXT_RELEASE:
-            stk_text_expose(txt);
+            stk_text_expose(txt, NULL);
             break;
 
         case STK_TEXT_KEYPRESS:
-            {
-                char c;
-                int len;
-                KeySym keysym;
-                len = XLookupString(&ev->xkey, &c, sizeof(char), &keysym, NULL);
-                if (len > 0)
-                {
-                    switch(c)
-                    {
-                        case '\r':
-                            c = '\n';
-                            printf("ENTER\n");
-                            break;
-
-                        case '\b':
-                            printf("BACKSPACE\n");
-                            break;
-
-                        case '\t':
-                            printf("TAB\n");
-                            break;
-                    }
-                    printf("STK_TEXT_KEYPRESS / key = %c\n", c);
-                }
-
-            }
+        {
+            KeySym keysym;
+            stk_text_keys(txt, &ev->xkey, &keysym);
+        }
             break;
 
         case STK_TEXT_KEYRELEASE:
-            stk_text_expose(txt);
+            stk_text_expose(txt, NULL);
             break;
 
 
