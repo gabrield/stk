@@ -51,8 +51,7 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
         new_txt->y = y;
         new_txt->w = w;
         new_txt->h = h;
-
-
+        new_txt->ext = NULL;
         new_txt->handler = &stk_text_handle;
 
         if(label)
@@ -68,11 +67,35 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
 }
 
 
+void stk_text_append(stk_widget *txt, char c)
+{
+    int len = 0;
+    char *new_string = NULL;
+
+    if(txt->ext == NULL)
+    {
+          txt->ext = (char*)malloc(sizeof(char));
+          txt->ext[0] = c;
+    }
+    else
+    {
+        len = strlen(txt->ext);
+        new_string = (char*)realloc(txt->ext, len + 1);
+        if(new_string)
+        {
+          new_string[len] = c;
+          txt->ext = new_string;
+        }
+    }
+}
+
+
+
 void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
 {
     KeySym keysym = (KeySym)&key;
     char c;
-    int   width, begin, hcenter;
+    int hcenter;
 
     /*
     if(txt->label)
@@ -89,6 +112,11 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
 
     if((keysym >= XK_space) && (keysym <= XK_asciitilde))
     {
+        hcenter = (txt->font_info->descent) + (txt->h / 2);
+        stk_text_append(txt, c);
+        printf("%s\n", txt->ext);
+        XDrawString(txt->dsp, txt->win, txt->gc2, 2, hcenter,
+                              txt->ext, strlen(txt->ext));
         printf ("Ascii key:- ");
         if (event->state & ShiftMask)
                printf("(Shift) %c\n", c);
@@ -151,7 +179,7 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
 
 void stk_text_expose(stk_widget *txt, void *arg)
 {
-    int   width, begin, hcenter;
+     /*int   width, begin, hcenter; */
     XClearWindow(txt->dsp, txt->win);
     /*
     if(txt->label)

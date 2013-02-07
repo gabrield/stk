@@ -27,7 +27,7 @@ typedef struct widget_ptr
 
 typedef struct
 {
-    unsigned int w, h;
+    uint w, h;
     int     x, y;
     Window  win;
     Display *dsp;
@@ -37,7 +37,9 @@ typedef struct
     GC gc, gc2;
     XFontStruct *font_info;
     char *fontname;
+    char *ext;
     const char *label;
+
 } stk_widget;
 
 
