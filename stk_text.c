@@ -72,6 +72,18 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
 {
     KeySym keysym = (KeySym)&key;
     char c;
+    int   width, begin, hcenter;
+
+    /*
+    if(txt->label)
+    {
+        width = XTextWidth(txt->font_info, txt->label, strlen(txt->label));
+        begin = 0;
+        hcenter = (txt->font_info->descent) + (txt->h / 2);
+
+        XDrawString(txt->dsp, txt->win, txt->gc2, begin, hcenter,
+                                  txt->label, strlen(txt->label));
+    */
 
     XLookupString(event, &c, sizeof(char), &keysym, NULL);
 
@@ -96,13 +108,13 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
             printf ("modifier key: - ");
                 switch (keysym){
                     case XK_Shift_L: printf("Left Shift\n"); break;
-                    case XK_Shift_R: printf("Right Shift\n") ;break;
-                    case XK_Control_L: printf("Left Control\n") ;break;
+                    case XK_Shift_R: printf("Right Shift\n"); break;
+                    case XK_Control_L: printf("Left Control\n"); break;
                     case XK_Control_R: printf("Right Control\n"); break;
                     case XK_Caps_Lock: printf("Caps Lock\n"); break;
-                    case XK_Shift_Lock: printf("Shift Lock\n") ;break;
-                    case XK_Meta_L: printf("Left Meta\n");    break;
-                    case XK_Meta_R: printf("Right Meta\n");   break;
+                    case XK_Shift_Lock: printf("Shift Lock\n"); break;
+                    case XK_Meta_L: printf("Left Meta\n"); break;
+                    case XK_Meta_R: printf("Right Meta\n"); break;
         }
     }
     else
@@ -141,7 +153,7 @@ void stk_text_expose(stk_widget *txt, void *arg)
 {
     int   width, begin, hcenter;
     XClearWindow(txt->dsp, txt->win);
-
+    /*
     if(txt->label)
     {
         width = XTextWidth(txt->font_info, txt->label, strlen(txt->label));
@@ -151,6 +163,7 @@ void stk_text_expose(stk_widget *txt, void *arg)
         XDrawString(txt->dsp, txt->win, txt->gc2, begin, hcenter,
                                   txt->label, strlen(txt->label));
     }
+    */
     XFlush(txt->dsp);
 }
 
@@ -171,7 +184,6 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
 
         case STK_TEXT_PRESS:
             XSetInputFocus(txt->dsp, txt->win, RevertToNone, CurrentTime);
-            printf("PRESS\n");
             break;
 
         case STK_TEXT_RELEASE:
@@ -181,12 +193,12 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
         case STK_TEXT_KEYPRESS:
         {
             KeySym keysym;
+            stk_text_expose(txt, NULL);
             stk_text_keys(txt, &ev->xkey, &keysym);
         }
             break;
 
         case STK_TEXT_KEYRELEASE:
-            stk_text_expose(txt, NULL);
             break;
 
 
