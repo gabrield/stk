@@ -131,7 +131,7 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
     int hcenter;
 
     XLookupString(event, &c, sizeof(char), &keysym, NULL);
-    hcenter = (txt->font_info->descent) + (txt->h / 2);
+   
 
     if((keysym >= XK_space) && (keysym <= XK_asciitilde))
     {
@@ -181,30 +181,13 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
     else
         if((keysym == XK_BackSpace) || (keysym == XK_Delete))
         {
-            printf("Delete\n");
             stk_text_delete(txt);
             stk_text_redraw(STK_TEXT_EXPOSE, txt, NULL);
-            printf("%s\n", txt->ext);
-
         }
         else
             if ((keysym >= XK_KP_0) && (keysym <= XK_KP_9)){
                 printf("Number pad key %d\n", (int)(keysym -  XK_KP_0));
    }
-    else
-        if(keysym == XK_Break)
-        {
-            printf("closing display\n"); 
-            XCloseDisplay(display); 
-            exit (0);
-        } 
-        else
-        {
-            printf("Not handled\n");
-        }
-        
-        XDrawString(txt->dsp, txt->win, txt->gc2, 2, hcenter,
-                                     txt->ext, strlen(txt->ext));
 }
 
 
@@ -240,6 +223,12 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
             KeySym keysym;
             stk_text_expose(txt, NULL);
             stk_text_keys(txt, &ev->xkey, &keysym);
+            {     
+                int hcenter = (txt->font_info->descent) + (txt->h / 2);
+                if(txt->ext)
+                    XDrawString(txt->dsp, txt->win, txt->gc2, 2, hcenter,
+                                             txt->ext, strlen(txt->ext));
+            }
         }
             break;
 
