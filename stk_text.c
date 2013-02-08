@@ -208,6 +208,12 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
 }
 
 
+char *stk_text_get_text(stk_widget *txt)
+{
+    return txt->ext;
+}
+
+
 void stk_text_redraw(int dtype, stk_widget *txt, void *args)
 { 
     
@@ -219,7 +225,6 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
     switch(dtype)
     {
         case STK_TEXT_EXPOSE:
-            printf("EXPOSE\n");
             stk_text_expose(txt, NULL);
             break;
 
