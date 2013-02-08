@@ -126,7 +126,6 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
 {
     KeySym keysym = (KeySym)&key;
     char c;
-    int hcenter;
 
     XLookupString(event, &c, sizeof(char), &keysym, NULL);
    
@@ -223,9 +222,22 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
             stk_text_keys(txt, &ev->xkey, &keysym);
             {     
                 int hcenter = (txt->font_info->descent) + (txt->h / 2);
+                int sw, begin;
+
                 if(txt->ext)
-                    XDrawString(txt->dsp, txt->win, txt->gc2, 2, hcenter,
-                                             txt->ext, strlen(txt->ext));
+                {
+                    sw = XTextWidth(txt->font_info, txt->ext, strlen(txt->ext));
+                    if(sw > txt->w)
+                    {
+                        begin = txt->w - sw;
+                        printf("Overflow begin %d\n", begin);
+                    }
+                    else
+                        begin = 2;
+                    
+                    XDrawString(txt->dsp, txt->win, txt->gc2, begin, hcenter,
+                                                 txt->ext, strlen(txt->ext));
+                }
             }
         }
             break;

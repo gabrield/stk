@@ -39,7 +39,7 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
 
         XChangeWindowAttributes(new_bt->dsp, new_bt->win, CWBackingStore,
                                                             &setwinattr);
-        XSetWindowBackground(new_bt->dsp, new_bt->win, 0x778899);
+        XSetWindowBackground(new_bt->dsp, new_bt->win, 0xEDD8E0);
         XSelectInput( new_bt->dsp, new_bt->win, new_bt->mask);
         XMapWindow(new_bt->dsp, new_bt->win);
 
