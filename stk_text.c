@@ -103,14 +103,12 @@ void stk_text_delete(stk_widget *txt)
     else
     {
         len = strlen(txt->ext);
-        printf("%d\n", len);
         new_string = (char*)realloc(txt->ext, sizeof(char)*(len - sizeof(char)));
         if(new_string)
         {
             new_string[len - 1] = 0;
             txt->ext = new_string;
             len = strlen(new_string);
-            printf("%d\n", len);
         }
     }
 }
