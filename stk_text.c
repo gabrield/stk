@@ -104,11 +104,10 @@ void stk_text_delete(stk_widget *txt)
     {
         len = strlen(txt->ext);
         printf("%d\n", len);
-        new_string = (char*)malloc(sizeof(char)*(len - sizeof(char)));
+        new_string = (char*)realloc(txt->ext, sizeof(char)*(len - sizeof(char)));
         if(new_string)
         {
-            strncpy(new_string, txt->ext, len - 1);
-            free(txt->ext);
+            new_string[len - 1] = 0;
             txt->ext = new_string;
             len = strlen(new_string);
             printf("%d\n", len);
@@ -119,19 +118,7 @@ void stk_text_delete(stk_widget *txt)
 
 void stk_text_expose(stk_widget *txt, void *arg)
 {
-     int   width, begin, hcenter;
-     //XClearWindow(txt->dsp, txt->win);
-     /*
-    if(txt->label)
-    {
-        width = XTextWidth(txt->font_info, txt->label, strlen(txt->label));
-        begin = 0;
-        hcenter = (txt->font_info->descent) + (txt->h / 2);
-
-        XDrawString(txt->dsp, txt->win, txt->gc2, begin, hcenter,
-                                  txt->label, strlen(txt->label));
-    }
-    */
+    XClearWindow(txt->dsp, txt->win);
     XFlush(txt->dsp);
 }
 
@@ -143,19 +130,9 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
     char c;
     int hcenter;
 
-    /*
-    if(txt->label)
-    {
-        width = XTextWidth(txt->font_info, txt->label, strlen(txt->label));
-        begin = 0;
-        hcenter = (txt->font_info->descent) + (txt->h / 2);
-
-        XDrawString(txt->dsp, txt->win, txt->gc2, begin, hcenter,
-                                  txt->label, strlen(txt->label));
-    */
-
     XLookupString(event, &c, sizeof(char), &keysym, NULL);
-hcenter = (txt->font_info->descent) + (txt->h / 2);
+    hcenter = (txt->font_info->descent) + (txt->h / 2);
+
     if((keysym >= XK_space) && (keysym <= XK_asciitilde))
     {
         
@@ -206,7 +183,7 @@ hcenter = (txt->font_info->descent) + (txt->h / 2);
         {
             printf("Delete\n");
             stk_text_delete(txt);
-            XClearWindow(txt->dsp, txt->win);
+            stk_text_redraw(STK_TEXT_EXPOSE, txt, NULL);
             printf("%s\n", txt->ext);
 
         }
@@ -242,6 +219,7 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
     switch(dtype)
     {
         case STK_TEXT_EXPOSE:
+            printf("EXPOSE\n");
             stk_text_expose(txt, NULL);
             break;
 
@@ -250,7 +228,6 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
             break;
 
         case STK_TEXT_RELEASE:
-            stk_text_expose(txt, NULL);
             break;
 
         case STK_TEXT_KEYPRESS:
