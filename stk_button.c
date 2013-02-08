@@ -29,7 +29,7 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     if(new_bt->fontname != NULL)
         XSetFont(display, new_bt->gc2, new_bt->font_info->fid);
     else
-      perror("XLoadQueryFont");
+        perror("XLoadQueryFont");
 
     if(new_bt->dsp)
     {

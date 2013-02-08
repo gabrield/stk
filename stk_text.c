@@ -37,8 +37,8 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
                                                                   h, 2, fg, bg);
 
         new_txt->mask =  ExposureMask | KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask |
-                         ButtonMotionMask | EnterWindowMask | LeaveWindowMask | PointerMotionMask | 
-                         FocusChangeMask | ColormapChangeMask | StructureNotifyMask | PropertyChangeMask | VisibilityChangeMask;
+                         EnterWindowMask | LeaveWindowMask |
+                         FocusChangeMask | StructureNotifyMask | PropertyChangeMask | VisibilityChangeMask;
 
         XChangeWindowAttributes(new_txt->dsp, new_txt->win, CWBackingStore,
                                                               &setwinattr);
@@ -75,7 +75,7 @@ void stk_text_append(stk_widget *txt, char c)
     if(txt->ext == NULL)
     {
         txt->ext = (char*)malloc(sizeof(char));
-         txt->ext[0] = c;
+        txt->ext[0] = c;
     }
     else
     {
@@ -83,6 +83,7 @@ void stk_text_append(stk_widget *txt, char c)
         new_string = (char*)realloc(txt->ext, len + sizeof(char));
         if(new_string)
         {
+            new_string[len + 1] = 0;
             new_string[len] = c;
             txt->ext = new_string;
         }
@@ -97,18 +98,16 @@ void stk_text_delete(stk_widget *txt)
     char *new_string = NULL;
 
     if(txt->ext == NULL)
-    {
         return;
-    }
     else
     {
         len = strlen(txt->ext);
         new_string = (char*)realloc(txt->ext, sizeof(char)*(len - sizeof(char)));
         if(new_string)
         {
-            new_string[len - 1] = 0;
+            new_string[len + 1] = 0;
+            new_string[len - sizeof(char)] = 0;
             txt->ext = new_string;
-            len = strlen(new_string);
         }
     }
 }
@@ -128,63 +127,29 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
     char c;
 
     XLookupString(event, &c, sizeof(char), &keysym, NULL);
-   
 
+    if((keysym == XK_BackSpace) || (keysym == XK_Delete))
+    {
+        stk_text_delete(txt);
+        stk_text_redraw(STK_TEXT_EXPOSE, txt, NULL);
+    }
+
+    if((keysym >= XK_Left) && (keysym <= XK_Down))
+    {
+         printf("Arrow Key:-");
+         switch(keysym){
+         case XK_Left: printf("Left\n"); break;
+         case XK_Up: printf("Up\n"); break;
+         case XK_Right: printf("Right\n"); break;
+         case XK_Down: printf("Down\n"); break;
+         } 
+    }
     if((keysym >= XK_space) && (keysym <= XK_asciitilde))
     {
-        
+        printf("OBA %c\n", c);
         stk_text_append(txt, c);
-        printf("%s\n", txt->ext);
+    }
 
-        printf ("Ascii key:- ");
-        if (event->state & ShiftMask)
-               printf("(Shift) %c\n", c);
-        else
-            if(event->state & LockMask)
-                printf("(Caps Lock) %c\n", c);
-        else
-            if(event->state & ControlMask)
-                printf("(Control) %c\n", 'a'+ c-1);
-
-        else
-            printf("%c\n", c) ;
-    }
-    else 
-        if((keysym >= XK_Shift_L) && (keysym <= XK_Hyper_R))
-        {
-            printf ("modifier key: - ");
-                switch (keysym){
-                    case XK_Shift_L: printf("Left Shift\n"); break;
-                    case XK_Shift_R: printf("Right Shift\n"); break;
-                    case XK_Control_L: printf("Left Control\n"); break;
-                    case XK_Control_R: printf("Right Control\n"); break;
-                    case XK_Caps_Lock: printf("Caps Lock\n"); break;
-                    case XK_Shift_Lock: printf("Shift Lock\n"); break;
-                    case XK_Meta_L: printf("Left Meta\n"); break;
-                    case XK_Meta_R: printf("Right Meta\n"); break;
-        }
-    }
-    else
-        if((keysym >= XK_Left) && (keysym <= XK_Down))
-        {
-             printf("Arrow Key:-");
-             switch(keysym){
-             case XK_Left: printf("Left\n"); break;
-             case XK_Up: printf("Up\n"); break;
-             case XK_Right: printf("Right\n"); break;
-             case XK_Down: printf("Down\n"); break; 
-        }
-    }
-    else
-        if((keysym == XK_BackSpace) || (keysym == XK_Delete))
-        {
-            stk_text_delete(txt);
-            stk_text_redraw(STK_TEXT_EXPOSE, txt, NULL);
-        }
-        else
-            if ((keysym >= XK_KP_0) && (keysym <= XK_KP_9)){
-                printf("Number pad key %d\n", (int)(keysym -  XK_KP_0));
-   }
 }
 
 
@@ -228,10 +193,7 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
                 {
                     sw = XTextWidth(txt->font_info, txt->ext, strlen(txt->ext));
                     if(sw > txt->w)
-                    {
                         begin = txt->w - sw;
-                        printf("Overflow begin %d\n", begin);
-                    }
                     else
                         begin = 2;
                     
