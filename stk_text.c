@@ -74,19 +74,65 @@ void stk_text_append(stk_widget *txt, char c)
 
     if(txt->ext == NULL)
     {
-          txt->ext = (char*)malloc(sizeof(char));
-          txt->ext[0] = c;
+        txt->ext = (char*)malloc(sizeof(char));
+         txt->ext[0] = c;
     }
     else
     {
         len = strlen(txt->ext);
-        new_string = (char*)realloc(txt->ext, len + 1);
+        new_string = (char*)realloc(txt->ext, len + sizeof(char));
         if(new_string)
         {
-          new_string[len] = c;
-          txt->ext = new_string;
+            new_string[len] = c;
+            txt->ext = new_string;
         }
     }
+}
+
+
+
+void stk_text_delete(stk_widget *txt)
+{
+    int len = 0;
+    char *new_string = NULL;
+
+    if(txt->ext == NULL)
+    {
+        return;
+    }
+    else
+    {
+        len = strlen(txt->ext);
+        printf("%d\n", len);
+        new_string = (char*)malloc(sizeof(char)*(len - sizeof(char)));
+        if(new_string)
+        {
+            strncpy(new_string, txt->ext, len - 1);
+            free(txt->ext);
+            txt->ext = new_string;
+            len = strlen(new_string);
+            printf("%d\n", len);
+        }
+    }
+}
+
+
+void stk_text_expose(stk_widget *txt, void *arg)
+{
+     int   width, begin, hcenter;
+     //XClearWindow(txt->dsp, txt->win);
+     /*
+    if(txt->label)
+    {
+        width = XTextWidth(txt->font_info, txt->label, strlen(txt->label));
+        begin = 0;
+        hcenter = (txt->font_info->descent) + (txt->h / 2);
+
+        XDrawString(txt->dsp, txt->win, txt->gc2, begin, hcenter,
+                                  txt->label, strlen(txt->label));
+    }
+    */
+    XFlush(txt->dsp);
 }
 
 
@@ -109,14 +155,13 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
     */
 
     XLookupString(event, &c, sizeof(char), &keysym, NULL);
-
+hcenter = (txt->font_info->descent) + (txt->h / 2);
     if((keysym >= XK_space) && (keysym <= XK_asciitilde))
     {
-        hcenter = (txt->font_info->descent) + (txt->h / 2);
+        
         stk_text_append(txt, c);
         printf("%s\n", txt->ext);
-        XDrawString(txt->dsp, txt->win, txt->gc2, 2, hcenter,
-                              txt->ext, strlen(txt->ext));
+
         printf ("Ascii key:- ");
         if (event->state & ShiftMask)
                printf("(Shift) %c\n", c);
@@ -158,7 +203,13 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
     }
     else
         if((keysym == XK_BackSpace) || (keysym == XK_Delete))
+        {
             printf("Delete\n");
+            stk_text_delete(txt);
+            XClearWindow(txt->dsp, txt->win);
+            printf("%s\n", txt->ext);
+
+        }
         else
             if ((keysym >= XK_KP_0) && (keysym <= XK_KP_9)){
                 printf("Number pad key %d\n", (int)(keysym -  XK_KP_0));
@@ -174,25 +225,9 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
         {
             printf("Not handled\n");
         }
-}
-
-
-void stk_text_expose(stk_widget *txt, void *arg)
-{
-     /*int   width, begin, hcenter; */
-    XClearWindow(txt->dsp, txt->win);
-    /*
-    if(txt->label)
-    {
-        width = XTextWidth(txt->font_info, txt->label, strlen(txt->label));
-        begin = 0;
-        hcenter = (txt->font_info->descent) + (txt->h / 2);
-
-        XDrawString(txt->dsp, txt->win, txt->gc2, begin, hcenter,
-                                  txt->label, strlen(txt->label));
-    }
-    */
-    XFlush(txt->dsp);
+        
+        XDrawString(txt->dsp, txt->win, txt->gc2, 2, hcenter,
+                                     txt->ext, strlen(txt->ext));
 }
 
 

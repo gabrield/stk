@@ -45,7 +45,7 @@ int main()
     bt2 = stk_button_new(win, 300, 100, 60, 20, "Color1", &color, (void*)&wc1);
     bt3 = stk_button_new(win, 400, 100, 60, 20, "Color2", &color, (void*)&wc);
     bt4 = stk_button_new(win, 400, 300, 60, 20, "MoveBt1", &move, (void*)&wc3);
-    txt = stk_text_new(win, 100, 300, 60, 20, "TxtArea", STK_TEXT_LABEL);
+    txt = stk_text_new(win, 100, 300, 200, 20, "TxtArea", STK_TEXT_LABEL);
 
     wc.d1  = win;
     wc.c   = 0xd3d3d3;

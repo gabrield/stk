@@ -21,5 +21,6 @@ enum { STK_TEXT_EDIT,
 stk_widget *stk_text_new(stk_widget *, int, int, uint, uint, const char *,
                                                            int);
 void        stk_text_handle(STKEvent *, void *);
+void        stk_text_redraw(int, stk_widget *, void *);
 
 #endif /* STK_TEXT_H */
