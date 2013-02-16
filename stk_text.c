@@ -52,7 +52,6 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
         new_txt->y = y;
         new_txt->w = w;
         new_txt->h = h;
-        new_txt->ext = NULL;
         new_txt->handler = &stk_text_handle;
         new_txt->ext_struct = (void*)txt;
 

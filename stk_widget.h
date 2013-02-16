@@ -37,7 +37,6 @@ typedef struct
     GC gc, gc2;
     XFontStruct *font_info;
     char *fontname;
-    char *ext;
     const char *label;
     void *ext_struct; /* if need a place to store a reference to other struct, if it's not a basic widget, etc. */
 
