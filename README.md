@@ -7,9 +7,9 @@ Widget list:
 
 * Window
 * Button
-* Text Area (for input and output text, still under development)
+* Text Area (for input and output text, useful, but still need some changes)
 * Canvas (for drawing curves, lines and other geometric objects, will be developed maybe :p)
-* ProgressBar (planned)
+* ProgressBar (under development)
 * Listbox (planned) 
 
 Take a look at test.c to see the basics of STK;
