@@ -1,6 +1,9 @@
 #include <stk_window.h>
 #include <stk_button.h>
 #include <stk_text.h>
+#include <stk_progress_bar.h>
+
+
 
 typedef struct 
 {
@@ -34,7 +37,9 @@ void move(void *c)
 int main()
 {
     stk_widget *win = NULL;
-    stk_widget *bt, *bt1, *bt2, *bt3, *bt4, *txt;
+    stk_widget *bt, *bt1, *bt2, *bt3,
+                     *bt4, *txt, *pb;
+
     ptr wc, wc1, wc2, wc3;
 
     stk_init();
@@ -46,6 +51,7 @@ int main()
     bt3 = stk_button_new(win, 400, 100, 60, 20, "Color2", &color, (void*)&wc);
     bt4 = stk_button_new(win, 400, 300, 60, 20, "MoveBt1", &move, (void*)&wc3);
     txt = stk_text_new(win, 100, 300, 200, 20, "TxtArea", STK_TEXT_LABEL);
+    pb  = stk_progress_bar_new(win, 400, 400, 200, 20, "ProgressBar 10%");
 
     wc.d1  = win;
     wc.c   = 0xd3d3d3;
