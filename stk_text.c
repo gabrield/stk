@@ -174,7 +174,7 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
             stk_text_expose(txt, NULL);
             stk_text_keys(txt, &ev->xkey, &keysym);
             {     
-                int hcenter = (txt->font_info->descent) + (txt->h / 2);
+                int hcenter = ((txt->font_info->descent + txt->font_info->ascent )/2) + (txt->h / 2);
                 int sw, begin;
 
                 if(string->text)

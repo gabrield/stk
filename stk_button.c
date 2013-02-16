@@ -79,7 +79,7 @@ void stk_button_expose(stk_widget *bt)
 
         width = XTextWidth(bt->font_info, bt->label, strlen(bt->label));
         wcenter = (bt->w - width) / 2;
-        hcenter = (bt->font_info->descent) + (bt->h / 2);
+        hcenter = ((bt->font_info->descent + bt->font_info->ascent)/2) + (bt->h / 2);
 
         XDrawString(bt->dsp, bt->win, bt->gc2, wcenter, hcenter,
                                   bt->label, strlen(bt->label));

@@ -27,6 +27,10 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title, void
       if(args)
         new_win->args = args;
 
+
+      new_win->gc=XCreateGC(display, new_win->win,0,0);
+
+
       stk_widget_insert((void*)new_win); 
 
       return new_win;
