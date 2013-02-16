@@ -5,6 +5,7 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
                                                   const char *label, int type)
 {
     stk_widget *new_txt  = (stk_widget*) malloc(sizeof(stk_widget));
+    stk_text *txt = (stk_text*) malloc(sizeof(stk_text));
     int screen;
 
     XGCValues gcval;
@@ -53,6 +54,9 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
         new_txt->h = h;
         new_txt->ext = NULL;
         new_txt->handler = &stk_text_handle;
+        new_txt->ext_struct = (void*)txt;
+
+        memset(txt->text, '\0', STK_TEXT_BUFFER_SIZE);
 
         if(label)
             new_txt->label = label;
@@ -70,24 +74,15 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
 void stk_text_append(stk_widget *txt, char c)
 {
     int len = 0;
-    char *new_string = NULL;
 
-    if(txt->ext == NULL)
-    {
-        txt->ext = (char*)malloc(sizeof(char));
-        txt->ext[0] = c;
-    }
+    stk_text *string = (stk_text*)txt->ext_struct;
+
+    len = strlen(string->text);
+    
+    if(len == 0)
+        string->text[0] = c;
     else
-    {
-        len = strlen(txt->ext);
-        new_string = (char*)realloc(txt->ext, len + sizeof(char));
-        if(new_string)
-        {
-            new_string[len + 1] = 0;
-            new_string[len] = c;
-            txt->ext = new_string;
-        }
-    }
+        string->text[len] = c;
 }
 
 
@@ -95,21 +90,14 @@ void stk_text_append(stk_widget *txt, char c)
 void stk_text_delete(stk_widget *txt)
 {
     int len = 0;
-    char *new_string = NULL;
+    stk_text *string = (stk_text*)txt->ext_struct;
 
-    if(txt->ext == NULL)
+    len = strlen(string->text);
+
+    if(len == 0)
         return;
     else
-    {
-        len = strlen(txt->ext);
-        new_string = (char*)realloc(txt->ext, sizeof(char)*(len - sizeof(char)));
-        if(new_string)
-        {
-            new_string[len + 1] = 0;
-            new_string[len - sizeof(char)] = 0;
-            txt->ext = new_string;
-        }
-    }
+        string->text[len - 1] = 0;
 }
 
 
@@ -146,7 +134,6 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
     }
     if((keysym >= XK_space) && (keysym <= XK_asciitilde))
     {
-        printf("OBA %c\n", c);
         stk_text_append(txt, c);
     }
 
@@ -155,7 +142,8 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
 
 char *stk_text_get_text(stk_widget *txt)
 {
-    return txt->ext;
+    stk_text *string = (stk_text*)txt->ext_struct;
+    return string->text;
 }
 
 
@@ -163,6 +151,7 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
 { 
     
     STKEvent *ev;
+    stk_text *string = (stk_text*)txt->ext_struct;
 
     if(args)
          ev = (STKEvent*)args;
@@ -189,16 +178,16 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
                 int hcenter = (txt->font_info->descent) + (txt->h / 2);
                 int sw, begin;
 
-                if(txt->ext)
+                if(string->text)
                 {
-                    sw = XTextWidth(txt->font_info, txt->ext, strlen(txt->ext));
+                    sw = XTextWidth(txt->font_info, string->text, strlen(string->text));
                     if(sw > txt->w)
                         begin = txt->w - sw;
                     else
                         begin = 2;
                     
                     XDrawString(txt->dsp, txt->win, txt->gc2, begin, hcenter,
-                                                 txt->ext, strlen(txt->ext));
+                                         string->text, strlen(string->text));
                 }
             }
         }

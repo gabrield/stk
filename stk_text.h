@@ -11,12 +11,21 @@
 #define STK_TEXT_LEAVE       0x50
 #define STK_TEXT_KEYPRESS    0x60
 #define STK_TEXT_KEYRELEASE  0x70
+#define STK_TEXT_BUFFER_SIZE 4096
+
 
 
 /* STKText Properties */
 enum { STK_TEXT_EDIT,
        STK_TEXT_LABEL
  };
+
+
+
+typedef struct
+{
+    char text[STK_TEXT_BUFFER_SIZE];
+} stk_text;
 
 stk_widget *stk_text_new(stk_widget *, int, int, uint, uint, const char *,
                                                            int);
