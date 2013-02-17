@@ -79,7 +79,7 @@ int main()
 {
     stk_widget *win = NULL;
     stk_widget *bt, *bt1, *bt2, *bt3,
-               *bt4, *bt5, *txt, *pb;
+         *bt4, *bt5, *bt6, *txt, *pb;
 
     ptr wc, wc1, wc2, wc3;
 
@@ -93,8 +93,8 @@ int main()
     bt4 = stk_button_new(win, 400, 300, 60, 20, "MoveBt1", &move, (void*)&wc3);
     txt = stk_text_new(win, 100, 300, 200, 20, "TxtArea", STK_TEXT_LABEL);
     pb  = stk_progress_bar_new(win, 400, 400, 200, 20, "0");
-    bt4 = stk_button_new(win, 600, 400, 20, 20, "+", &add, (void*)pb);
-    bt5 = stk_button_new(win, 380, 400, 20, 20, "-", &sub, (void*)pb);
+    bt5 = stk_button_new(win, 600, 400, 20, 20, "+", &add, (void*)pb);
+    bt6 = stk_button_new(win, 380, 400, 20, 20, "-", &sub, (void*)pb);
 
     wc.d1  = win;
     wc.c   = 0xd3d3d3;
