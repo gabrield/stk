@@ -34,6 +34,15 @@ void move(void *c)
     stk_widget_set_pos((stk_widget*)w->d1, w->x, w->y);
 }
 
+void add(void *c)
+{
+    static int x;
+    stk_widget *p = (stk_widget*)c;
+    x += 1;
+    set(p, x);
+}
+
+
 int main()
 {
     stk_widget *win = NULL;
@@ -52,6 +61,8 @@ int main()
     bt4 = stk_button_new(win, 400, 300, 60, 20, "MoveBt1", &move, (void*)&wc3);
     txt = stk_text_new(win, 100, 300, 200, 20, "TxtArea", STK_TEXT_LABEL);
     pb  = stk_progress_bar_new(win, 400, 400, 200, 20, "ProgressBar 10%");
+    bt4 = stk_button_new(win, 500, 300, 60, 20, "PrgBarBt", &add, (void*)pb);
+    //stk_progress_bar_set(pb, 15);
 
     wc.d1  = win;
     wc.c   = 0xd3d3d3;
@@ -67,7 +78,9 @@ int main()
     wc3.x  = 200;
     wc3.y  = 260;
 
+    
     stk_window_show(win);
+
     stk_run();
     
     return 0;

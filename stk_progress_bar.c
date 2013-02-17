@@ -52,8 +52,7 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
         }
 
         XMapWindow(new_pb->dsp, new_pb->win);
-
-
+  //XFillRectangle(new_pb->dsp, new_pb->win, new_pb->gc, 0, 0, new_pb->w, new_pb->h);
 
 
         new_pb->x = x;
@@ -79,11 +78,16 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
 }
 
 
+
+
 void stk_progress_bar_expose(stk_widget *pb)
 {
     int   width, wcenter, hcenter;
-    XClearWindow(pb->dsp, pb->win);
+    stk_progress_bar *spb = (stk_progress_bar*)pb->ext_struct;
 
+    XClearWindow(pb->dsp, pb->win);
+    XFillRectangle(pb->dsp, pb->win, pb->gc, 0, 0, (pb->w * spb->pct)/100, pb->h);
+    
 
     if(pb->label)
     {
@@ -98,6 +102,12 @@ void stk_progress_bar_expose(stk_widget *pb)
     XFlush(pb->dsp);
 }
 
+void set(stk_widget *pb, uint pct)
+{
+    stk_progress_bar *spb = (stk_progress_bar*)pb->ext_struct;
+    spb->pct = pct;
+    stk_progress_bar_expose(pb);
+}
 
 
 
@@ -120,7 +130,8 @@ void stk_progress_bar_redraw(int dtype, stk_widget *pb)
              break;
 
         case STK_PROGRESS_BAR_RELEASE:
-             //stk_progress_bar_expose(pb);
+             stk_progress_bar_expose(pb);
+             printf("STK_PROGRESS_BAR_RELEASE\n");
              break;
 
         case STK_PROGRESS_BAR_ENTER:
