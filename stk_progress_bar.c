@@ -52,8 +52,6 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
         }
 
         XMapWindow(new_pb->dsp, new_pb->win);
-  //XFillRectangle(new_pb->dsp, new_pb->win, new_pb->gc, 0, 0, new_pb->w, new_pb->h);
-
 
         new_pb->x = x;
         new_pb->y = y;
@@ -62,6 +60,7 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
 
         new_pb->handler = &stk_progress_bar_handle;
         new_pb->func = NULL;
+        pb->pct = 0;
         new_pb->ext_struct = (void*)pb;
 
         if(label)
@@ -78,14 +77,14 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
 }
 
 
-
-
 void stk_progress_bar_expose(stk_widget *pb)
 {
-    int   width, wcenter, hcenter;
+    int width, wcenter, hcenter;
+
     stk_progress_bar *spb = (stk_progress_bar*)pb->ext_struct;
 
     XClearWindow(pb->dsp, pb->win);
+  
     XFillRectangle(pb->dsp, pb->win, pb->gc, 0, 0, (pb->w * spb->pct)/100, pb->h);
     
 
@@ -102,14 +101,27 @@ void stk_progress_bar_expose(stk_widget *pb)
     XFlush(pb->dsp);
 }
 
-void set(stk_widget *pb, uint pct)
+
+void stk_progress_bar_set_label(stk_widget *pb, char *new_label)
+{
+    pb->label = new_label;
+    stk_progress_bar_expose(pb);
+}
+
+
+uint stk_progress_bar_get_value(stk_widget *pb)
+{    
+    stk_progress_bar *spb = (stk_progress_bar*)pb->ext_struct;
+    return spb->pct;
+}
+
+
+void stk_progress_bar_set_value(stk_widget *pb, uint pct)
 {
     stk_progress_bar *spb = (stk_progress_bar*)pb->ext_struct;
     spb->pct = pct;
     stk_progress_bar_expose(pb);
 }
-
-
 
 
 void stk_progress_bar_redraw(int dtype, stk_widget *pb)
@@ -122,16 +134,9 @@ void stk_progress_bar_redraw(int dtype, stk_widget *pb)
             break;
 
         case STK_PROGRESS_BAR_PRESS:
-        /*
-            XSetInputFocus(pb->dsp, pb->win, RevertToNone, CurrentTime);
-            XDrawRectangle(pb->dsp, pb->win, pb->gc2, 0, 0, pb->w - 1,
-                                                            pb->h - 1);
-        */
              break;
 
         case STK_PROGRESS_BAR_RELEASE:
-             stk_progress_bar_expose(pb);
-             printf("STK_PROGRESS_BAR_RELEASE\n");
              break;
 
         case STK_PROGRESS_BAR_ENTER:
@@ -140,7 +145,6 @@ void stk_progress_bar_redraw(int dtype, stk_widget *pb)
             break;
     }
 }
-
 
 
 void stk_progress_bar_handle(STKEvent *event, void *warg)
@@ -155,16 +159,8 @@ void stk_progress_bar_handle(STKEvent *event, void *warg)
     case LeaveNotify:
         break;
     case ButtonPress:
-        if(event->xbutton.button == Button1)
-            stk_progress_bar_redraw(STK_PROGRESS_BAR_PRESS, wg);
         break;
     case ButtonRelease:
-        if(event->xbutton.button == Button1)
-        {
-            if(wg->func)
-                printf("FUNC\n");
-        }
-        stk_progress_bar_redraw(STK_PROGRESS_BAR_RELEASE, wg);
         break;
   }
 }

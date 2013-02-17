@@ -5,6 +5,8 @@
 
 
 
+
+
 typedef struct 
 {
     void *d1;
@@ -36,10 +38,40 @@ void move(void *c)
 
 void add(void *c)
 {
-    static int x;
+    int val;
+    char buffer[10];
+
     stk_widget *p = (stk_widget*)c;
-    x += 1;
-    set(p, x);
+
+    val = stk_progress_bar_get_value(p);
+    
+    if(val < 100)
+    {
+        val += 1;
+        sprintf(buffer, "%d", val);
+
+        stk_progress_bar_set_value(p, val);
+        stk_progress_bar_set_label(p, buffer);
+    }
+}
+
+void sub(void *c)
+{
+    int val;
+    char buffer[10];
+
+    stk_widget *p = (stk_widget*)c;
+
+    val = stk_progress_bar_get_value(p);
+    
+    if(val > 0)
+    {
+        val -= 1;
+        sprintf(buffer, "%d", val);
+
+        stk_progress_bar_set_value(p, val);
+        stk_progress_bar_set_label(p, buffer);
+    }
 }
 
 
@@ -47,7 +79,7 @@ int main()
 {
     stk_widget *win = NULL;
     stk_widget *bt, *bt1, *bt2, *bt3,
-                     *bt4, *txt, *pb;
+               *bt4, *bt5, *txt, *pb;
 
     ptr wc, wc1, wc2, wc3;
 
@@ -60,9 +92,9 @@ int main()
     bt3 = stk_button_new(win, 400, 100, 60, 20, "Color2", &color, (void*)&wc);
     bt4 = stk_button_new(win, 400, 300, 60, 20, "MoveBt1", &move, (void*)&wc3);
     txt = stk_text_new(win, 100, 300, 200, 20, "TxtArea", STK_TEXT_LABEL);
-    pb  = stk_progress_bar_new(win, 400, 400, 200, 20, "ProgressBar 10%");
-    bt4 = stk_button_new(win, 500, 300, 60, 20, "PrgBarBt", &add, (void*)pb);
-    //stk_progress_bar_set(pb, 15);
+    pb  = stk_progress_bar_new(win, 400, 400, 200, 20, "0");
+    bt4 = stk_button_new(win, 600, 400, 20, 20, "+", &add, (void*)pb);
+    bt5 = stk_button_new(win, 380, 400, 20, 20, "-", &sub, (void*)pb);
 
     wc.d1  = win;
     wc.c   = 0xd3d3d3;
