@@ -27,10 +27,7 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
     {
         new_pb->win = XCreateSimpleWindow(new_pb->dsp, parent_win->win, x, y, w,
                                                                   h, 2, fg, bg);
-
         new_pb->gc = XCreateGC(new_pb->dsp, new_pb->win, 0, 0);
-
-
         new_pb->font_info = XLoadQueryFont(new_pb->dsp, new_pb->fontname);
 
         if(new_pb->fontname != NULL)
@@ -80,17 +77,14 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
 void stk_progress_bar_expose(stk_widget *pb)
 {
     int width, wcenter, hcenter;
-
     stk_progress_bar *spb = (stk_progress_bar*)pb->ext_struct;
 
     XClearWindow(pb->dsp, pb->win);
-  
     XFillRectangle(pb->dsp, pb->win, pb->gc, 0, 0, (pb->w * spb->pct)/100, pb->h);
     
 
     if(pb->label)
     {
-
         width = XTextWidth(pb->font_info, pb->label, strlen(pb->label));
         wcenter = (pb->w - width) / 2;
         hcenter = ((pb->font_info->descent + pb->font_info->ascent)/2) + (pb->h / 2);

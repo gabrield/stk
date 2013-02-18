@@ -4,6 +4,7 @@ LDFLAGS=-L/usr/X11R6/lib -lX11
 SOURCES=$(wildcard *.c)
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=test
+STK_OBJS=$(wildcard stk*.o)
 
 all: $(SOURCES) $(EXECUTABLE)
 	
@@ -14,4 +15,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -rf $(OBJECTS) test
+	rm -rf $(OBJECTS) test *.a
+
+lib:
+	ar rcs libstk.a $(STK_OBJS)
