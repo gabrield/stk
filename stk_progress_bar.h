@@ -11,13 +11,13 @@
 #define STK_PROGRESS_BAR_LEAVE    0x50
 
 
-
 typedef struct
 {
     Colormap cmap;
     XColor color, colorrgb;
     uint pct;
 } stk_progress_bar;
+
 
 stk_widget *stk_progress_bar_new(stk_widget *, int, int, uint, uint, const char *);
 void        stk_progress_bar_handle(STKEvent *, void *);

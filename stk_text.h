@@ -16,8 +16,9 @@
 
 
 /* STKText Properties */
-enum { STK_TEXT_EDIT,
-       STK_TEXT_LABEL
+enum {
+    STK_TEXT_EDIT,
+    STK_TEXT_LABEL
  };
 
 

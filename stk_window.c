@@ -1,6 +1,6 @@
 #include <stk_window.h>
 
-stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title, void (*func), void *args)
+stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title, void *func, void *args)
 {
     stk_widget *new_win  = (stk_widget*) malloc(sizeof(stk_widget));
     new_win->dsp = display;

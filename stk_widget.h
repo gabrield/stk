@@ -31,7 +31,7 @@ typedef struct
     Window  win;
     Display *dsp;
     void    (*func)(void *), *args;
-    void    (*handler)(XEvent *, void *);
+    void    (*handler)(STKEvent *, void *);
     int     mask;
     GC gc, gc2;
     XFontStruct *font_info;

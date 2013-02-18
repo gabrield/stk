@@ -100,11 +100,9 @@ void stk_run()
         {
             XNextEvent(display, &event);
             wnode = stk_widget_search((void*)event.xany.window);
+
             if(wnode != NULL)
-            {
-                /*printf("Event %d happened to %p == %p\n", event.type, wnode->win, event.xany.window);*/
                 wnode->handler(&event, wnode);
-            }
         }
     }
 }
