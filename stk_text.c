@@ -197,6 +197,8 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
 
 
         case STK_TEXT_ENTER:
+            XDefineCursor(txt->dsp, txt->win, XCreateFontCursor(txt->dsp, XC_xterm));
+            break;
         case STK_TEXT_LEAVE:
         default:
             break;
@@ -214,8 +216,6 @@ void stk_text_handle(STKEvent *event, void *warg)
         case Expose:
             stk_text_redraw(STK_TEXT_EXPOSE, wg, NULL);
             break;
-        case LeaveNotify:
-            break;
 
         case ButtonPress:
             stk_text_redraw(STK_TEXT_PRESS, wg, NULL);
@@ -231,6 +231,13 @@ void stk_text_handle(STKEvent *event, void *warg)
 
         case KeyRelease:
             stk_text_redraw(STK_TEXT_KEYRELEASE, wg, NULL);
+            break;
+
+        case EnterNotify:
+            stk_text_redraw(STK_TEXT_ENTER, wg, NULL);
+            break;
+
+        case LeaveNotify:
             break;
     }
 }
