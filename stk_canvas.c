@@ -28,13 +28,6 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
 
     setwinattr.backing_store = Always;
 
-    new_cv->font_info = XLoadQueryFont(new_cv->dsp, new_cv->fontname);
-
-    if(new_cv->fontname != NULL)
-        XSetFont(display, new_cv->gc2, new_cv->font_info->fid);
-    else
-        perror("XLoadQueryFont");
-
     if(new_cv->dsp)
     {
         new_cv->win = XCreateSimpleWindow(new_cv->dsp, parent_win->win, x, y, w,
@@ -64,13 +57,21 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
 }
 
 
+
+void stk_canvas_draw_line(stk_widget *cv, uint x0, uint y0, uint x1, uint y1)
+{
+    XDrawLine(cv->dsp, cv->win, cv->gc2, x0, y0, x1, y1);
+}
+
+
 void stk_canvas_expose(stk_widget *cv)
 {
-    XDrawLine(display, cv->win, cv->gc2, 12, 10, 100, 100);
-    //XDrawArc(display, cv->win, cv->gc2, 50, 70, 150, 150, 0, 360*64);
+    stk_canvas_line(cv, 10, 10, 100, 100);
+    
     /*
     int   width, wcenter, hcenter;
     XClearWindow(cv->dsp, cv->win);
+    XDrawArc(display, cv->win, cv->gc2, 50, 70, 150, 150, 0, 360*64);
 
     if(cv->label)
     {

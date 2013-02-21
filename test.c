@@ -46,7 +46,6 @@ void add(void *c)
     {
         val += 1;
         sprintf(buffer, "%d", val);
-
         stk_progress_bar_set_value(p, val);
         stk_progress_bar_set_label(p, buffer);
     }
@@ -65,7 +64,6 @@ void sub(void *c)
     {
         val -= 1;
         sprintf(buffer, "%d", val);
-
         stk_progress_bar_set_value(p, val);
         stk_progress_bar_set_label(p, buffer);
     }
@@ -109,7 +107,6 @@ int main()
     wc3.x  = 200;
     wc3.y  = 260;
 
-    
     stk_window_show(win);
 
     stk_run();

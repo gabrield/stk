@@ -22,7 +22,6 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
     new_pb->gc2 = XCreateGC(new_pb->dsp, parent_win->win, GCForeground |
                                                   GCBackground, &gcval);
 
-
     if(new_pb->dsp)
     {
         new_pb->win = XCreateSimpleWindow(new_pb->dsp, parent_win->win, x, y, w,
