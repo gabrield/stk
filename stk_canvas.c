@@ -18,8 +18,13 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
     
     gcval.foreground = fg;
     gcval.background = bg;
+    gcval.line_width = 1;
+    gcval.line_style = LineSolid;
+
+
     new_cv->gc2 = XCreateGC(new_cv->dsp, parent_win->win, GCForeground |
-                                                  GCBackground, &gcval);
+                          GCBackground|GCLineWidth|GCLineStyle, &gcval);
+
 
     setwinattr.backing_store = Always;
 
@@ -34,11 +39,11 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
     {
         new_cv->win = XCreateSimpleWindow(new_cv->dsp, parent_win->win, x, y, w,
                                                                   h, 2, fg, bg);
-        new_cv->mask =  ExposureMask | EnterWindowMask | LeaveWindowMask | ButtonPressMask | ButtonReleaseMask;
+        new_cv->mask = ExposureMask | EnterWindowMask | LeaveWindowMask | ButtonPressMask | ButtonReleaseMask;
 
         XChangeWindowAttributes(new_cv->dsp, new_cv->win, CWBackingStore,
                                                             &setwinattr);
-        XSetWindowBackground(new_cv->dsp, new_cv->win, 0xEDD8E0);
+        //XSetWindowBackground(new_cv->dsp, new_cv->win, 0xEDD8E0);
         XSelectInput( new_cv->dsp, new_cv->win, new_cv->mask);
         XMapWindow(new_cv->dsp, new_cv->win);
 
@@ -61,6 +66,8 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
 
 void stk_canvas_expose(stk_widget *cv)
 {
+    XDrawLine(display, cv->win, cv->gc2, 12, 10, 100, 100);
+    //XDrawArc(display, cv->win, cv->gc2, 50, 70, 150, 150, 0, 360*64);
     /*
     int   width, wcenter, hcenter;
     XClearWindow(cv->dsp, cv->win);
@@ -82,7 +89,6 @@ void stk_canvas_expose(stk_widget *cv)
 
 void stk_canvas_redraw(int dtype, stk_widget *cv)
 { 
-
     switch(dtype)
     {
         case STK_CANVAS_EXPOSE:
@@ -90,13 +96,10 @@ void stk_canvas_redraw(int dtype, stk_widget *cv)
             break;
 
         case STK_CANVAS_PRESS:
-            XSetInputFocus(cv->dsp, cv->win, RevertToNone, CurrentTime);
-            XDrawRectangle(cv->dsp, cv->win, cv->gc2, 0, 0, cv->w - 1,
-                                                            cv->h - 1);
+              XDrawArc(display, cv->win, cv->gc2, 50, 70, 150, 150, 0, 360*64);
              break;
 
         case STK_CANVAS_RELEASE:
-             stk_canvas_expose(cv);
              break;
 
         case STK_CANVAS_ENTER:

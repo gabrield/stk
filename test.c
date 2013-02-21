@@ -2,10 +2,7 @@
 #include <stk_button.h>
 #include <stk_text.h>
 #include <stk_progress_bar.h>
-
-
-
-
+#include <stk_canvas.h>
 
 typedef struct 
 {
@@ -79,7 +76,8 @@ int main()
 {
     stk_widget *win = NULL;
     stk_widget *bt, *bt1, *bt2, *bt3,
-         *bt4, *bt5, *bt6, *txt, *pb;
+               *bt4, *bt5, *bt6, *cv,
+                           *txt, *pb;
 
     ptr wc, wc1, wc2, wc3;
 
@@ -90,11 +88,12 @@ int main()
     bt1 = stk_button_new(win, 200, 100, 60, 20, "MoveWin", &move,  (void*)&wc2);
     bt2 = stk_button_new(win, 300, 100, 60, 20, "Color1", &color, (void*)&wc1);
     bt3 = stk_button_new(win, 400, 100, 60, 20, "Color2", &color, (void*)&wc);
-    bt4 = stk_button_new(win, 400, 300, 60, 20, "MoveBt1", &move, (void*)&wc3);
-    txt = stk_text_new(win, 100, 300, 200, 20, "TxtArea", STK_TEXT_LABEL);
-    pb  = stk_progress_bar_new(win, 400, 400, 200, 20, "0");
-    bt5 = stk_button_new(win, 600, 400, 20, 20, "+", &add, (void*)pb);
-    bt6 = stk_button_new(win, 380, 400, 20, 20, "-", &sub, (void*)pb);
+    bt4 = stk_button_new(win, 400, 150, 60, 20, "MoveBt1", &move, (void*)&wc3);
+    txt = stk_text_new(win, 100, 150, 200, 20, "TxtArea", STK_TEXT_LABEL);
+    pb  = stk_progress_bar_new(win, 100, 200, 200, 20, "0");
+    bt5 = stk_button_new(win, 300, 200, 20, 20, "+", &add, (void*)pb);
+    bt6 = stk_button_new(win, 80, 200, 20, 20, "-", &sub, (void*)pb);
+    cv  = stk_canvas_new(win, 80, 230, 500, 230);
 
     wc.d1  = win;
     wc.c   = 0xd3d3d3;
