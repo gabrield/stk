@@ -12,10 +12,6 @@
 
 stk_widget *stk_button_new(stk_widget *, int, int, uint, uint, const char *,
                                                             void *, void *);
-void        stk_canvas_line(stk_widget *, int, int);
-void        stk_canvas_point(stk_widget *, int, int);
-void        stk_canvas_circle(stk_widget *, int, int, int);
-void        stk_canvas_rectangle(stk_widget *, int, int);
 void        stk_button_handle(STKEvent *, void *);
 
 #endif /* STK_BUTTON_H */

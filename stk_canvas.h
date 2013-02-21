@@ -11,6 +11,10 @@
 #define STK_CANVAS_LEAVE    0x50
 
 stk_widget *stk_canvas_new(stk_widget *, int, int, uint, uint);
+void        stk_canvas_line(stk_widget *, int, int);
+void        stk_canvas_point(stk_widget *, int, int);
+void        stk_canvas_circle(stk_widget *, int, int, int);
+void        stk_canvas_rectangle(stk_widget *, int, int);
 void        stk_canvas_handle(STKEvent *, void *);
 
 #endif /* STK_CANVAS_H */
