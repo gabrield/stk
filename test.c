@@ -10,6 +10,15 @@ typedef struct
     int c, x, y;
 } ptr;
 
+
+
+
+void line(void *c)
+{
+    stk_widget *p = (stk_widget*)c;
+    stk_canvas_draw_line(p, 10, 10, 100, 100);
+}
+
 void hello(void *string)
 {
     char *str = (char*)string;
@@ -37,7 +46,6 @@ void add(void *c)
 {
     int val;
     char buffer[10];
-
     stk_widget *p = (stk_widget*)c;
 
     val = stk_progress_bar_get_value(p);
@@ -55,7 +63,6 @@ void sub(void *c)
 {
     int val;
     char buffer[10];
-
     stk_widget *p = (stk_widget*)c;
 
     val = stk_progress_bar_get_value(p);
@@ -75,7 +82,7 @@ int main()
     stk_widget *win = NULL;
     stk_widget *bt, *bt1, *bt2, *bt3,
                *bt4, *bt5, *bt6, *cv,
-                           *txt, *pb;
+               *bt7, *txt, *pb;
 
     ptr wc, wc1, wc2, wc3;
 
@@ -87,12 +94,13 @@ int main()
     bt2 = stk_button_new(win, 300, 100, 60, 20, "Color1", &color, (void*)&wc1);
     bt3 = stk_button_new(win, 400, 100, 60, 20, "Color2", &color, (void*)&wc);
     bt4 = stk_button_new(win, 400, 150, 60, 20, "MoveBt1", &move, (void*)&wc3);
-    txt = stk_text_new(win, 100, 150, 200, 20, "TxtArea", STK_TEXT_LABEL);
+    txt = stk_text_new(win, 100, 150, 200, 20, "TxtArea", STK_TEXT_INPUT);
     pb  = stk_progress_bar_new(win, 100, 200, 200, 20, "0");
     bt5 = stk_button_new(win, 300, 200, 20, 20, "+", &add, (void*)pb);
     bt6 = stk_button_new(win, 80, 200, 20, 20, "-", &sub, (void*)pb);
     cv  = stk_canvas_new(win, 80, 230, 500, 230);
-
+    bt7 = stk_button_new(win, 400, 200, 60, 20, "CanvasBt", &line, (void*)cv);
+    
     wc.d1  = win;
     wc.c   = 0xd3d3d3;
 
@@ -108,7 +116,7 @@ int main()
     wc3.y  = 260;
 
     stk_window_show(win);
-
+  
     stk_run();
     
     return 0;

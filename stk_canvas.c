@@ -36,7 +36,7 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
 
         XChangeWindowAttributes(new_cv->dsp, new_cv->win, CWBackingStore,
                                                             &setwinattr);
-        XSelectInput( new_cv->dsp, new_cv->win, new_cv->mask);
+        XSelectInput(new_cv->dsp, new_cv->win, new_cv->mask);
         XMapWindow(new_cv->dsp, new_cv->win);
 
 
@@ -69,25 +69,7 @@ void stk_canvas_draw_line(stk_widget *cv, uint x0, uint y0, uint x1, uint y1)
 
 void stk_canvas_expose(stk_widget *cv)
 {
-    stk_canvas_draw_line(cv, 10, 10, 100, 100);
-    
-    /*
-    int   width, wcenter, hcenter;
-    XClearWindow(cv->dsp, cv->win);
-    XDrawArc(display, cv->win, cv->gc2, 50, 70, 150, 150, 0, 360*64);
-
-    if(cv->label)
-    {
-
-        width = XTextWidth(cv->font_info, cv->label, strlen(cv->label));
-        wcenter = (cv->w - width) / 2;
-        hcenter = ((cv->font_info->descent + cv->font_info->ascent)/2) + (cv->h / 2);
-
-        XDrawString(cv->dsp, cv->win, cv->gc2, wcenter, hcenter,
-                                  cv->label, strlen(cv->label));
-    }
     XFlush(cv->dsp);
-    */
 }
 
 
@@ -100,7 +82,7 @@ void stk_canvas_redraw(int dtype, stk_widget *cv)
             break;
 
         case STK_CANVAS_PRESS:
-              stk_canvas_draw_arc(cv, 50, 70, 150, 150, 10, 360*64);
+              /*stk_canvas_draw_arc(cv, 50, 70, 150, 150, 10, 360*64);*/
              break;
 
         case STK_CANVAS_RELEASE:
@@ -127,10 +109,10 @@ void stk_canvas_handle(STKEvent *event, void *warg)
     case LeaveNotify:
         break;
     case ButtonPress:
-        stk_canvas_redraw(STK_CANVAS_PRESS, wg);
+        //stk_canvas_redraw(STK_CANVAS_PRESS, wg);
         break;
     case ButtonRelease:
-        stk_canvas_redraw(STK_CANVAS_RELEASE, wg);
+        //stk_canvas_redraw(STK_CANVAS_RELEASE, wg);
         break;
   }
 }
