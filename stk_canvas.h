@@ -10,10 +10,10 @@
 #define STK_CANVAS_ENTER    0x40
 #define STK_CANVAS_LEAVE    0x50
 
-stk_widget *stk_canvas_draw_new(stk_widget *, int, int, uint, uint);
+stk_widget *stk_canvas_new(stk_widget *, int, int, uint, uint);
 void        stk_canvas_draw_line(stk_widget *, uint, uint, uint, uint);
 void        stk_canvas_draw_point(stk_widget *, uint, uint);
-void        stk_canvas_draw_arc(stk_widget *, uint, uint, uint, uint, uint);
+void        stk_canvas_draw_arc(stk_widget *, uint, uint, uint, uint, uint, uint);
 void        stk_canvas_draw_rectangle(stk_widget *, int, int);
 void        stk_canvas_handle(STKEvent *, void *);
 

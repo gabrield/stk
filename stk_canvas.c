@@ -36,7 +36,6 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
 
         XChangeWindowAttributes(new_cv->dsp, new_cv->win, CWBackingStore,
                                                             &setwinattr);
-        //XSetWindowBackground(new_cv->dsp, new_cv->win, 0xEDD8E0);
         XSelectInput( new_cv->dsp, new_cv->win, new_cv->mask);
         XMapWindow(new_cv->dsp, new_cv->win);
 
@@ -57,6 +56,10 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
 }
 
 
+void stk_canvas_draw_arc(stk_widget *cv, uint x, uint y, uint w, uint h, uint angle0, uint angle1)
+{
+    XDrawArc(cv->dsp, cv->win, cv->gc2, x, y, w, h, angle0, angle1);
+} 
 
 void stk_canvas_draw_line(stk_widget *cv, uint x0, uint y0, uint x1, uint y1)
 {
@@ -66,7 +69,7 @@ void stk_canvas_draw_line(stk_widget *cv, uint x0, uint y0, uint x1, uint y1)
 
 void stk_canvas_expose(stk_widget *cv)
 {
-    stk_canvas_line(cv, 10, 10, 100, 100);
+    stk_canvas_draw_line(cv, 10, 10, 100, 100);
     
     /*
     int   width, wcenter, hcenter;
@@ -97,7 +100,7 @@ void stk_canvas_redraw(int dtype, stk_widget *cv)
             break;
 
         case STK_CANVAS_PRESS:
-              XDrawArc(display, cv->win, cv->gc2, 50, 70, 150, 150, 0, 360*64);
+              stk_canvas_draw_arc(cv, 50, 70, 150, 150, 10, 360*64);
              break;
 
         case STK_CANVAS_RELEASE:
