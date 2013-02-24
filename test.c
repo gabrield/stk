@@ -11,12 +11,11 @@ typedef struct
 } ptr;
 
 
-
-
-void line(void *c)
+void draw(void *c)
 {
     stk_widget *p = (stk_widget*)c;
     stk_canvas_draw_line(p, 10, 10, 100, 100);
+    stk_canvas_draw_arc(p, 50, 70, 150, 150, 10, 360*64);
 }
 
 void hello(void *string)
@@ -99,7 +98,7 @@ int main()
     bt5 = stk_button_new(win, 300, 200, 20, 20, "+", &add, (void*)pb);
     bt6 = stk_button_new(win, 80, 200, 20, 20, "-", &sub, (void*)pb);
     cv  = stk_canvas_new(win, 80, 230, 500, 230);
-    bt7 = stk_button_new(win, 400, 200, 60, 20, "CanvasBt", &line, (void*)cv);
+    bt7 = stk_button_new(win, 400, 200, 60, 20, "CanvasBt", &draw, (void*)cv);
     
     wc.d1  = win;
     wc.c   = 0xd3d3d3;
