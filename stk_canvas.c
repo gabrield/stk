@@ -32,7 +32,8 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
     {
         new_cv->win = XCreateSimpleWindow(new_cv->dsp, parent_win->win, x, y, w,
                                                                   h, 2, fg, bg);
-        new_cv->mask = ExposureMask | EnterWindowMask | LeaveWindowMask | ButtonPressMask | ButtonReleaseMask;
+        new_cv->mask = ExposureMask | EnterWindowMask | LeaveWindowMask |
+                                     ButtonPressMask | ButtonReleaseMask;
 
         XChangeWindowAttributes(new_cv->dsp, new_cv->win, CWBackingStore,
                                                             &setwinattr);
@@ -56,7 +57,8 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
 }
 
 
-void stk_canvas_draw_arc(stk_widget *cv, uint x, uint y, uint w, uint h, uint angle0, uint angle1)
+void stk_canvas_draw_arc(stk_widget *cv, uint x, uint y, uint w, uint h,
+                                               uint angle0, uint angle1)
 {
     XDrawArc(cv->dsp, cv->win, cv->gc2, x, y, w, h, angle0, angle1);
 } 
@@ -64,6 +66,11 @@ void stk_canvas_draw_arc(stk_widget *cv, uint x, uint y, uint w, uint h, uint an
 void stk_canvas_draw_line(stk_widget *cv, uint x0, uint y0, uint x1, uint y1)
 {
     XDrawLine(cv->dsp, cv->win, cv->gc2, x0, y0, x1, y1);
+}
+
+void stk_canvas_draw_point(stk_widget *cv, uint x, uint y)
+{
+    XDrawPoint(cv->dsp, cv->win, cv->gc2, x, y);
 }
 
 

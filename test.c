@@ -13,9 +13,14 @@ typedef struct
 
 void draw(void *c)
 {
+    int i = 0;
+    
     stk_widget *p = (stk_widget*)c;
-    stk_canvas_draw_line(p, 10, 10, 100, 100);
     stk_canvas_draw_arc(p, 50, 70, 150, 150, 10, 360*64);
+    stk_canvas_draw_line(p, 10, 10, 100, 100);
+
+    for(i = 350; i > 200; i--)
+        stk_canvas_draw_point(p, 100+i, i-150);        
 }
 
 void hello(void *string)
