@@ -63,10 +63,12 @@ void stk_canvas_draw_arc(stk_widget *cv, uint x, uint y, uint w, uint h,
     XDrawArc(cv->dsp, cv->win, cv->gc2, x, y, w, h, angle0, angle1);
 } 
 
+
 void stk_canvas_draw_line(stk_widget *cv, uint x0, uint y0, uint x1, uint y1)
 {
     XDrawLine(cv->dsp, cv->win, cv->gc2, x0, y0, x1, y1);
 }
+
 
 void stk_canvas_draw_point(stk_widget *cv, uint x, uint y)
 {
