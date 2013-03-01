@@ -49,6 +49,8 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
 
         XMapWindow(new_pb->dsp, new_pb->win);
 
+        memset(pb, 0, sizeof(stk_progress_bar));
+
         new_pb->x = x;
         new_pb->y = y;
         new_pb->w = w;
@@ -59,8 +61,10 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
         pb->pct = 0;
         new_pb->ext_struct = (void*)pb;
 
+
+
         if(label)
-            new_pb->label = label;
+            strcpy(pb->label, label);
         else
             new_pb->label = NULL;
 
@@ -75,21 +79,24 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
 
 void stk_progress_bar_expose(stk_widget *pb)
 {
-    int width, wcenter, hcenter;
+    int width, wcenter, hcenter,
+                            len;
     stk_progress_bar *spb = (stk_progress_bar*)pb->ext_struct;
 
     XClearWindow(pb->dsp, pb->win);
     XFillRectangle(pb->dsp, pb->win, pb->gc, 0, 0, (pb->w * spb->pct)/100, pb->h);
+
+    len = strlen(spb->label);
     
 
-    if(pb->label)
+    if(len > 0)
     {
-        width = XTextWidth(pb->font_info, pb->label, strlen(pb->label));
+        width = XTextWidth(pb->font_info, spb->label, strlen(spb->label));
         wcenter = (pb->w - width) / 2;
         hcenter = ((pb->font_info->descent + pb->font_info->ascent)/2) + (pb->h / 2);
 
         XDrawString(pb->dsp, pb->win, pb->gc2, wcenter, hcenter,
-                                  pb->label, strlen(pb->label));
+                                  spb->label, strlen(spb->label));
     }
     XFlush(pb->dsp);
 }
@@ -97,7 +104,12 @@ void stk_progress_bar_expose(stk_widget *pb)
 
 void stk_progress_bar_set_label(stk_widget *pb, char *new_label)
 {
-    pb->label = new_label;
+    stk_progress_bar *spb = (stk_progress_bar*)pb->ext_struct;
+
+    printf("%d\n", strlen(spb->label));
+
+    memset(spb->label, 0, strlen(spb->label));
+    strcpy(spb->label, new_label);
     stk_progress_bar_expose(pb);
 }
 

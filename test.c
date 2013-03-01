@@ -33,8 +33,8 @@ void hello(void *string)
 void color(void *c)
 {
     ptr *w = (ptr*)c;
-    printf("Win = %p, Color %x\n", w->d1, w->c);
 
+    printf("Win = %p, Color %x\n", w->d1, w->c);
     stk_window_set_color((stk_widget*)w->d1, w->c);
 }
 
@@ -42,6 +42,7 @@ void color(void *c)
 void move(void *c)
 {
     ptr *w = (ptr*)c;
+
     printf("Win = %p, pos %dx%d\n", w->d1, w->x, w->y);
     stk_widget_set_pos((stk_widget*)w->d1, w->x, w->y);
 }
@@ -57,7 +58,7 @@ void add(void *c)
     if(val < 100)
     {
         val += 1;
-        sprintf(buffer, "%d", val);
+        sprintf(buffer, "%d%%", val);
         stk_progress_bar_set_value(p, val);
         stk_progress_bar_set_label(p, buffer);
     }
@@ -74,7 +75,7 @@ void sub(void *c)
     if(val > 0)
     {
         val -= 1;
-        sprintf(buffer, "%d", val);
+        sprintf(buffer, "%d%%", val);
         stk_progress_bar_set_value(p, val);
         stk_progress_bar_set_label(p, buffer);
     }
@@ -99,7 +100,7 @@ int main()
     bt3 = stk_button_new(win, 400, 100, 60, 20, "Color2", &color, (void*)&wc);
     bt4 = stk_button_new(win, 400, 150, 60, 20, "MoveBt1", &move, (void*)&wc3);
     txt = stk_text_new(win, 100, 150, 200, 20, "TxtArea", STK_TEXT_INPUT);
-    pb  = stk_progress_bar_new(win, 100, 200, 200, 20, "0");
+    pb  = stk_progress_bar_new(win, 100, 200, 200, 20, "0%");
     bt5 = stk_button_new(win, 300, 200, 20, 20, "+", &add, (void*)pb);
     bt6 = stk_button_new(win, 80, 200, 20, 20, "-", &sub, (void*)pb);
     cv  = stk_canvas_new(win, 80, 230, 500, 230);

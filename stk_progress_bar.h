@@ -16,7 +16,7 @@ typedef struct
     Colormap cmap;
     XColor color, colorrgb;
     uint pct;
-    char *label;
+    char label[64];
 } stk_progress_bar;
 
 
