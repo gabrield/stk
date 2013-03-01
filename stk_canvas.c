@@ -107,7 +107,6 @@ void stk_canvas_redraw(int dtype, stk_widget *cv)
     switch(dtype)
     {
         case STK_CANVAS_EXPOSE:
-            printf("TEST PRESS\n");
             stk_canvas_expose(cv);
             break;
 
