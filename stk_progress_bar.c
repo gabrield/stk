@@ -106,8 +106,6 @@ void stk_progress_bar_set_label(stk_widget *pb, char *new_label)
 {
     stk_progress_bar *spb = (stk_progress_bar*)pb->ext_struct;
 
-    printf("%d\n", strlen(spb->label));
-
     memset(spb->label, 0, strlen(spb->label));
     strcpy(spb->label, new_label);
     stk_progress_bar_expose(pb);
