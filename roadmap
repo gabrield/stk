@@ -1,7 +1,8 @@
-- Set stk_text to be only text output as well;
-- Finish Canvas with basic geometric primitives;
+0.8
+- Set stk_text to be text output as well;
+- Finish Canvas with basic geometric primitives - DONE
 - Write a listbox with single and multiple selection
 - Do a code review
 - Write the widget hierarchy for event propagation
 - Write binds to Lua and Python
-- Sleep 
+- Sleep - ???
