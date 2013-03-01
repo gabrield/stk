@@ -82,6 +82,12 @@ void stk_window_handle(STKEvent *event, void *warg)
               XCloseDisplay(wg->dsp);
               exit(0);
           }
+          else
+          {
+              XUnmapWindow(wg->dsp, wg->win);
+              XFlush(wg->dsp);
+          }
+
           break;
   }
 }
