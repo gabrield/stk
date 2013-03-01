@@ -14,8 +14,6 @@
 
 typedef XEvent STKEvent;
 
-typedef unsigned int uint;
-
 Display *display;
 
 typedef struct widget_ptr
