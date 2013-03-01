@@ -4,7 +4,8 @@
 stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
 {
     stk_widget *new_cv  = (stk_widget*) malloc(sizeof(stk_widget));
-    int screen;
+    stk_canvas *cv  = (stk_canvas*) malloc(sizeof(stk_canvas));
+    int screen, depth;
 
     XGCValues gcval;
     long fg, bg;
@@ -13,6 +14,7 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
     new_cv->fontname = "7x13";
 
     screen = DefaultScreen(new_cv->dsp);
+    depth = DefaultDepth(new_cv->dsp, screen);
     fg = BlackPixel(new_cv->dsp, screen);
     bg = WhitePixel(new_cv->dsp, screen);
     
@@ -25,6 +27,11 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
     new_cv->gc2 = XCreateGC(new_cv->dsp, parent_win->win, GCForeground |
                           GCBackground|GCLineWidth|GCLineStyle, &gcval);
 
+    gcval.foreground = bg;
+    gcval.background = fg;
+
+    new_cv->gc = XCreateGC(new_cv->dsp, parent_win->win, GCForeground |
+                          GCBackground|GCLineWidth|GCLineStyle, &gcval);
 
     setwinattr.backing_store = Always;
 
@@ -40,6 +47,9 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
         XSelectInput(new_cv->dsp, new_cv->win, new_cv->mask);
         XMapWindow(new_cv->dsp, new_cv->win);
 
+        cv->pmap = XCreatePixmap(new_cv->dsp, new_cv->win, w, h, depth);
+        XSetForeground(new_cv->dsp, new_cv->gc, WhitePixelOfScreen(DefaultScreenOfDisplay(new_cv->dsp)));
+        XFillRectangle(new_cv->dsp, cv->pmap, new_cv->gc, 0, 0, w, h);
 
         new_cv->x = x;
         new_cv->y = y;
@@ -47,6 +57,7 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
         new_cv->h = h;
 
         new_cv->handler = &stk_canvas_handle;
+        new_cv->ext_struct = (void*)cv;
 
         stk_widget_insert((void*)new_cv); 
 
@@ -57,28 +68,37 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
 }
 
 
+void stk_canvas_expose(stk_widget *cv)
+{
+    stk_canvas *scv = (stk_canvas*)cv->ext_struct;
+
+    XCopyArea(cv->dsp, scv->pmap, cv->win, cv->gc2, 0, 0, cv->w, cv->h, 0, 0);
+    XFlush(cv->dsp);
+}
+
+
 void stk_canvas_draw_arc(stk_widget *cv, uint x, uint y, uint w, uint h,
                                                uint angle0, uint angle1)
 {
-    XDrawArc(cv->dsp, cv->win, cv->gc2, x, y, w, h, angle0, angle1);
+    stk_canvas *scv = (stk_canvas*)cv->ext_struct;
+    XDrawArc(cv->dsp, scv->pmap, cv->gc2, x, y, w, h, angle0, angle1);
+    stk_canvas_expose(cv);
 } 
 
 
 void stk_canvas_draw_line(stk_widget *cv, uint x0, uint y0, uint x1, uint y1)
 {
-    XDrawLine(cv->dsp, cv->win, cv->gc2, x0, y0, x1, y1);
+    stk_canvas *scv = (stk_canvas*)cv->ext_struct;
+    XDrawLine(cv->dsp, scv->pmap, cv->gc2, x0, y0, x1, y1);
+    stk_canvas_expose(cv);
 }
 
 
 void stk_canvas_draw_point(stk_widget *cv, uint x, uint y)
 {
-    XDrawPoint(cv->dsp, cv->win, cv->gc2, x, y);
-}
-
-
-void stk_canvas_expose(stk_widget *cv)
-{
-    XFlush(cv->dsp);
+    stk_canvas *scv = (stk_canvas*)cv->ext_struct;
+    XDrawPoint(cv->dsp, scv->pmap, cv->gc2, x, y);
+    stk_canvas_expose(cv);
 }
 
 
@@ -87,10 +107,12 @@ void stk_canvas_redraw(int dtype, stk_widget *cv)
     switch(dtype)
     {
         case STK_CANVAS_EXPOSE:
+            printf("TEST PRESS\n");
             stk_canvas_expose(cv);
             break;
 
         case STK_CANVAS_PRESS:
+
               /*stk_canvas_draw_arc(cv, 50, 70, 150, 150, 10, 360*64);*/
              break;
 
