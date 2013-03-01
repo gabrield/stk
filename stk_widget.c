@@ -67,7 +67,6 @@ stk_widget *stk_widget_search(void *widget)
             wnode = (stk_widget*)node->this;
             if(wnode->win == (Window)widget)
             {
-                /*printf("Widget %p found!\n", widget);*/
                 return wnode;
             }
             else
@@ -110,6 +109,9 @@ void stk_run()
 
 
 void stk_widget_set_size(stk_widget *);
+
+
+void stk_widget_root();
 
 
 void stk_widget_set_pos(stk_widget *win, uint x, uint y)

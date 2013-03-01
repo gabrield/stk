@@ -1,16 +1,17 @@
 STK - Small toolkit based on Xlib;
 
+STK is a small Graphical toolkit for applications.
+
 To compile, type ''make'' (without the quotes) on your terminal and voilà!
-STK's goal is to provide a small widget set for small applications.
 
 Widget list:
 
 * Window
 * Button
-* Text Area (for input and output text, useful, but still need some changes)
-* Canvas (for drawing curves, lines and other geometric objects, under development :D)
-* ProgressBar (under test, seems to work fine, but nobody knows :p)
-* Listbox (planned) 
+* Text Area - still need some changes/improvements
+* Canvas - under development/test
+* ProgressBar - under test
+* Listbox - planned
 
 Take a look at test.c to see the basics of STK;
 
