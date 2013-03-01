@@ -62,7 +62,6 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
         new_pb->ext_struct = (void*)pb;
 
 
-
         if(label)
             strcpy(pb->label, label);
         else

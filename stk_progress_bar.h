@@ -10,13 +10,15 @@
 #define STK_PROGRESS_BAR_ENTER    0x40
 #define STK_PROGRESS_BAR_LEAVE    0x50
 
+#define STK_PROGRESS_BAR_LABEL_SIZE (1 << 6)
+
 
 typedef struct
 {
     Colormap cmap;
     XColor color, colorrgb;
     uint pct;
-    char label[64];
+    char label[STK_PROGRESS_BAR_LABEL_SIZE];
 } stk_progress_bar;
 
 
