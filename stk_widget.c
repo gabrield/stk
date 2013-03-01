@@ -110,8 +110,20 @@ void stk_run()
 
 void stk_widget_set_size(stk_widget *);
 
+/* stk_widget_root() returns the first widget created */
+stk_widget *stk_widget_root()
+{
+    widget_list *node = list;
+    stk_widget *wnode = NULL;
 
-void stk_widget_root();
+    while(node)
+    {
+
+        wnode = (stk_widget*)node->this;
+        node = node->next;
+    }
+    return wnode;
+}
 
 
 void stk_widget_set_pos(stk_widget *win, uint x, uint y)

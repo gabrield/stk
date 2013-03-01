@@ -84,10 +84,9 @@ void sub(void *c)
 
 int main()
 {
-    stk_widget *win = NULL;
     stk_widget *bt, *bt1, *bt2, *bt3,
                *bt4, *bt5, *bt6, *cv,
-               *bt7, *txt, *pb;
+               *bt7, *txt, *pb, *win;
 
     ptr wc, wc1, wc2, wc3;
 

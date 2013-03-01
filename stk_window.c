@@ -3,6 +3,7 @@
 stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title, void *func, void *args)
 {
     stk_widget *new_win  = (stk_widget*) malloc(sizeof(stk_widget));
+    Atom del_win;
     new_win->dsp = display;
 
     if(new_win->dsp)
@@ -14,6 +15,11 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title, void
       new_win->mask = ExposureMask | ButtonPressMask | ButtonReleaseMask | PointerMotionMask | KeyPressMask | StructureNotifyMask;
       XSelectInput(new_win->dsp, new_win->win, new_win->mask);
       XSetWindowBackground(new_win->dsp, new_win->win, 0xF2E6EB);
+      del_win = XInternAtom(new_win->dsp, "WM_DELETE_WINDOW", 0);
+      XSetWMProtocols(new_win->dsp, new_win->win, &del_win, 1);
+
+
+
       new_win->func = func;
       new_win->args = args;
       new_win->handler = &stk_window_handle;
@@ -52,18 +58,31 @@ void stk_window_set_color(stk_widget *win, int color)
 void stk_window_handle(STKEvent *event, void *warg)
 {
   stk_widget *wg = (stk_widget*)warg;
+  stk_widget *wroot = stk_widget_root();
 
   switch(event->type)
   {
-    case Expose:
-        break;
-    case ButtonPress:
-        XSetInputFocus(wg->dsp, wg->win, RevertToNone, CurrentTime);
-        break;
-    case ButtonRelease:
-       /*if(wg->func)
-           wg->func(wg->args);*/
-      break;
+      case Expose:
+          break;
+      
+      case ButtonPress:
+          XSetInputFocus(wg->dsp, wg->win, RevertToNone, CurrentTime);
+          break;
+      
+      case ButtonRelease:
+         /*if(wg->func)
+             wg->func(wg->args);*/
+          break;
+
+      case ClientMessage:
+          if(wg == wroot)
+          {
+              XDestroyWindow(wg->dsp, wg->win);
+              /* close connection to server */
+              XCloseDisplay(wg->dsp);
+              exit(0);
+          }
+          break;
   }
 }
 

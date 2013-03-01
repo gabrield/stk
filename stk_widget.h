@@ -49,6 +49,7 @@ void        stk_run();
 void        stk_widget_set_size(stk_widget *);
 void        stk_widget_set_pos(stk_widget *, uint, uint);
 void        stk_widget_set_color(stk_widget *, int color);
+stk_widget *stk_widget_root();
 
 
 #endif /* STK_WIDGET_H */
