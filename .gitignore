@@ -18,5 +18,7 @@
 test
 
 #folders
-
 test.dSYM
+
+#others
+*.html

@@ -1,0 +1,86 @@
+STK - Small Graphic Toolkit
+===========================
+Gabriel Duarte <gduarte.costa@globomail.com>
+v0.5, 2013-03
+
+
+STK - Small toolkit based on Xlib for GUI applications.
+
+.Widget Set
+* Window
+* Button
+* Text Area - still need some changes/improvements
+* Canvas - under development/test
+* ProgressBar - under test
+* Listbox - planned
+
+
+STK Functions
+--------------
+
+stk_widget
+~~~~~~~~~~
+The stk_widget functions are the base of STK. They are responsible for initializing
+the widget list, connect to display, set widget's size, etc.
+
+[source, c]
+void stk_init()
+
+Starts the widget list and connects to the display.
+
++return *void*+
+
+CAUTION: This function MUST be called before any other stk function.
+
+
+
+
+[source, c]
+int stk_widget_insert(void *widget)
+
+Alloc and insert a widget in the widget list.
+Every widget must call it to be registered and have its events handled.
+
++return *0 if success, -1 if not*+ +
+
+
+
+[source, c]
+void stk_run()
+
+Search for a widget in the widget list. It's the event loop that handles the all the event callings of the widgets.
+Must be the last stk called.
+
++return *void*+
+
+
+
+
+[source, c]
+stk_widget *stk_widget_root()
+
+Returns the pointer to first widget added the list.
+
++return *stk_widget**+ 
+
+
+
+
+[source, c]
+stk_widget *stk_widget_search(void *widget)
+
+Searchs for a widget in the widget list.
+
++return *stk_widget** if found or *NULL*+
+
+
+
+
+[source, c]
+void stk_widget_set_pos(stk_widget *win, uint x, uint y)
+
+Set widget position on the screen.
+
++return *void*+
+
+

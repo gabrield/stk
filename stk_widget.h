@@ -16,6 +16,7 @@ typedef XEvent STKEvent;
 
 Display *display;
 
+
 typedef struct widget_ptr
 {
     void *this;
@@ -36,7 +37,7 @@ typedef struct
     XFontStruct *font_info;
     char *fontname;
     const char *label;
-    void *ext_struct; /* if need a place to store a reference to other struct, if it's not a basic widget, etc. */
+    void *ext_struct; /** if need a place to store a reference to other struct, if it's not a basic widget, etc. */
 
 } stk_widget;
 

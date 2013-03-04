@@ -1,11 +1,15 @@
+/*!
+
+*/
 #include <stk_widget.h>
 
 widget_list *list;
 
-/* stk_init()
+/*!
+@brief 
 Initialize the Display connection to X and the widget list
-@return: void
-@comments: Must be called before any STK functions
+
+Must be called before any STK functions
 */
 void stk_init()
 {
@@ -14,12 +18,13 @@ void stk_init()
 }
 
 
-/* stk_widget_insert():
-Alloc and insert a widget in the widget list.
-@return: 0 if success or -1 if unsuccessful.
-@comments: Every widget must call it to be
-           registered and have its events
-           handled
+/**
+@brief Alloc and insert a widget in the widget list.
+@param widget The pointer to the widget to be inserted on the list
+@return 0 if success or -1 if unsuccessful.
+@discussion Every widget must call it to be
+registered and have its events
+handled
 */
 int stk_widget_insert(void *widget)
 {
@@ -47,10 +52,10 @@ int stk_widget_delete(void *widget)
 }
 
 
-/* stk_widget_search():
-Search for a widget in the widget list.
-@return:and return a pointer to stk_widget or NULL
-@comments: return a pointer to stk_widget if the widget exists.
+/*!
+@brief Searchs for a widget in the widget list.
+@param widget The widget to be located on the list.
+@return Returns a pointer to stk_widget or NULL
 */
 stk_widget *stk_widget_search(void *widget)
 {
@@ -78,12 +83,11 @@ stk_widget *stk_widget_search(void *widget)
 }
 
 
-/* stk_run():
-Search for a widget in the widget list.
-@return: void
-@comments: Must be called after all STK functions.
-           It's the event loop that handles the all
-           the event callings of the widgets.
+/*!
+@brief Search for a widget in the widget list.
+@return Must be called after all STK functions.
+It's the event loop that handles the all
+the event callings of the widgets.
 */
 void stk_run()
 {
@@ -110,7 +114,10 @@ void stk_run()
 
 void stk_widget_set_size(stk_widget *);
 
-/* stk_widget_root() returns the first widget created */
+/*! 
+@brief returns the first widget created
+@return The pointer to the first widget added on the list
+*/
 stk_widget *stk_widget_root()
 {
     widget_list *node = list;
@@ -125,13 +132,17 @@ stk_widget *stk_widget_root()
     return wnode;
 }
 
-
+/*! 
+@brief set widget position on the screen
+*/
 void stk_widget_set_pos(stk_widget *win, uint x, uint y)
 {
     XMoveWindow(win->dsp, win->win, x, y);   
 }
 
-
+/*! 
+@brief set widget color
+*/
 void stk_widget_set_color(stk_widget *win, int color)
 {
     XSetWindowBackground(win->dsp, win->win, color);

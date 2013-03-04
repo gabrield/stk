@@ -6,7 +6,13 @@ OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=test
 STK_OBJS=$(wildcard stk*.o)
 
+
+
+docs:
+	@cd doc && make
+
 all: $(SOURCES) $(EXECUTABLE)
+
 	
 $(EXECUTABLE): $(OBJECTS) 
 	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
@@ -15,7 +21,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -rf $(OBJECTS) test *.a
+	rm -rf $(OBJECTS) test *.a doc/*.html
 
 lib:
 	ar rcs libstk.a $(STK_OBJS)
