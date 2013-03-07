@@ -155,17 +155,26 @@ void stk_canvas_redraw(int dtype, stk_widget *cv)
 
 void stk_canvas_handle(STKEvent *event, void *warg)
 {
-  stk_widget *wg = (stk_widget*)warg;
-  
-  wg->ev  = event;
-
-  switch(event->type)
-  {
+    stk_widget *wg = (stk_widget*)warg;
+    
+    wg->ev  = event;
+    
+    switch(event->type)
+    {
     case Expose:
+        if(wg->exposefunc)
+            wg->exposefunc(wg->exargs);
         stk_canvas_redraw(STK_CANVAS_EXPOSE, wg);
+        break;
+    
+    case EnterNotify:
+        if(wg->enterfunc)
+            wg->enterfunc(wg->eargs);
         break;
         
     case LeaveNotify:
+        if(wg->leavefunc)
+            wg->leavefunc(wg->largs);
         break;
         
     case ButtonPress:
@@ -174,11 +183,13 @@ void stk_canvas_handle(STKEvent *event, void *warg)
         break;
         
     case ButtonRelease:
+        if(wg->releasefunc)
+            wg->releasefunc(wg->rargs);
         break;
         
     case MotionNotify:
         if(wg->movefunc)
             wg->movefunc(wg->margs);
         break;
-  }
+    }
 }

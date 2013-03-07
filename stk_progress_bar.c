@@ -154,18 +154,41 @@ void stk_progress_bar_redraw(int dtype, stk_widget *pb)
 
 void stk_progress_bar_handle(STKEvent *event, void *warg)
 {
-  stk_widget *wg = (stk_widget*)warg;
-
-  switch(event->type)
-  {
+    stk_widget *wg = (stk_widget*)warg;
+  
+    wg->ev  = event;
+    
+    switch(event->type)
+    {
     case Expose:
+        if(wg->exposefunc)
+            wg->exposefunc(wg->exargs);
         stk_progress_bar_redraw(STK_PROGRESS_BAR_EXPOSE, wg);
         break;
+    
+    case EnterNotify:
+        if(wg->enterfunc)
+            wg->enterfunc(wg->eargs);
+        break;
+        
     case LeaveNotify:
+        if(wg->leavefunc)
+            wg->leavefunc(wg->largs);
         break;
+        
     case ButtonPress:
+        if(wg->pressfunc)
+            wg->pressfunc(wg->pargs);
         break;
+        
     case ButtonRelease:
+        if(wg->releasefunc)
+            wg->releasefunc(wg->rargs);
         break;
-  }
+        
+    case MotionNotify:
+        if(wg->movefunc)
+            wg->movefunc(wg->margs);
+        break;
+    }
 }

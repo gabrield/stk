@@ -57,10 +57,10 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
         new_bt->handler = &stk_button_handle;
 
         if(func)
-            new_bt->func = func;
+            new_bt->pressfunc = func;
 
         if(args)
-            new_bt->args = args;
+            new_bt->pargs = args;
 
         if(label)
             new_bt->label = label;
@@ -123,26 +123,46 @@ void stk_button_redraw(int dtype, stk_widget *bt)
 
 void stk_button_handle(STKEvent *event, void *warg)
 {
-  stk_widget *wg = (stk_widget*)warg;
-
-  switch(event->type)
-  {
+    stk_widget *wg = (stk_widget*)warg;
+    
+    wg->ev  = event;
+    
+    switch(event->type)
+    {
     case Expose:
+        if(wg->exposefunc)
+            wg->exposefunc(wg->exargs);
         stk_button_redraw(STK_BUTTON_EXPOSE, wg);
         break;
-    case LeaveNotify:
+    
+    case EnterNotify:
+        if(wg->enterfunc)
+            wg->enterfunc(wg->eargs);
         break;
+        
+    case LeaveNotify:
+        if(wg->leavefunc)
+            wg->leavefunc(wg->largs);
+        break;
+        
     case ButtonPress:
         if(event->xbutton.button == Button1)
             stk_button_redraw(STK_BUTTON_PRESS, wg);
         break;
+
     case ButtonRelease:
         if(event->xbutton.button == Button1)
         {
-            if(wg->func)
-                wg->func(wg->args);
+            if(wg->pressfunc)
+                wg->pressfunc(wg->pargs);
         }
         stk_button_redraw(STK_BUTTON_RELEASE, wg);
+
         break;
-  }
+        
+    case MotionNotify:
+        if(wg->movefunc)
+            wg->movefunc(wg->margs);
+        break;
+    }
 }
