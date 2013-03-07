@@ -52,14 +52,15 @@ typedef struct
     char *fontname;
     char *label;
     void *ext_struct; /* if need a place to store a reference to other struct, if it's not a basic widget, etc. */
-    void (*movefunc)(void *),    *margs;
-    void (*pressfunc)(void *),   *pargs;
-    void (*enterfunc)(void *),   *eargs;
-    void (*leavefunc)(void *),   *largs;
-    void (*exposefunc)(void *),  *exargs;
-    void (*releasefunc)(void *), *rargs;
-
-} stk_widget;
+    void (*movefunc)(void *),     *margs;  /* move event       */
+    void (*pressfunc)(void *),    *pargs;  /* press event      */
+    void (*enterfunc)(void *),    *eargs;  /* enter event      */
+    void (*leavefunc)(void *),    *largs;  /* leave event      */
+    void (*exposefunc)(void *),   *exargs; /* expose event     */
+    void (*releasefunc)(void *),  *rargs;  /* realse event     */
+    void (*kpressfunc)(void *),   *kpxargs;/* keypress event   */
+    void (*kreleasefunc)(void *), *krargs; /* keyrelease event */
+ } stk_widget;
 
 /* Font Sizes */
 #define STK_FONT_SIZE_6x9   "6x9"
