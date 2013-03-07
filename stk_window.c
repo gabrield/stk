@@ -5,6 +5,9 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title,
 {
     stk_widget *new_win  = (stk_widget*) malloc(sizeof(stk_widget));
     Atom del_win;
+    
+    memset(new_win, 0, sizeof(stk_widget));
+    
     new_win->dsp = display;
 
     if(new_win->dsp)

@@ -10,6 +10,10 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     XGCValues gcval;
     long fg, bg;
     XSetWindowAttributes setwinattr;
+    
+    memset(new_bt, 0, sizeof(stk_widget));
+    
+    
     new_bt->dsp = display;
     new_bt->fontname = "7x13";
 

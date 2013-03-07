@@ -51,8 +51,12 @@ typedef struct
     char *fontname;
     char *label;
     void *ext_struct; /* if need a place to store a reference to other struct, if it's not a basic widget, etc. */
-    void (*movefunc)(void *),  *margs;
-    void (*clickfunc)(void *), *cargs;
+    void (*movefunc)(void *),    *margs;
+    void (*pressfunc)(void *),   *pargs;
+    void (*enterfunc)(void *),   *eargs;
+    void (*leavefunc)(void *),   *largs;
+    void (*exposefunc)(void *),  *exargs;
+    void (*releasefunc)(void *), *rargs;
 
 } stk_widget;
 

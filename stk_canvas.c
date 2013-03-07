@@ -169,19 +169,16 @@ void stk_canvas_handle(STKEvent *event, void *warg)
         break;
         
     case ButtonPress:
-        if(wg->clickfunc)
-            wg->clickfunc(wg->cargs);
-        //stk_canvas_redraw(STK_CANVAS_PRESS, wg);
+        if(wg->pressfunc)
+            wg->pressfunc(wg->pargs);
         break;
         
     case ButtonRelease:
-        //stk_canvas_redraw(STK_CANVAS_RELEASE, wg);
         break;
         
     case MotionNotify:
         if(wg->movefunc)
             wg->movefunc(wg->margs);
-        //stk_canvas_redraw(STK_CANVAS_RELEASE, wg);
         break;
   }
 }

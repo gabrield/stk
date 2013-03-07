@@ -123,8 +123,28 @@ void stk_widget_event_listen(stk_widget *win, int event_type, void *func,
             break;
             
         case STK_WIDGET_PRESS:
-            win->clickfunc = func;
-            win->cargs = args;
+            win->pressfunc = func;
+            win->pargs = args;
+            break;
+            
+        case STK_WIDGET_EXPOSE:
+            win->exposefunc = func;
+            win->exargs = args;
+            break;
+            
+        case STK_WIDGET_LEAVE:
+            win->leavefunc = func;
+            win->largs = args;
+            break;
+            
+        case STK_WIDGET_ENTER:
+            win->enterfunc = func;
+            win->eargs = args;
+            break;
+            
+        case STK_WIDGET_RELEASE:
+            win->releasefunc = func;
+            win->rargs = args;
             break;
     }
 }

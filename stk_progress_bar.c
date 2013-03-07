@@ -9,6 +9,9 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
 
     XGCValues gcval;
     long fg, bg;
+    
+    memset(new_pb, 0, sizeof(stk_widget));
+    
     new_pb->dsp = display;
     new_pb->fontname = "7x13";
 

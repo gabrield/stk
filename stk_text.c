@@ -2,7 +2,7 @@
 
 
 stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
-                                                  const char *label, int type)
+                                                        char *label, int type)
 {
     stk_widget *new_txt  = (stk_widget*) malloc(sizeof(stk_widget));
     stk_text *txt = (stk_text*) malloc(sizeof(stk_text));
@@ -11,6 +11,9 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     XGCValues gcval;
     long fg, bg;
     XSetWindowAttributes setwinattr;
+    
+    memset(new_txt, 0, sizeof(stk_widget));
+    
     new_txt->dsp = display;
     new_txt->fontname = "7x13";
 
