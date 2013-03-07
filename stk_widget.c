@@ -120,6 +120,12 @@ void stk_widget_event_listen(stk_widget *win, int event_type, void *func,
         case STK_WIDGET_MOVE:
             win->movefunc = func;
             win->margs = args;
+            break;
+            
+        case STK_WIDGET_PRESS:
+            win->clickfunc = func;
+            win->cargs = args;
+            break;
     }
 }
 

@@ -66,6 +66,14 @@ void add(void *c)
     }
 }
 
+void listen(void *c)
+{
+    stk_widget *p = (stk_widget*)c;
+    printf("Click at %dx%d\n", p->ev->xbutton.x, p->ev->xbutton.y);
+}
+
+
+
 void sub(void *c)
 {
     int val;
@@ -107,7 +115,8 @@ int main()
     cv  = stk_canvas_new(win, 80, 230, 500, 230);
     bt7 = stk_button_new(win, 400, 200, 60, 20, "CanvasBt", &draw, (void*)cv);
     
-    stk_widget_event_listen(cv, STK_WIDGET_MOVE, hello, "move canvas");
+    /*stk_widget_event_listen(cv, STK_WIDGET_MOVE, hello, "move canvas");*/
+    stk_widget_event_listen(cv, STK_WIDGET_PRESS, listen, (void*)cv);
         
     wc.d1  = win;
     wc.c   = 0xd3d3d3;

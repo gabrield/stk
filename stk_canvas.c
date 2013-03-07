@@ -10,6 +10,9 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
     XGCValues gcval;
     long fg, bg;
     XSetWindowAttributes setwinattr;
+    memset(new_cv, 0, sizeof(stk_widget));
+    
+    
     new_cv->dsp = display;
     new_cv->fontname = STK_FONT_SIZE_6x9;
 
@@ -23,8 +26,6 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
     gcval.line_width = 1;
     gcval.line_style = LineSolid;
     
-    new_cv->movefunc = NULL;
-    new_cv->margs = NULL;
 
     new_cv->gc2 = XCreateGC(new_cv->dsp, parent_win->win, GCForeground |
                           GCBackground|GCLineWidth|GCLineStyle, &gcval);
@@ -155,20 +156,28 @@ void stk_canvas_redraw(int dtype, stk_widget *cv)
 void stk_canvas_handle(STKEvent *event, void *warg)
 {
   stk_widget *wg = (stk_widget*)warg;
+  
+  wg->ev  = event;
 
   switch(event->type)
   {
     case Expose:
         stk_canvas_redraw(STK_CANVAS_EXPOSE, wg);
         break;
+        
     case LeaveNotify:
         break;
+        
     case ButtonPress:
+        if(wg->clickfunc)
+            wg->clickfunc(wg->cargs);
         //stk_canvas_redraw(STK_CANVAS_PRESS, wg);
         break;
+        
     case ButtonRelease:
         //stk_canvas_redraw(STK_CANVAS_RELEASE, wg);
         break;
+        
     case MotionNotify:
         if(wg->movefunc)
             wg->movefunc(wg->margs);
