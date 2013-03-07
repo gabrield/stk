@@ -14,6 +14,16 @@
 
 
 
+/* STK_WIDGET Events */
+#define STK_WIDGET_EXPOSE   0x10
+#define STK_WIDGET_PRESS    0x20
+#define STK_WIDGET_RELEASE  0x30
+#define STK_WIDGET_ENTER    0x40
+#define STK_WIDGET_LEAVE    0x50
+#define STK_WIDGET_MOVE     0x60
+
+
+
 typedef XEvent STKEvent;
 
 Display *display;
@@ -40,6 +50,8 @@ typedef struct
     char *fontname;
     char *label;
     void *ext_struct; /* if need a place to store a reference to other struct, if it's not a basic widget, etc. */
+    void (*movefunc)(void *),  *margs;
+    void (*clickfunc)(void *), *cargs;
 
 } stk_widget;
 
@@ -58,7 +70,7 @@ void        stk_widget_set_pos(stk_widget *, uint, uint);
 void        stk_widget_set_color(stk_widget *, int color);
 void        stk_widget_set_font_size(stk_widget *, char *);
 stk_widget *stk_widget_root();
-void        stk_widget_event_listen(stk_widget *, void *, void *);
+void        stk_widget_event_listen(stk_widget *, int, void *,void *);
 
 
 #endif /* STK_WIDGET_H */

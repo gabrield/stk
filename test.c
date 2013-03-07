@@ -107,6 +107,8 @@ int main()
     cv  = stk_canvas_new(win, 80, 230, 500, 230);
     bt7 = stk_button_new(win, 400, 200, 60, 20, "CanvasBt", &draw, (void*)cv);
     
+    stk_widget_event_listen(cv, STK_WIDGET_MOVE, hello, "move canvas");
+        
     wc.d1  = win;
     wc.c   = 0xd3d3d3;
 

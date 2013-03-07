@@ -22,7 +22,9 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
     gcval.background = bg;
     gcval.line_width = 1;
     gcval.line_style = LineSolid;
-
+    
+    new_cv->movefunc = NULL;
+    new_cv->margs = NULL;
 
     new_cv->gc2 = XCreateGC(new_cv->dsp, parent_win->win, GCForeground |
                           GCBackground|GCLineWidth|GCLineStyle, &gcval);
@@ -41,7 +43,7 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
         new_cv->win = XCreateSimpleWindow(new_cv->dsp, parent_win->win, x, y, w,
                                                                   h, 2, fg, bg);
         new_cv->mask = ExposureMask | EnterWindowMask | LeaveWindowMask |
-                                     ButtonPressMask | ButtonReleaseMask;
+                       PointerMotionMask | ButtonPressMask | ButtonReleaseMask;
 
         XChangeWindowAttributes(new_cv->dsp, new_cv->win, CWBackingStore,
                                                             &setwinattr);
@@ -135,8 +137,6 @@ void stk_canvas_redraw(int dtype, stk_widget *cv)
             break;
 
         case STK_CANVAS_PRESS:
-
-              /*stk_canvas_draw_arc(cv, 50, 70, 150, 150, 10, 360*64);*/
              break;
 
         case STK_CANVAS_RELEASE:
@@ -144,6 +144,7 @@ void stk_canvas_redraw(int dtype, stk_widget *cv)
 
         case STK_CANVAS_ENTER:
         case STK_CANVAS_LEAVE:
+        case STK_CANVAS_MOVE:
         default:
             break;
     }
@@ -166,6 +167,11 @@ void stk_canvas_handle(STKEvent *event, void *warg)
         //stk_canvas_redraw(STK_CANVAS_PRESS, wg);
         break;
     case ButtonRelease:
+        //stk_canvas_redraw(STK_CANVAS_RELEASE, wg);
+        break;
+    case MotionNotify:
+        if(wg->movefunc)
+            wg->movefunc(wg->margs);
         //stk_canvas_redraw(STK_CANVAS_RELEASE, wg);
         break;
   }

@@ -112,6 +112,18 @@ void stk_run()
 
 
 
+void stk_widget_event_listen(stk_widget *win, int event_type, void *func,
+                                                              void *args)
+{
+    switch(event_type)
+    {
+        case STK_WIDGET_MOVE:
+            win->movefunc = func;
+            win->margs = args;
+    }
+}
+
+
 void stk_widget_set_size(stk_widget *win);
 
 /*! 

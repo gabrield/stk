@@ -9,6 +9,7 @@
 #define STK_CANVAS_RELEASE  0x30
 #define STK_CANVAS_ENTER    0x40
 #define STK_CANVAS_LEAVE    0x50
+#define STK_CANVAS_MOVE     0x60
 
 
 typedef struct
