@@ -1,6 +1,7 @@
 #include <stk_window.h>
 
-stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title, void *func, void *args)
+stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title,
+                                                    void *func, void *args)
 {
     stk_widget *new_win  = (stk_widget*) malloc(sizeof(stk_widget));
     Atom del_win;
@@ -8,11 +9,13 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title, void
 
     if(new_win->dsp)
     {
-      new_win->win = XCreateWindow(new_win->dsp, DefaultRootWindow(new_win->dsp), x, y, w, h,
-                                           0, CopyFromParent, CopyFromParent, CopyFromParent,
-    	                                                                               0, 0);
+      new_win->win = XCreateWindow(new_win->dsp, DefaultRootWindow(new_win->dsp),
+                                   x, y, w, h, 0, CopyFromParent, CopyFromParent,
+                                                           CopyFromParent, 0, 0);
 
-      new_win->mask = ExposureMask | ButtonPressMask | ButtonReleaseMask | PointerMotionMask | KeyPressMask | StructureNotifyMask;
+      new_win->mask = ExposureMask | ButtonPressMask | ButtonReleaseMask |
+                    PointerMotionMask | KeyPressMask | StructureNotifyMask;
+                    
       XSelectInput(new_win->dsp, new_win->win, new_win->mask);
       XSetWindowBackground(new_win->dsp, new_win->win, 0xF2E6EB);
       del_win = XInternAtom(new_win->dsp, "WM_DELETE_WINDOW", 0);

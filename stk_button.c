@@ -35,7 +35,8 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     {
         new_bt->win = XCreateSimpleWindow(new_bt->dsp, parent_win->win, x, y, w,
                                                                   h, 2, fg, bg);
-        new_bt->mask =  ExposureMask | EnterWindowMask | LeaveWindowMask | ButtonPressMask | ButtonReleaseMask;
+        new_bt->mask =  ExposureMask | EnterWindowMask | LeaveWindowMask |
+                                      ButtonPressMask | ButtonReleaseMask;
 
         XChangeWindowAttributes(new_bt->dsp, new_bt->win, CWBackingStore,
                                                             &setwinattr);

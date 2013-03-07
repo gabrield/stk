@@ -49,7 +49,8 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
         XMapWindow(new_cv->dsp, new_cv->win);
 
         cv->pmap = XCreatePixmap(new_cv->dsp, new_cv->win, w, h, depth);
-        XSetForeground(new_cv->dsp, new_cv->gc, WhitePixelOfScreen(DefaultScreenOfDisplay(new_cv->dsp)));
+        XSetForeground(new_cv->dsp, new_cv->gc, 
+                       WhitePixelOfScreen(DefaultScreenOfDisplay(new_cv->dsp)));
         XFillRectangle(new_cv->dsp, cv->pmap, new_cv->gc, 0, 0, w, h);
         
         stk_canvas_set_string_font(new_cv, new_cv->fontname);
