@@ -112,7 +112,7 @@ void stk_run()
 
 
 
-void stk_widget_set_size(stk_widget *);
+void stk_widget_set_size(stk_widget *win);
 
 /*! 
 @brief returns the first widget created
@@ -149,3 +149,16 @@ void stk_widget_set_color(stk_widget *win, int color)
     XClearWindow(win->dsp, win->win);
     XFlush(win->dsp);
 }
+
+
+void stk_widget_set_font_size(stk_widget *win, char *str_size)
+{
+    win->font_info = XLoadQueryFont(win->dsp, str_size);
+
+    if(win->fontname != NULL)
+        XSetFont(win->dsp, win->gc2, win->font_info->fid);
+    else
+        perror("XLoadQueryFont");
+}
+
+

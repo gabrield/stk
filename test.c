@@ -18,6 +18,8 @@ void draw(void *c)
     stk_widget *p = (stk_widget*)c;
     stk_canvas_draw_arc(p, 50, 70, 150, 150, 10, 360*64);
     stk_canvas_draw_line(p, 10, 10, 100, 100);
+    /*stk_canvas_set_string_font_size(p, STK_FONT_SIZE_9x15);*/
+    stk_canvas_draw_string(p, 50, 50, "50x50");
 
     for(i = 350; i > 200; i--)
         stk_canvas_draw_point(p, 100+i, i-150);        

@@ -12,6 +12,8 @@
 #include <X11/keysym.h>
 #include <X11/cursorfont.h> 
 
+
+
 typedef XEvent STKEvent;
 
 Display *display;
@@ -41,6 +43,10 @@ typedef struct
 
 } stk_widget;
 
+/* Font Sizes */
+#define STK_FONT_SIZE_6x9   "6x9"
+#define STK_FONT_SIZE_7x13  "7x13"
+#define STK_FONT_SIZE_9x15  "9x15"
 
 stk_widget *stk_widget_search(void *);
 int         stk_widget_insert(void *);
@@ -50,6 +56,7 @@ void        stk_run();
 void        stk_widget_set_size(stk_widget *);
 void        stk_widget_set_pos(stk_widget *, uint, uint);
 void        stk_widget_set_color(stk_widget *, int color);
+void        stk_widget_set_font_size(stk_widget *, char *);
 stk_widget *stk_widget_root();
 void        stk_widget_event_listen(stk_widget *, void *, void *);
 

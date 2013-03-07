@@ -23,6 +23,16 @@ void        stk_canvas_draw_line(stk_widget *, uint, uint, uint, uint);
 void        stk_canvas_draw_point(stk_widget *, uint, uint);
 void        stk_canvas_draw_arc(stk_widget *, uint, uint, uint, uint, uint, uint);
 void        stk_canvas_draw_rectangle(stk_widget *, int, int);
+void        stk_canvas_draw_string(stk_widget *cv, uint x, uint y, char *str);
+void        stk_canvas_set_string_font_size(stk_widget *, char *);
+void        stk_canvas_set_string_font(stk_widget *, char *);
 void        stk_canvas_handle(STKEvent *, void *);
+
+
+/* TODO */
+void stk_canvas_area_rotate(stk_widget *cv, uint x0, uint y0, uint x1, uint y1, uint angle);
+void stk_canvas_area_move(stk_widget *cv, uint x0, uint y0, uint x1, uint y1, uint x, uint y);
+void stk_canvas_line_color(stk_widget *cv, int color);
+
 
 #endif /* STK_CANVAS_H */

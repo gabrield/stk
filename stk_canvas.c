@@ -11,7 +11,7 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
     long fg, bg;
     XSetWindowAttributes setwinattr;
     new_cv->dsp = display;
-    new_cv->fontname = "7x13";
+    new_cv->fontname = STK_FONT_SIZE_6x9;
 
     screen = DefaultScreen(new_cv->dsp);
     depth = DefaultDepth(new_cv->dsp, screen);
@@ -27,6 +27,7 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
     new_cv->gc2 = XCreateGC(new_cv->dsp, parent_win->win, GCForeground |
                           GCBackground|GCLineWidth|GCLineStyle, &gcval);
 
+  
     gcval.foreground = bg;
     gcval.background = fg;
 
@@ -50,6 +51,8 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
         cv->pmap = XCreatePixmap(new_cv->dsp, new_cv->win, w, h, depth);
         XSetForeground(new_cv->dsp, new_cv->gc, WhitePixelOfScreen(DefaultScreenOfDisplay(new_cv->dsp)));
         XFillRectangle(new_cv->dsp, cv->pmap, new_cv->gc, 0, 0, w, h);
+        
+        stk_canvas_set_string_font(new_cv, new_cv->fontname);
 
         new_cv->x = x;
         new_cv->y = y;
@@ -86,6 +89,14 @@ void stk_canvas_draw_arc(stk_widget *cv, uint x, uint y, uint w, uint h,
 } 
 
 
+void stk_canvas_draw_string(stk_widget *cv, uint x, uint y, char *str)
+{
+	stk_canvas *scv = (stk_canvas*)cv->ext_struct;
+	XDrawString(cv->dsp, scv->pmap, cv->gc2, x, y, str, strlen(str));
+	stk_canvas_expose(cv);
+}
+
+
 void stk_canvas_draw_line(stk_widget *cv, uint x0, uint y0, uint x1, uint y1)
 {
     stk_canvas *scv = (stk_canvas*)cv->ext_struct;
@@ -99,6 +110,18 @@ void stk_canvas_draw_point(stk_widget *cv, uint x, uint y)
     stk_canvas *scv = (stk_canvas*)cv->ext_struct;
     XDrawPoint(cv->dsp, scv->pmap, cv->gc2, x, y);
     stk_canvas_expose(cv);
+}
+
+
+void stk_canvas_set_string_font_size(stk_widget *cv, char *size)
+{
+	stk_widget_set_font_size(cv, size);
+}
+
+
+void stk_canvas_set_string_font(stk_widget *cv, char *font)
+{
+	stk_widget_set_font_size(cv, font);
 }
 
 
