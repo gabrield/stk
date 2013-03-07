@@ -217,30 +217,46 @@ void stk_text_handle(STKEvent *event, void *warg)
     switch(event->type)
     {
         case Expose:
+            if(wg->exposefunc)
+                wg->exposefunc(wg->exargs);
+            
             stk_text_redraw(STK_TEXT_EXPOSE, wg, NULL);
             break;
 
         case ButtonPress:
+            if(wg->pressfunc)
+                wg->pressfunc(wg->pargs);
+                
             stk_text_redraw(STK_TEXT_PRESS, wg, NULL);
             break;
 
         case ButtonRelease:
+            if(wg->releasefunc)
+                wg->releasefunc(wg->rargs);
+
             stk_text_redraw(STK_TEXT_RELEASE, wg, NULL);
             break;
 
         case KeyPress:
+            /*MISSING STK_WIDGET_KEYPRESS */
             stk_text_redraw(STK_TEXT_KEYPRESS, wg, event);
             break;
 
         case KeyRelease:
+        
+            /*MISSING STK_WIDGET_KEYRELEASE */
             stk_text_redraw(STK_TEXT_KEYRELEASE, wg, NULL);
             break;
 
         case EnterNotify:
+            if(wg->enterfunc)
+                wg->enterfunc(wg->eargs);
             stk_text_redraw(STK_TEXT_ENTER, wg, NULL);
             break;
 
         case LeaveNotify:
+            if(wg->leavefunc)
+                wg->leavefunc(wg->largs);
             break;
     }
 }

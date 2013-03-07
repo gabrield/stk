@@ -15,12 +15,14 @@
 
 
 /* STK_WIDGET Events */
-#define STK_WIDGET_EXPOSE   0x10
-#define STK_WIDGET_PRESS    0x20
-#define STK_WIDGET_RELEASE  0x30
-#define STK_WIDGET_ENTER    0x40
-#define STK_WIDGET_LEAVE    0x50
-#define STK_WIDGET_MOVE     0x60
+#define STK_WIDGET_EXPOSE     0x10
+#define STK_WIDGET_PRESS      0x20
+#define STK_WIDGET_RELEASE    0x30
+#define STK_WIDGET_ENTER      0x40
+#define STK_WIDGET_LEAVE      0x50
+#define STK_WIDGET_MOVE       0x60
+#define STK_WIDGET_KEYPRESS   0x70
+#define STK_WIDGET_KEYRELEASE 0x80
 
 
 
