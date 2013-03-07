@@ -36,8 +36,8 @@ typedef struct
     GC gc, gc2;
     XFontStruct *font_info;
     char *fontname;
-    const char *label;
-    void *ext_struct; /** if need a place to store a reference to other struct, if it's not a basic widget, etc. */
+    char *label;
+    void *ext_struct; /* if need a place to store a reference to other struct, if it's not a basic widget, etc. */
 
 } stk_widget;
 
@@ -51,6 +51,7 @@ void        stk_widget_set_size(stk_widget *);
 void        stk_widget_set_pos(stk_widget *, uint, uint);
 void        stk_widget_set_color(stk_widget *, int color);
 stk_widget *stk_widget_root();
+void        stk_widget_event_listen(stk_widget *, void *, void *);
 
 
 #endif /* STK_WIDGET_H */

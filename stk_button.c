@@ -2,7 +2,7 @@
 
 
 stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
-                                      const char *label, void *func, void *args)
+                                            char *label, void *func, void *args)
 {
     stk_widget *new_bt  = (stk_widget*) malloc(sizeof(stk_widget));
     int screen;

@@ -6,11 +6,6 @@ OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=test
 STK_OBJS=$(wildcard stk*.o)
 
-
-
-docs:
-	@cd doc && make
-
 all: $(SOURCES) $(EXECUTABLE)
 
 	

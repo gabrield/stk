@@ -22,7 +22,7 @@ typedef struct
 } stk_progress_bar;
 
 
-stk_widget *stk_progress_bar_new(stk_widget *, int, int, uint, uint, const char *);
+stk_widget *stk_progress_bar_new(stk_widget *, int, int, uint, uint, char *);
 void        stk_progress_bar_handle(STKEvent *, void *);
 void        stk_progress_bar_set(stk_widget *, uint);
 void        stk_progress_bar_set_value(stk_widget *, uint);

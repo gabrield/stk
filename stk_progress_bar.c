@@ -1,7 +1,7 @@
 #include <stk_progress_bar.h>
 
 
-stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, uint h, const char *label)
+stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, uint h, char *label)
 {
     stk_widget *new_pb  = (stk_widget*) malloc(sizeof(stk_widget));
     stk_progress_bar *pb  = (stk_progress_bar*) malloc(sizeof(stk_progress_bar));
