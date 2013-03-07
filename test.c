@@ -69,7 +69,7 @@ void add(void *c)
 void listen(void *c)
 {
     stk_widget *p = (stk_widget*)c;
-    printf("Click at %dx%d\n", p->ev->xbutton.x, p->ev->xbutton.y);
+    printf("%dx%d\n", p->ev->xbutton.x, p->ev->xbutton.y);
 }
 
 
@@ -102,7 +102,7 @@ int main()
 
     stk_init();
     
-    win = stk_window_new(500, 500, 640, 480, "STK Demo", NULL, NULL);
+    win = stk_window_new(500, 500, 640, 480, "STK Demo");
     bt  = stk_button_new(win, 100, 100, 60, 20, "Hello", &hello, "to STKButton");
     bt1 = stk_button_new(win, 200, 100, 60, 20, "MoveWin", &move,  (void*)&wc2);
     bt2 = stk_button_new(win, 300, 100, 60, 20, "Color1", &color, (void*)&wc1);
@@ -115,8 +115,8 @@ int main()
     cv  = stk_canvas_new(win, 80, 230, 500, 230);
     bt7 = stk_button_new(win, 400, 200, 60, 20, "CanvasBt", &draw, (void*)cv);
     
-    /*stk_widget_event_listen(cv, STK_WIDGET_MOVE, hello, "move canvas");*/
-    stk_widget_event_listen(cv, STK_WIDGET_PRESS, listen, (void*)cv);
+    stk_widget_event_listen_add(cv, STK_WIDGET_MOVE, listen, (void*)cv);
+    stk_widget_event_listen_add(cv, STK_WIDGET_PRESS, listen, (void*)cv);
         
     wc.d1  = win;
     wc.c   = 0xd3d3d3;

@@ -3,7 +3,7 @@
 
 #include <stk_widget.h>
 
-stk_widget *stk_window_new(int, int, uint, uint, const char *, void *, void *);
+stk_widget *stk_window_new(int, int, uint, uint, const char *);
 void        stk_window_show(stk_widget *);
 void        stk_window_set_title(stk_widget *, const char *);
 void        stk_window_handle(STKEvent *, void *);

@@ -112,8 +112,8 @@ void stk_run()
 
 
 
-void stk_widget_event_listen(stk_widget *win, int event_type, void *func,
-                                                              void *args)
+void stk_widget_event_listen_add(stk_widget *win, int event_type, void *func,
+                                                                  void *args)
 {
     switch(event_type)
     {
@@ -149,6 +149,43 @@ void stk_widget_event_listen(stk_widget *win, int event_type, void *func,
     }
 }
 
+
+
+void stk_widget_event_listen_remove(stk_widget *win, int event_type)
+{
+    switch(event_type)
+    {
+        case STK_WIDGET_MOVE:
+            win->movefunc = NULL;
+            win->margs = NULL;
+            break;
+            
+        case STK_WIDGET_PRESS:
+            win->pressfunc = NULL;
+            win->pargs = NULL;
+            break;
+            
+        case STK_WIDGET_EXPOSE:
+            win->exposefunc = NULL;
+            win->exargs = NULL;
+            break;
+            
+        case STK_WIDGET_LEAVE:
+            win->leavefunc = NULL;
+            win->largs = NULL;
+            break;
+            
+        case STK_WIDGET_ENTER:
+            win->enterfunc = NULL;
+            win->eargs = NULL;
+            break;
+            
+        case STK_WIDGET_RELEASE:
+            win->releasefunc = NULL;
+            win->rargs = NULL;
+            break;
+    }
+}
 
 void stk_widget_set_size(stk_widget *win);
 

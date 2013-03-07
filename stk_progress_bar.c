@@ -60,7 +60,6 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
         new_pb->h = h;
 
         new_pb->handler = &stk_progress_bar_handle;
-        new_pb->func = NULL;
         pb->pct = 0;
         new_pb->ext_struct = (void*)pb;
 

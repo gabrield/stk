@@ -1,7 +1,6 @@
 #include <stk_window.h>
 
-stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title,
-                                                    void *func, void *args)
+stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title)
 {
     stk_widget *new_win  = (stk_widget*) malloc(sizeof(stk_widget));
     Atom del_win;
@@ -25,20 +24,10 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title,
       XSetWMProtocols(new_win->dsp, new_win->win, &del_win, 1);
 
 
-
-      new_win->func = func;
-      new_win->args = args;
       new_win->handler = &stk_window_handle;
 
       if(title)
           stk_window_set_title(new_win, title);
-
-      if(func)
-          new_win->func = func;
-
-      if(args)
-          new_win->args = args;
-
 
       new_win->gc = XCreateGC(display, new_win->win, 0, 0);
 
