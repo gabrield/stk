@@ -129,8 +129,8 @@ int main()
     wc2.y  = 200;
 
     wc3.d1 = bt4;
-    wc3.x  = 200;
-    wc3.y  = 260;
+    wc3.x  = 10;
+    wc3.y  = 10;
 
     stk_window_show(win);
   

@@ -19,7 +19,7 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title)
                     PointerMotionMask | KeyPressMask | StructureNotifyMask;
                     
       XSelectInput(new_win->dsp, new_win->win, new_win->mask);
-      XSetWindowBackground(new_win->dsp, new_win->win, 0xF2E6EB);
+      XSetWindowBackground(new_win->dsp, new_win->win, 0xd3d3d3);
       del_win = XInternAtom(new_win->dsp, "WM_DELETE_WINDOW", 0);
       XSetWMProtocols(new_win->dsp, new_win->win, &del_win, 1);
 
