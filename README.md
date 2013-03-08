@@ -1,6 +1,6 @@
-STK - Small toolkit based on Xlib;
+STK - Small Graphical toolkit based on Xlib;
 
-STK is a small Graphical toolkit for applications.
+STK is a small Graphical toolkit for desktop applications.
 
 To compile, type ''make'' (without the quotes) on your terminal and voilà!
 
