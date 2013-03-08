@@ -42,7 +42,7 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
     if(new_cv->dsp)
     {
         new_cv->win = XCreateSimpleWindow(new_cv->dsp, parent_win->win, x, y, w,
-                                                                  h, 2, fg, bg);
+                                                                  h, 1, fg, bg);
         new_cv->mask = ExposureMask | EnterWindowMask | LeaveWindowMask |
                        PointerMotionMask | ButtonPressMask | ButtonReleaseMask;
 
@@ -115,6 +115,12 @@ void stk_canvas_draw_point(stk_widget *cv, uint x, uint y)
     XDrawPoint(cv->dsp, scv->pmap, cv->gc2, x, y);
     stk_canvas_expose(cv);
 }
+
+
+void stk_canvas_area_rotate(stk_widget *cv, uint x0 , uint y0, uint x1, uint y1,
+                                                                     uint angle)
+{
+}             
 
 
 void stk_canvas_set_string_font_size(stk_widget *cv, char *size)

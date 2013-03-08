@@ -28,7 +28,7 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
     if(new_pb->dsp)
     {
         new_pb->win = XCreateSimpleWindow(new_pb->dsp, parent_win->win, x, y, w,
-                                                                  h, 2, fg, bg);
+                                                                  h, 1, fg, bg);
         new_pb->gc = XCreateGC(new_pb->dsp, new_pb->win, 0, 0);
         new_pb->font_info = XLoadQueryFont(new_pb->dsp, new_pb->fontname);
 

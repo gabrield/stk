@@ -15,7 +15,7 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     
     
     new_bt->dsp = display;
-    new_bt->fontname = "7x13";
+    new_bt->fontname = STK_FONT_SIZE_7x13;
 
     screen = DefaultScreen(new_bt->dsp);
     fg = BlackPixel(new_bt->dsp, screen);
@@ -38,7 +38,7 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     if(new_bt->dsp)
     {
         new_bt->win = XCreateSimpleWindow(new_bt->dsp, parent_win->win, x, y, w,
-                                                                  h, 2, fg, bg);
+                                                                  h, 1, fg, bg);
         new_bt->mask =  ExposureMask | EnterWindowMask | LeaveWindowMask |
                                       ButtonPressMask | ButtonReleaseMask;
 

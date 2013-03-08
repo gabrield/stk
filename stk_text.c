@@ -38,7 +38,7 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     if(new_txt->dsp)
     {
         new_txt->win = XCreateSimpleWindow(new_txt->dsp, parent_win->win, x, y, w,
-                                                                  h, 2, fg, bg);
+                                                                  h, 1, fg, bg);
 
         new_txt->mask =  ExposureMask | KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask |
                          EnterWindowMask | LeaveWindowMask |
