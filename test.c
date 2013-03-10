@@ -16,7 +16,7 @@ void draw(void *c)
     int i = 0;
     
     stk_widget *p = (stk_widget*)c;
-    stk_canvas_draw_arc(p, 50, 70, 150, 150, 10, 360*64);
+    stk_canvas_draw_arc(p, 80, 70, 300, 100, 100, 360*64);
     stk_canvas_draw_line(p, 10, 10, 100, 100);
     /*stk_canvas_set_string_font_size(p, STK_FONT_SIZE_9x15);*/
     stk_canvas_draw_string(p, 50, 50, "50x50");
@@ -72,8 +72,6 @@ void listen(void *c)
     printf("%dx%d\n", p->ev->xbutton.x, p->ev->xbutton.y);
 }
 
-
-
 void sub(void *c)
 {
     int val;
@@ -112,13 +110,14 @@ int main()
     pb  = stk_progress_bar_new(win, 100, 200, 200, 20, "0%");
     bt5 = stk_button_new(win, 300, 200, 20, 20, "+", &add, (void*)pb);
     bt6 = stk_button_new(win, 80, 200, 20, 20, "-", &sub, (void*)pb);
-    cv  = stk_canvas_new(win, 80, 230, 500, 230);
+    cv  = stk_canvas_new(win, 80, 230, 700, 350);
     bt7 = stk_button_new(win, 400, 200, 60, 20, "CanvasBt", &draw, (void*)cv);
     
     stk_widget_event_listen_add(cv, STK_WIDGET_MOVE, listen, (void*)cv);
     stk_widget_event_listen_add(cv, STK_WIDGET_PRESS, listen, (void*)cv);
 
     stk_text_set_text(txt, "Oba!!!");
+    stk_canvas_draw_arc(cv, 50, 70, 150, 150, 10, 360*64);
     
     wc.d1  = win;
     wc.c   = 0xd3d3d3;
