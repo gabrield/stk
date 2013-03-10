@@ -136,7 +136,6 @@ void stk_text_expose(stk_widget *txt, void *arg)
 
 
 
-
 void stk_text_set_text(stk_widget *txt, char *string)
 {
     int i, len;
@@ -150,6 +149,7 @@ void stk_text_set_text(stk_widget *txt, char *string)
     
     stk_text_expose(txt, NULL);
 }
+
 
 
 void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
