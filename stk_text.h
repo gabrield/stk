@@ -17,8 +17,8 @@
 
 /* STKText Properties */
 enum {
-    STK_TEXT_INPUT,
-    STK_TEXT_OUTPUT
+    STK_TEXT_INPUT = 0,
+    STK_TEXT_OUTPUT = 1
  };
 
 

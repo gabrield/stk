@@ -15,7 +15,7 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     memset(new_txt, 0, sizeof(stk_widget));
     
     new_txt->dsp = display;
-    new_txt->fontname = "7x13";
+    new_txt->fontname = STK_FONT_SIZE_7x13;
 
     screen = DefaultScreen(new_txt->dsp);
     fg = BlackPixel(new_txt->dsp, screen);
@@ -40,9 +40,17 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
         new_txt->win = XCreateSimpleWindow(new_txt->dsp, parent_win->win, x, y, w,
                                                                   h, 1, fg, bg);
 
-        new_txt->mask =  ExposureMask | KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask |
-                         EnterWindowMask | LeaveWindowMask |
-                         FocusChangeMask | StructureNotifyMask | PropertyChangeMask | VisibilityChangeMask;
+        if(type == STK_TEXT_INPUT)
+        {
+            new_txt->mask =  ExposureMask | KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask |
+                             EnterWindowMask | LeaveWindowMask |
+                             FocusChangeMask | StructureNotifyMask | PropertyChangeMask | VisibilityChangeMask;
+        }
+        else
+        {
+            new_txt->mask =  ExposureMask| EnterWindowMask | LeaveWindowMask |
+                             FocusChangeMask | StructureNotifyMask | PropertyChangeMask | VisibilityChangeMask;       
+        }
 
         XChangeWindowAttributes(new_txt->dsp, new_txt->win, CWBackingStore,
                                                               &setwinattr);
@@ -58,10 +66,8 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
         new_txt->handler = &stk_text_handle;
         new_txt->ext_struct = (void*)txt;
 
-        memset(txt->text, '\0', STK_TEXT_BUFFER_SIZE);
-
         if(label)
-            new_txt->label = label;
+            strcpy(txt->text, label);
 
 
         stk_widget_insert((void*)new_txt); 
@@ -105,7 +111,23 @@ void stk_text_delete(stk_widget *txt)
 
 void stk_text_expose(stk_widget *txt, void *arg)
 {
+    stk_text *string = (stk_text*)txt->ext_struct;
+    int hcenter = ((txt->font_info->descent + txt->font_info->ascent )/2) + (txt->h / 2);
+    int sw, begin;
+
     XClearWindow(txt->dsp, txt->win);
+
+    if(string->text)
+    {
+        sw = XTextWidth(txt->font_info, string->text, strlen(string->text));
+        if(sw > txt->w)
+            begin = txt->w - sw;
+        else
+            begin = 2;
+        
+        XDrawString(txt->dsp, txt->win, txt->gc2, begin, hcenter,
+                             string->text, strlen(string->text));
+    }
     XFlush(txt->dsp);
 }
 
@@ -153,7 +175,6 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
 { 
     
     STKEvent *ev;
-    stk_text *string = (stk_text*)txt->ext_struct;
 
     if(args)
          ev = (STKEvent*)args;
@@ -174,24 +195,8 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
         case STK_TEXT_KEYPRESS:
         {
             KeySym keysym;
-            stk_text_expose(txt, NULL);
             stk_text_keys(txt, &ev->xkey, &keysym);
-            {     
-                int hcenter = ((txt->font_info->descent + txt->font_info->ascent )/2) + (txt->h / 2);
-                int sw, begin;
-
-                if(string->text)
-                {
-                    sw = XTextWidth(txt->font_info, string->text, strlen(string->text));
-                    if(sw > txt->w)
-                        begin = txt->w - sw;
-                    else
-                        begin = 2;
-                    
-                    XDrawString(txt->dsp, txt->win, txt->gc2, begin, hcenter,
-                                         string->text, strlen(string->text));
-                }
-            }
+            stk_text_expose(txt, NULL);
         }
             break;
 

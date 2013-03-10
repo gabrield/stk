@@ -108,7 +108,7 @@ int main()
     bt2 = stk_button_new(win, 300, 100, 60, 20, "Color1", &color, (void*)&wc1);
     bt3 = stk_button_new(win, 400, 100, 60, 20, "Color2", &color, (void*)&wc);
     bt4 = stk_button_new(win, 400, 150, 60, 20, "MoveBt1", &move, (void*)&wc3);
-    txt = stk_text_new(win, 100, 150, 200, 20, "TxtArea", STK_TEXT_INPUT);
+    txt = stk_text_new(win, 100, 150, 200, 20, "TxtArea", STK_TEXT_OUTPUT);
     pb  = stk_progress_bar_new(win, 100, 200, 200, 20, "0%");
     bt5 = stk_button_new(win, 300, 200, 20, 20, "+", &add, (void*)pb);
     bt6 = stk_button_new(win, 80, 200, 20, 20, "-", &sub, (void*)pb);
