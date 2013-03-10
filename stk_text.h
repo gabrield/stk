@@ -32,5 +32,6 @@ stk_widget *stk_text_new(stk_widget *, int, int, uint, uint, char *, int);
 void        stk_text_handle(STKEvent *, void *);
 void        stk_text_redraw(int, stk_widget *, void *);
 char       *stk_text_get_text(stk_widget *);
+void        stk_text_set_text(stk_widget *, char *);
 
 #endif /* STK_TEXT_H */

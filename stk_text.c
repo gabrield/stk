@@ -13,6 +13,7 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     XSetWindowAttributes setwinattr;
     
     memset(new_txt, 0, sizeof(stk_widget));
+    memset(txt->text, 0, sizeof(stk_text));
     
     new_txt->dsp = display;
     new_txt->fontname = STK_FONT_SIZE_7x13;
@@ -79,6 +80,7 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
 }
 
 
+
 void stk_text_append(stk_widget *txt, char c)
 {
     int len = 0;
@@ -109,6 +111,7 @@ void stk_text_delete(stk_widget *txt)
 }
 
 
+
 void stk_text_expose(stk_widget *txt, void *arg)
 {
     stk_text *string = (stk_text*)txt->ext_struct;
@@ -131,6 +134,22 @@ void stk_text_expose(stk_widget *txt, void *arg)
     XFlush(txt->dsp);
 }
 
+
+
+
+void stk_text_set_text(stk_widget *txt, char *string)
+{
+    int i, len;
+    stk_text *extstr = (stk_text*)txt->ext_struct;
+
+    len = strlen(string);
+    memset(extstr->text, '\0', STK_TEXT_BUFFER_SIZE);
+
+    for(i = 0; i < len; i++)
+        stk_text_append(txt, *string++);
+    
+    stk_text_expose(txt, NULL);
+}
 
 
 void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)

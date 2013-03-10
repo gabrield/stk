@@ -108,7 +108,7 @@ int main()
     bt2 = stk_button_new(win, 300, 100, 60, 20, "Color1", &color, (void*)&wc1);
     bt3 = stk_button_new(win, 400, 100, 60, 20, "Color2", &color, (void*)&wc);
     bt4 = stk_button_new(win, 400, 150, 60, 20, "MoveBt1", &move, (void*)&wc3);
-    txt = stk_text_new(win, 100, 150, 200, 20, "TxtArea", STK_TEXT_OUTPUT);
+    txt = stk_text_new(win, 100, 150, 200, 20, "TxtArea", STK_TEXT_INPUT);
     pb  = stk_progress_bar_new(win, 100, 200, 200, 20, "0%");
     bt5 = stk_button_new(win, 300, 200, 20, 20, "+", &add, (void*)pb);
     bt6 = stk_button_new(win, 80, 200, 20, 20, "-", &sub, (void*)pb);
@@ -117,7 +117,9 @@ int main()
     
     stk_widget_event_listen_add(cv, STK_WIDGET_MOVE, listen, (void*)cv);
     stk_widget_event_listen_add(cv, STK_WIDGET_PRESS, listen, (void*)cv);
-        
+
+    stk_text_set_text(txt, "Oba!!!");
+    
     wc.d1  = win;
     wc.c   = 0xd3d3d3;
 
@@ -133,6 +135,7 @@ int main()
     wc3.y  = 10;
 
     stk_window_show(win);
+
   
     stk_run();
     
