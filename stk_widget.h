@@ -25,7 +25,6 @@
 #define STK_WIDGET_KEYRELEASE 0x80
 
 
-
 typedef XEvent STKEvent;
 
 Display *display;
@@ -77,7 +76,8 @@ void        stk_widget_set_pos(stk_widget *, uint, uint);
 void        stk_widget_set_color(stk_widget *, int color);
 void        stk_widget_set_font_size(stk_widget *, char *);
 stk_widget *stk_widget_root();
-void        stk_widget_event_listen_add(stk_widget *, int, void *,void *);
+void        stk_widget_event_listen_add(stk_widget *, int, 
+                          void (*funcptr) (void*),void *);
 void        stk_widget_event_listen_remove(stk_widget *, int);
 
 #endif /* STK_WIDGET_H */

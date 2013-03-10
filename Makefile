@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-c -g -I. -Wall 
+CFLAGS=-c -g -I. -pedantic -Wall 
 LDFLAGS=-L/usr/X11R6/lib -lX11
 SOURCES=$(wildcard *.c)
 OBJECTS=$(SOURCES:.c=.o)

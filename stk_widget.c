@@ -112,8 +112,8 @@ void stk_run()
 
 
 
-void stk_widget_event_listen_add(stk_widget *win, int event_type, void *func,
-                                                                  void *args)
+void stk_widget_event_listen_add(stk_widget *win, int event_type,
+                                void (*func) (void*), void *args)
 {
     switch(event_type)
     {
