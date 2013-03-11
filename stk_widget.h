@@ -77,7 +77,7 @@ void        stk_widget_set_color(stk_widget *, int color);
 void        stk_widget_set_font_size(stk_widget *, char *);
 stk_widget *stk_widget_root();
 void        stk_widget_event_listen_add(stk_widget *, int, 
-                          void (*funcptr) (void*),void *);
+                                  void (*)(void*),void *);
 void        stk_widget_event_listen_remove(stk_widget *, int);
 
 #endif /* STK_WIDGET_H */

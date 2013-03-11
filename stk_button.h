@@ -11,7 +11,7 @@
 #define STK_BUTTON_LEAVE    0x50
 
 stk_widget *stk_button_new(stk_widget *, int, int, uint, uint, char *, 
-                                         void (*func)(void*), void *);
+                                         void (*)(void*), void *);
 void        stk_button_handle(STKEvent *, void *);
 
 #endif /* STK_BUTTON_H */
