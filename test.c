@@ -3,6 +3,7 @@
 #include <stk_text.h>
 #include <stk_progress_bar.h>
 #include <stk_canvas.h>
+#include <stk_menu.h>
 
 typedef struct 
 {
@@ -94,13 +95,15 @@ int main()
 {
     stk_widget *bt, *bt1, *bt2, *bt3,
                *bt4, *bt5, *bt6, *cv,
-               *bt7, *txt, *pb, *win;
+               *bt7, *txt, *pb, *win,
+               *mn;
 
     ptr wc, wc1, wc2, wc3;
 
     stk_init();
     
     win = stk_window_new(500, 500, 800, 600, "STK Demo");
+    mn  = stk_menu_new(win, 600, 70, 60, 100, NULL);
     bt  = stk_button_new(win, 100, 100, 60, 20, "Hello", &hello, "to STKButton");
     bt1 = stk_button_new(win, 200, 100, 60, 20, "MoveWin", &move,  (void*)&wc2);
     bt2 = stk_button_new(win, 300, 100, 60, 20, "Color1", &color, (void*)&wc1);

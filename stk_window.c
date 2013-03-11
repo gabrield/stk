@@ -11,29 +11,37 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title)
 
     if(new_win->dsp)
     {
-      new_win->win = XCreateWindow(new_win->dsp, DefaultRootWindow(new_win->dsp),
+        new_win->win = XCreateWindow(new_win->dsp, DefaultRootWindow(new_win->dsp),
                                    x, y, w, h, 0, CopyFromParent, CopyFromParent,
                                                            CopyFromParent, 0, 0);
-
-      new_win->mask = ExposureMask | ButtonPressMask | ButtonReleaseMask |
+        
+        new_win->mask = ExposureMask | ButtonPressMask | ButtonReleaseMask |
                     PointerMotionMask | KeyPressMask | StructureNotifyMask;
                     
-      XSelectInput(new_win->dsp, new_win->win, new_win->mask);
-      XSetWindowBackground(new_win->dsp, new_win->win, 0xd3d3d3);
-      del_win = XInternAtom(new_win->dsp, "WM_DELETE_WINDOW", 0);
-      XSetWMProtocols(new_win->dsp, new_win->win, &del_win, 1);
+        XSelectInput(new_win->dsp, new_win->win, new_win->mask);
+        XSetWindowBackground(new_win->dsp, new_win->win, 0xd3d3d3);
+        del_win = XInternAtom(new_win->dsp, "WM_DELETE_WINDOW", 0);
+        XSetWMProtocols(new_win->dsp, new_win->win, &del_win, 1);
+        
+      
+      
+              
+        new_win->x = x;
+        new_win->y = y;
+        new_win->w = w;
+        new_win->h = h;
 
 
-      new_win->handler = &stk_window_handle;
+        new_win->handler = &stk_window_handle;
 
-      if(title)
-          stk_window_set_title(new_win, title);
+        if(title)
+            stk_window_set_title(new_win, title);
 
-      new_win->gc = XCreateGC(display, new_win->win, 0, 0);
+        new_win->gc = XCreateGC(display, new_win->win, 0, 0);
 
-      stk_widget_insert((void*)new_win); 
+        stk_widget_insert((void*)new_win); 
 
-      return new_win;
+        return new_win;
     }
     else
       return NULL;
