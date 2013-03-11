@@ -1,9 +1,12 @@
 #include <stk_menu.h>
+#include <stk_button.h>
+
 
 stk_widget *stk_menu_new(stk_widget *parent_win, int x, int y, uint w, uint h,
                                                                   char *title)
 {
     stk_widget *new_menu  = (stk_widget*) malloc(sizeof(stk_widget));
+    stk_widget *bt;
     
     memset(new_menu, 0, sizeof(stk_widget));
     
@@ -15,7 +18,8 @@ stk_widget *stk_menu_new(stk_widget *parent_win, int x, int y, uint w, uint h,
                                                 x, y, w, h, 1, 0, 0);
         
         new_menu->mask = ExposureMask | ButtonPressMask | ButtonReleaseMask |
-                  PointerMotionMask | KeyPressMask | StructureNotifyMask;
+                     PointerMotionMask | KeyPressMask | StructureNotifyMask |
+                                           EnterWindowMask | LeaveWindowMask;
                 
         XSelectInput(new_menu->dsp, new_menu->win, new_menu->mask);
         XSetWindowBackground(new_menu->dsp, new_menu->win, 0xd3d3d3);
@@ -28,6 +32,7 @@ stk_widget *stk_menu_new(stk_widget *parent_win, int x, int y, uint w, uint h,
         new_menu->w = w;
         new_menu->h = h;
         
+        bt =  stk_button_new(new_menu, -1, 80, new_menu->w, 20, "Hello", NULL, NULL);    
         
         if(title)
             stk_menu_set_title(new_menu, title);
@@ -57,7 +62,6 @@ void stk_menu_set_color(stk_widget *menu, int color)
 void stk_menu_handle(STKEvent *event, void *warg)
 {
   stk_widget *wg = (stk_widget*)warg;
-  stk_widget *wroot = stk_widget_root();
 
   switch(event->type)
   {
@@ -65,30 +69,24 @@ void stk_menu_handle(STKEvent *event, void *warg)
           break;
       
       case ButtonPress:
-          XResizeWindow(wg->dsp, wg->win, wg->w, wg->h+30);
+          XResizeWindow(wg->dsp, wg->win, wg->w, wg->h+100);
          
           break;
       
       case ButtonRelease:
-          XResizeWindow(wg->dsp, wg->win, wg->w, wg->h-30);
-         /*if(wg->func)
-             wg->func(wg->args);*/
+         
+
           break;
 
-      case ClientMessage:
-          if(wg == wroot)
-          {
-              XDestroyWindow(wg->dsp, wg->win);
-              /* close connection to server */
-              XCloseDisplay(wg->dsp);
-              exit(0);
-          }
-          else
-          {
-              XUnmapWindow(wg->dsp, wg->win);
-              XFlush(wg->dsp);
-          }
-
+        case EnterNotify:
+            printf("Enter\n");
+            break;
+        
+        case LeaveNotify:
+            printf("Leave\n");
+            XResizeWindow(wg->dsp, wg->win, wg->w, 20);
+            break;
+    
           break;
   }
 }

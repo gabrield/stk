@@ -70,7 +70,10 @@ void add(void *c)
 void listen(void *c)
 {
     stk_widget *p = (stk_widget*)c;
+    char coords[10] = {0};
+    sprintf(coords, "%dx%d", p->ev->xbutton.x, p->ev->xbutton.y);
     printf("%dx%d\n", p->ev->xbutton.x, p->ev->xbutton.y);
+    stk_canvas_draw_string(p, p->ev->xbutton.x, p->ev->xbutton.y, coords);
 }
 
 void sub(void *c)
@@ -103,7 +106,7 @@ int main()
     stk_init();
     
     win = stk_window_new(500, 500, 800, 600, "STK Demo");
-    mn  = stk_menu_new(win, 600, 70, 60, 100, NULL);
+    mn  = stk_menu_new(win, 600, 70, 60, 20, NULL);
     bt  = stk_button_new(win, 100, 100, 60, 20, "Hello", &hello, "to STKButton");
     bt1 = stk_button_new(win, 200, 100, 60, 20, "MoveWin", &move,  (void*)&wc2);
     bt2 = stk_button_new(win, 300, 100, 60, 20, "Color1", &color, (void*)&wc1);
@@ -116,7 +119,7 @@ int main()
     cv  = stk_canvas_new(win, 80, 230, 700, 350);
     bt7 = stk_button_new(win, 400, 200, 60, 20, "CanvasBt", &draw, (void*)cv);
     
-    stk_widget_event_listen_add(cv, STK_WIDGET_MOVE, listen, (void*)cv);
+    /*stk_widget_event_listen_add(cv, STK_WIDGET_MOVE, listen, (void*)cv);*/
     stk_widget_event_listen_add(cv, STK_WIDGET_PRESS, listen, (void*)cv);
 
     stk_text_set_text(txt, "Oba!!!");
