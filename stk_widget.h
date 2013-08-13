@@ -71,7 +71,7 @@ int         stk_widget_insert(void *);
 int         stk_widget_delete(void *);
 void        stk_init();
 void        stk_run();
-void        stk_widget_set_size(stk_widget *);
+void        stk_widget_set_size(stk_widget *, uint, uint);
 void        stk_widget_set_pos(stk_widget *, uint, uint);
 void        stk_widget_set_color(stk_widget *, int color);
 void        stk_widget_set_font_size(stk_widget *, char *);

@@ -6,7 +6,6 @@ stk_widget *stk_menu_new(stk_widget *parent_win, int x, int y, uint w, uint h,
                                                                   char *title)
 {
     stk_widget *new_menu  = (stk_widget*) malloc(sizeof(stk_widget));
-    stk_widget *bt;
     
     memset(new_menu, 0, sizeof(stk_widget));
     
@@ -32,10 +31,7 @@ stk_widget *stk_menu_new(stk_widget *parent_win, int x, int y, uint w, uint h,
         new_menu->w = w;
         new_menu->h = h;
         
-        bt =  stk_button_new(new_menu, -1, 80, new_menu->w, 20, "Hello", NULL, NULL);    
         
-        if(title)
-            stk_menu_set_title(new_menu, title);
         
         new_menu->gc = XCreateGC(display, new_menu->win, 0, 0);
         
@@ -61,34 +57,27 @@ void stk_menu_set_color(stk_widget *menu, int color)
 
 void stk_menu_handle(STKEvent *event, void *warg)
 {
-  stk_widget *wg = (stk_widget*)warg;
+    stk_widget *wg = (stk_widget*)warg;
 
-  switch(event->type)
-  {
-      case Expose:
-          break;
-      
-      case ButtonPress:
-          XResizeWindow(wg->dsp, wg->win, wg->w, wg->h+100);
-         
-          break;
-      
-      case ButtonRelease:
-         
-
-          break;
-
-        case EnterNotify:
-            printf("Enter\n");
+    switch(event->type)
+    {
+        case Expose:
             break;
+      
+        case ButtonPress:
+            XResizeWindow(wg->dsp, wg->win, wg->w, wg->h+100);
+            break;
+      
+        case ButtonRelease:
+            break;
+
+          case EnterNotify:
+              break;
         
-        case LeaveNotify:
-            printf("Leave\n");
-            XResizeWindow(wg->dsp, wg->win, wg->w, 20);
-            break;
-    
-          break;
-  }
+          case LeaveNotify:
+              XResizeWindow(wg->dsp, wg->win, wg->w, 20);
+              break;
+    }
 }
 
 void stk_menu_show(stk_widget *menu)
@@ -97,15 +86,3 @@ void stk_menu_show(stk_widget *menu)
     XFlush(menu->dsp);
 }
 
-
-void stk_menu_set_title(stk_widget *menu, const char *title)
-{
-    /* This variable will store the newly created property. */
-    XTextProperty window_title_property;
-
-    /* translate the given string into an X property. */
-    XStringListToTextProperty((char**)&title,
-                                       1,
-                                       &window_title_property);
-    XSetWMName(menu->dsp, menu->win, &window_title_property);
-}

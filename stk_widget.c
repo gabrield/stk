@@ -29,6 +29,7 @@ handled
 int stk_widget_insert(void *widget)
 {
     widget_list *new_widget = (widget_list *)malloc(sizeof(widget_list));
+    
     if(new_widget)
     {
         new_widget->this = widget;
@@ -71,13 +72,12 @@ stk_widget *stk_widget_search(void *widget)
         {
             wnode = (stk_widget*)node->this;
             if(wnode->win == (Window)widget)
-            {
                 return wnode;
-            }
             else
                 node = node->next;
         }
-    }   
+    }
+
     printf("Widget %p not found :(\n", widget);
     return NULL;
 }
@@ -91,7 +91,7 @@ the event callings of the widgets.
 */
 void stk_run()
 {
-    STKEvent  event;
+    STKEvent event;
     widget_list *node = list;
     stk_widget *wnode = NULL;
 
@@ -187,7 +187,10 @@ void stk_widget_event_listen_remove(stk_widget *win, int event_type)
     }
 }
 
-void stk_widget_set_size(stk_widget *win);
+void stk_widget_set_size(stk_widget *win, uint w, uint h)
+{
+    XResizeWindow(win->dsp, win->win, w, h);
+}
 
 /*! 
 @brief returns the first widget created

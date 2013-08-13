@@ -52,8 +52,8 @@ void move(void *c)
 
 void add(void *c)
 {
-    int val;
-    char buffer[10];
+    int val = 0;
+    char buffer[10] = {0};
     stk_widget *p = (stk_widget*)c;
 
     val = stk_progress_bar_get_value(p);
