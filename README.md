@@ -9,7 +9,7 @@ Widget list:
 * Window
 * Button
 * Text Area - still need some changes/improvements
-* Canvas - under development/test
+* Plotter - under development/test
 * ProgressBar - under test
 * Listbox - planned
 

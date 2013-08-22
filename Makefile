@@ -1,22 +1,7 @@
-CC=gcc
-CFLAGS=-c -g -I. -pedantic -Wall 
-LDFLAGS=-L/usr/X11R6/lib -lX11
-SOURCES=$(wildcard *.c)
-OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLE=test
-STK_OBJS=$(wildcard stk*.o)
-
-all: $(SOURCES) $(EXECUTABLE)
-
-	
-$(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
-
-.c.o:
-	$(CC) $(CFLAGS) $< -o $@
+all:
+	@make -C src
+	@make -C test
 
 clean:
-	rm -rf $(OBJECTS) test *.a doc/*.html
-
-lib:
-	ar rcs libstk.a $(STK_OBJS)
+	@make -C src clean
+	@make -C test clean
