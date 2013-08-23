@@ -8,10 +8,9 @@ Widget list:
 
 * Window
 * Button
-* Text Area - still need some changes/improvements
+* Text Input/Output - still need some changes/improvements
 * Plotter - under development/test
-* ProgressBar - under test
-* Listbox - planned
+* ProgressBar
 
 Take a look at test.c to see the basics of STK;
 
