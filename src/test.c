@@ -2,7 +2,7 @@
 #include <stk_button.h>
 #include <stk_text.h>
 #include <stk_progress_bar.h>
-#include <stk_plotter.h>
+#include <stk_canvas.h>
 #include <stk_menu.h>
 
 typedef struct 
@@ -17,13 +17,13 @@ void draw(void *c)
     int i = 0;
     
     stk_widget *p = (stk_widget*)c;
-    stk_plotter_draw_arc(p, 80, 70, 300, 100, 100, 360*64);
-    stk_plotter_draw_line(p, 10, 10, 100, 100);
-    /*stk_plotter_set_string_font_size(p, STK_FONT_SIZE_9x15);*/
-    stk_plotter_draw_string(p, 50, 50, "50x50");
+    stk_canvas_draw_arc(p, 80, 70, 300, 100, 100, 360*64);
+    stk_canvas_draw_line(p, 10, 10, 100, 100);
+    /*stk_canvas_set_string_font_size(p, STK_FONT_SIZE_9x15);*/
+    stk_canvas_draw_string(p, 50, 50, "50x50");
 
     for(i = 350; i > 200; i--)
-        stk_plotter_draw_point(p, 100+i, i-150);        
+        stk_canvas_draw_point(p, 100+i, i-150);        
 }
 
 void hello(void *string)
@@ -73,7 +73,7 @@ void listen(void *c)
     char coords[10] = {0};
     sprintf(coords, "%dx%d", p->ev->xbutton.x, p->ev->xbutton.y);
     printf("%dx%d\n", p->ev->xbutton.x, p->ev->xbutton.y);
-    stk_plotter_draw_string(p, p->ev->xbutton.x, p->ev->xbutton.y, coords);
+    stk_canvas_draw_string(p, p->ev->xbutton.x, p->ev->xbutton.y, coords);
 }
 
 void sub(void *c)
@@ -116,14 +116,14 @@ int main()
     pb  = stk_progress_bar_new(win, 100, 200, 200, 20, "0%");
     bt5 = stk_button_new(win, 300, 200, 20, 20, "+", &add, (void*)pb);
     bt6 = stk_button_new(win, 80, 200, 20, 20, "-", &sub, (void*)pb);
-    cv  = stk_plotter_new(win, 80, 230, 700, 350);
+    cv  = stk_canvas_new(win, 80, 230, 700, 350);
     bt7 = stk_button_new(win, 400, 200, 60, 20, "CanvasBt", &draw, (void*)cv);
     
-    /*stk_widget_event_listen_add(cv, STK_WIDGET_MOVE, listen, (void*)cv);*/
+    stk_widget_event_listen_add(cv, STK_WIDGET_MOVE, listen, (void*)cv);
     stk_widget_event_listen_add(cv, STK_WIDGET_PRESS, listen, (void*)cv);
 
     stk_text_set_text(txt, "Oba!!!");
-    stk_plotter_draw_arc(cv, 50, 70, 150, 150, 10, 360*64);
+    stk_canvas_draw_arc(cv, 50, 70, 150, 150, 10, 360*64);
     
     wc.d1  = win;
     wc.c   = 0xd3d3d3;

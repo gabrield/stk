@@ -13,4 +13,4 @@ all: $(OBJECTS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 clean:
-	rm -rf $(OBJECTS)
+	rm -rf $(OBJECTS) test
