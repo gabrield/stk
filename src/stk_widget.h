@@ -48,6 +48,7 @@ typedef struct
     GC gc, gc2;
     XFontStruct *font_info;
     STKEvent *ev;
+    widget_list *child_list;
     char *fontname;
     char *label;
     void *ext_struct; /* if need a place to store a reference to other struct, if it's not a basic widget, etc. */
