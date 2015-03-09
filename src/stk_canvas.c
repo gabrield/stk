@@ -1,10 +1,10 @@
-#include <stk_plotter.h>
+#include <stk_canvas.h>
 
 
-stk_widget *stk_plotter_new(stk_widget *parent_win, int x, int y, uint w, uint h)
+stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
 {
     stk_widget *new_pl  = (stk_widget*) malloc(sizeof(stk_widget));
-    stk_plotter *pl  = (stk_plotter*) malloc(sizeof(stk_plotter));
+    stk_canvas *pl  = (stk_canvas*) malloc(sizeof(stk_canvas));
     int screen, depth;
 
     XGCValues gplal;
@@ -56,14 +56,14 @@ stk_widget *stk_plotter_new(stk_widget *parent_win, int x, int y, uint w, uint h
                        WhitePixelOfScreen(DefaultScreenOfDisplay(new_pl->dsp)));
         XFillRectangle(new_pl->dsp, pl->pmap, new_pl->gc, 0, 0, w, h);
         
-        stk_plotter_set_string_font(new_pl, new_pl->fontname);
+        stk_canvas_set_string_font(new_pl, new_pl->fontname);
 
         new_pl->x = x;
         new_pl->y = y;
         new_pl->w = w;
         new_pl->h = h;
 
-        new_pl->handler = &stk_plotter_handle;
+        new_pl->handler = &stk_canvas_handle;
         new_pl->ext_struct = (void*)pl;
 
         stk_widget_insert((void*)new_pl); 
@@ -75,72 +75,72 @@ stk_widget *stk_plotter_new(stk_widget *parent_win, int x, int y, uint w, uint h
 }
 
 
-void stk_plotter_expose(stk_widget *pl)
+void stk_canvas_expose(stk_widget *pl)
 {
-    stk_plotter *spl = (stk_plotter*)pl->ext_struct;
+    stk_canvas *spl = (stk_canvas*)pl->ext_struct;
 
     XCopyArea(pl->dsp, spl->pmap, pl->win, pl->gc2, 0, 0, pl->w, pl->h, 0, 0);
     XFlush(pl->dsp);
 }
 
 
-void stk_plotter_draw_arc(stk_widget *pl, uint x, uint y, uint w, uint h,
+void stk_canvas_draw_arc(stk_widget *pl, uint x, uint y, uint w, uint h,
                                                uint angle0, uint angle1)
 {
-    stk_plotter *spl = (stk_plotter*)pl->ext_struct;
+    stk_canvas *spl = (stk_canvas*)pl->ext_struct;
     XDrawArc(pl->dsp, spl->pmap, pl->gc2, x, y, w, h, angle0, angle1);
-    stk_plotter_expose(pl);
+    stk_canvas_expose(pl);
 } 
 
 
-void stk_plotter_draw_string(stk_widget *pl, uint x, uint y, char *str)
+void stk_canvas_draw_string(stk_widget *pl, uint x, uint y, char *str)
 {
-	stk_plotter *spl = (stk_plotter*)pl->ext_struct;
+	stk_canvas *spl = (stk_canvas*)pl->ext_struct;
 	XDrawString(pl->dsp, spl->pmap, pl->gc2, x, y, str, strlen(str));
-	stk_plotter_expose(pl);
+	stk_canvas_expose(pl);
 }
 
 
-void stk_plotter_draw_line(stk_widget *pl, uint x0, uint y0, uint x1, uint y1)
+void stk_canvas_draw_line(stk_widget *pl, uint x0, uint y0, uint x1, uint y1)
 {
-    stk_plotter *spl = (stk_plotter*)pl->ext_struct;
+    stk_canvas *spl = (stk_canvas*)pl->ext_struct;
     XDrawLine(pl->dsp, spl->pmap, pl->gc2, x0, y0, x1, y1);
-    stk_plotter_expose(pl);
+    stk_canvas_expose(pl);
 }
 
 
-void stk_plotter_draw_point(stk_widget *pl, uint x, uint y)
+void stk_canvas_draw_point(stk_widget *pl, uint x, uint y)
 {
-    stk_plotter *spl = (stk_plotter*)pl->ext_struct;
+    stk_canvas *spl = (stk_canvas*)pl->ext_struct;
     XDrawPoint(pl->dsp, spl->pmap, pl->gc2, x, y);
-    stk_plotter_expose(pl);
+    stk_canvas_expose(pl);
 }
 
 
-void stk_plotter_area_rotate(stk_widget *pl, uint x0 , uint y0, uint x1, uint y1,
+void stk_canvas_area_rotate(stk_widget *pl, uint x0 , uint y0, uint x1, uint y1,
                                                                      uint angle)
 {
 }             
 
 
-void stk_plotter_set_string_font_size(stk_widget *pl, char *size)
+void stk_canvas_set_string_font_size(stk_widget *pl, char *size)
 {
 	stk_widget_set_font_size(pl, size);
 }
 
 
-void stk_plotter_set_string_font(stk_widget *pl, char *font)
+void stk_canvas_set_string_font(stk_widget *pl, char *font)
 {
 	stk_widget_set_font_size(pl, font);
 }
 
 
-void stk_plotter_redraw(int dtype, stk_widget *pl)
+void stk_canvas_redraw(int dtype, stk_widget *pl)
 { 
     switch(dtype)
     {
         case STK_CANVAS_EXPOSE:
-            stk_plotter_expose(pl);
+            stk_canvas_expose(pl);
             break;
 
         case STK_CANVAS_PRESS:
@@ -159,7 +159,7 @@ void stk_plotter_redraw(int dtype, stk_widget *pl)
 
 
 
-void stk_plotter_handle(STKEvent *event, void *warg)
+void stk_canvas_handle(STKEvent *event, void *warg)
 {
     stk_widget *wg = (stk_widget*)warg;
     
@@ -170,7 +170,7 @@ void stk_plotter_handle(STKEvent *event, void *warg)
     case Expose:
         if(wg->exposefunc)
             wg->exposefunc(wg->exargs);
-        stk_plotter_redraw(STK_CANVAS_EXPOSE, wg);
+        stk_canvas_redraw(STK_CANVAS_EXPOSE, wg);
         break;
     
     case EnterNotify:
